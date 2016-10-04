@@ -1,14 +1,1 @@
 C:\Users\Sebastian\Documents\DTU\Windows programmering\Scumle\Scumle\Scumle\bin\Debug\Scumle.exe.config
-C:\Users\peteLab\Documents\WindowsProgrammering\Scumle\Scumle\Scumle\bin\Debug\Scumle.exe.config
-C:\Users\peteLab\Documents\WindowsProgrammering\Scumle\Scumle\Scumle\obj\Debug\Scumle.csprojResolveAssemblyReference.cache
-C:\Users\peteLab\Documents\WindowsProgrammering\Scumle\Scumle\Scumle\obj\Debug\MainWindow.baml
-C:\Users\peteLab\Documents\WindowsProgrammering\Scumle\Scumle\Scumle\obj\Debug\MainWindow.g.cs
-C:\Users\peteLab\Documents\WindowsProgrammering\Scumle\Scumle\Scumle\obj\Debug\App.g.cs
-C:\Users\peteLab\Documents\WindowsProgrammering\Scumle\Scumle\Scumle\obj\Debug\Scumle_MarkupCompile.cache
-C:\Users\peteLab\Documents\WindowsProgrammering\Scumle\Scumle\Scumle\obj\Debug\Scumle.g.resources
-C:\Users\peteLab\Documents\WindowsProgrammering\Scumle\Scumle\Scumle\obj\Debug\Scumle.Properties.Resources.resources
-C:\Users\peteLab\Documents\WindowsProgrammering\Scumle\Scumle\Scumle\obj\Debug\Scumle.csproj.GenerateResource.Cache
-C:\Users\peteLab\Documents\WindowsProgrammering\Scumle\Scumle\Scumle\bin\Debug\Scumle.exe
-C:\Users\peteLab\Documents\WindowsProgrammering\Scumle\Scumle\Scumle\bin\Debug\Scumle.pdb
-C:\Users\peteLab\Documents\WindowsProgrammering\Scumle\Scumle\Scumle\obj\Debug\Scumle.exe
-C:\Users\peteLab\Documents\WindowsProgrammering\Scumle\Scumle\Scumle\obj\Debug\Scumle.pdb

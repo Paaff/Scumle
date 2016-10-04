@@ -1,63 +1,12 @@
-﻿<RibbonWindow x:Class="Scumle.MainWindow"
-         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-         Title="Window1"
-         Height="600"
-         Width="800">
-
-
-
-
-    <DockPanel LastChildFill="True">
-
-
-        <Ribbon DockPanel.Dock="Top">
-
-
-
-            <RibbonTab Header="Home">
-
-                <RibbonGroup Header="Clipboard">
-                    <RibbonMenuButton x:Name="Clipboard" Label="Paste">
-                        <RibbonMenuItem x:Name="Copy" Header="Keep Text"></RibbonMenuItem>
-                    </RibbonMenuButton>
-                </RibbonGroup>
-
-            </RibbonTab>
-
-            <RibbonTab Header="Design"></RibbonTab>
-
-            <RibbonTab Header="Help" />
-
-
-        </Ribbon>
-
-        <Border  DockPanel.Dock="Bottom" BorderThickness="2" BorderBrush="Black">
-            <TextBlock VerticalAlignment="Center" HorizontalAlignment="Left"> Status / Error Message</TextBlock>
-        </Border>
-
-        <StackPanel DockPanel.Dock="Left" Width="175" >
-            <Expander Header="Arrows">
-
-                <StackPanel>
-                    <Rectangle Width="10" Height="10" Fill="YellowGreen"></Rectangle>
-                </StackPanel>
-
-            </Expander>
-
-        </StackPanel>
-
-
-        <Canvas DockPanel.Dock="Right" Background="Blue">
-
-        </Canvas>
-
-
-
-
-
-    </DockPanel>
-
-
-
-</RibbonWindow>
+﻿<Window x:Class="Scumle.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Scumle"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="350" Width="525">
+    <Grid>
+        
+    </Grid>
+</Window>
