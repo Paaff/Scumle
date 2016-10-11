@@ -114,13 +114,34 @@
     <Folder Include="ViewModel\" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\Paste.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\Cut.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Images\Copy.png" />
+    <Resource Include="Images\Add.png" />
+    <Resource Include="Images\Cancel.png" />
+    <Resource Include="Images\Check.png" />
+    <Resource Include="Images\Copy.png" />
+    <Resource Include="Images\Cut.png" />
+    <Resource Include="Images\Delete.png" />
+    <Resource Include="Images\Edit.png" />
+    <Resource Include="Images\Exit.png" />
+    <Resource Include="Images\Find.png" />
+    <Resource Include="Images\Help.png" />
+    <Resource Include="Images\Information.png" />
+    <Resource Include="Images\New.png" />
+    <Resource Include="Images\Open.png" />
+    <Resource Include="Images\Options.png" />
+    <Resource Include="Images\Paste.png" />
+    <Resource Include="Images\Picture.png" />
+    <Resource Include="Images\Preview.png" />
+    <Resource Include="Images\Print.png" />
+    <Resource Include="Images\Redo.png" />
+    <Resource Include="Images\Remove.png" />
+    <Resource Include="Images\Rename.png" />
+    <Resource Include="Images\Save.png" />
+    <Resource Include="Images\Search.png" />
+    <Resource Include="Images\Settings.png" />
+    <Resource Include="Images\Undo.png" />
+    <Resource Include="Images\Zoom-In.png" />
+    <Resource Include="Images\Zoom-Out.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
