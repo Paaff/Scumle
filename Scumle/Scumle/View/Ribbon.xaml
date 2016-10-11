@@ -1,0 +1,44 @@
+﻿<UserControl x:Class="Scumle.View.Ribbon"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      mc:Ignorable="d" 
+      d:DesignHeight="150" d:DesignWidth="600"
+      >
+
+    <Ribbon>
+
+
+        <RibbonTab Header="Home">
+
+            <RibbonGroup Header="Clipboard">
+                <RibbonMenuButton x:Name="Clipboard" Label="Paste" HorizontalAlignment="Left">
+                    <RibbonMenuItem x:Name="test" Header="Keep Text"></RibbonMenuItem>
+                </RibbonMenuButton>
+
+                <RibbonMenuButton x:Name="Cut" Label="Cut" HorizontalAlignment="Right"/>
+                <RibbonMenuButton x:Name="Copy" Label="Copy"/>
+
+            </RibbonGroup>
+
+            <RibbonGroup Header="Font">
+
+            </RibbonGroup>
+
+            <RibbonGroup Header="Tools">
+
+            </RibbonGroup>
+
+
+        </RibbonTab>
+
+        <RibbonTab Header="Design"></RibbonTab>
+
+        <RibbonTab Header="Help" />
+
+
+    </Ribbon>
+
+
+</UserControl>
