@@ -34,7 +34,11 @@
         </StackPanel>
 
 
-        <Canvas DockPanel.Dock="Right" Background="Blue">
+        <Canvas DockPanel.Dock="Right" >
+            
+            <local:BasicShapeContainer>
+                <Label> HALLO</Label>
+            </local:BasicShapeContainer>
 
         </Canvas>
 

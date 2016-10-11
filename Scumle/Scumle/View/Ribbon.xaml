@@ -13,14 +13,18 @@
         <RibbonTab Header="Home">
 
             <RibbonGroup Header="Clipboard">
-                <RibbonMenuButton x:Name="Clipboard" Label="Paste" HorizontalAlignment="Left">
-                    <RibbonMenuItem x:Name="test" Header="Keep Text"></RibbonMenuItem>
-                </RibbonMenuButton>
+             
+                <RibbonButton x:Name="Clipboard" Label="Paste" LargeImageSource="/Images/Paste.png"/>
 
-                <RibbonMenuButton x:Name="Cut" Label="Cut" HorizontalAlignment="Right"/>
-                <RibbonMenuButton x:Name="Copy" Label="Copy"/>
-
+                <RibbonButton x:Name="Cut" Label="Cut" SmallImageSource="/Images/Cut.png"/>
+                
+                <RibbonButton x:Name="Copy" Label="Copy" SmallImageSource="/Images/Copy.png"/>
+                
+           
             </RibbonGroup>
+            
+            
+        
 
             <RibbonGroup Header="Font">
 
