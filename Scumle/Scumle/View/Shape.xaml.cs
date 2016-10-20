@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Scumle.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -28,7 +29,7 @@ namespace Scumle.View
 
         void onDragDelta(object sender, DragDeltaEventArgs e)
         {
-            Model.Shape shape = DataContext as Model.Shape;
+            ShapeViewModel shape = DataContext as ShapeViewModel;
             shape.MoveDelta(sender, e);
         }
 

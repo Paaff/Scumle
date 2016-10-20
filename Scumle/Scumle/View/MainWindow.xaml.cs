@@ -18,7 +18,7 @@ namespace Scumle.View
     {
         public MainWindow()
         {
-            this.DataContext = new ViewModelMain();
+            this.DataContext = new ViewModelMain(new Model.Scumle());
             InitializeComponent();
         }
 

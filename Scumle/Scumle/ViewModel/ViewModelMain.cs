@@ -8,20 +8,18 @@ using System.Threading.Tasks;
 
 namespace Scumle.ViewModel
 {
-    class ViewModelMain
+    class ViewModelMain : ViewModelBase<Model.Scumle>
     {
-        public ObservableCollection<Shape> Shapes { get; }
+        public ObservableCollection<ShapeViewModel> Shapes { get; }
 
-        public String Version { get; }
+        public String Version { get; } = "Version 1.0.0";
 
-        public ViewModelMain()
+        public ViewModelMain(Model.Scumle scumle) : base(scumle)
         {
-            Version = "Version 1.0.0";
-
-            Shapes = new ObservableCollection<Shape>()
+            Shapes = new ObservableCollection<ShapeViewModel>()
             {
-                new Shape(20, 20, "My first shape"),
-                new Shape(100, 100, "My second shape")
+                new ShapeViewModel(new Shape(10, 10, "My frist shape")),
+                new ShapeViewModel(new Shape(100, 100, "My second shape"))
             };
         }
 

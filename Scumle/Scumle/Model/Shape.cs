@@ -8,11 +8,8 @@ using System.Windows.Controls.Primitives;
 
 namespace Scumle.Model
 {
-    class Shape : INotifyPropertyChanged
+    class Shape
     {
-
-        double _X;
-        double _Y;
 
         public Shape(double X, double Y, String Name)
         {
@@ -23,33 +20,12 @@ namespace Scumle.Model
             this.Name = Name;
         }
 
-        public double X
-        {
-            get { return _X; }
-            set
-            {
-                _X = value;
-                PropertyChanged(this, new PropertyChangedEventArgs(nameof(X)));
-            }
-        }
-        public double Y
-        {
-            get { return _Y; }
-            set { _Y = value;
-                PropertyChanged(this, new PropertyChangedEventArgs(nameof(Y)));
-            }
-        }
+        public double X { get; set; }
+        public double Y { get; set; }
 
         public double Width { get; set; }
         public double Height { get; set; }
         public String Name { get; set; }
-
-        public event PropertyChangedEventHandler PropertyChanged = delegate { };
-
-        public void MoveDelta(object sender, DragDeltaEventArgs e)
-        {
-            MoveDelta(e.HorizontalChange, e.VerticalChange);
-        }
 
         public void MoveDelta(double X, double Y)
         {
