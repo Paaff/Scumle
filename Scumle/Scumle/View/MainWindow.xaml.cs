@@ -1,10 +1,12 @@
-﻿using System;
+﻿using Scumle.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Controls.Ribbon;
 
 namespace Scumle.View
@@ -16,7 +18,10 @@ namespace Scumle.View
     {
         public MainWindow()
         {
+            this.DataContext = new ViewModelMain();
             InitializeComponent();
         }
+
     }
+
 }

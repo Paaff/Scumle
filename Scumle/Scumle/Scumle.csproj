@@ -37,7 +37,9 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Controls.Ribbon" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -57,11 +59,15 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Helpers\RelayCommand.cs" />
+    <Compile Include="Model\Shape.cs" />
     <Compile Include="Model\TextConverter.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
     <Compile Include="ViewModel\ViewModelMain.cs" />
     <Compile Include="View\Ribbon.xaml.cs">
       <DependentUpon>Ribbon.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Shape.xaml.cs">
+      <DependentUpon>Shape.xaml</DependentUpon>
     </Compile>
     <Page Include="View\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -76,6 +82,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="View\Ribbon.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Shape.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

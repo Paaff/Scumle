@@ -7,6 +7,13 @@
          Height="600"
          Width="800">
 
+    <Window.Resources>
+        <ResourceDictionary>
+            <ControlTemplate x:Key="template1">
+                <Ellipse Width="60" Height="30" Fill="Black"/>
+            </ControlTemplate>
+        </ResourceDictionary>
+    </Window.Resources>
 
 
 
@@ -31,19 +38,32 @@
 
             </Expander>
 
+            <Label Content="{Binding Version}" Height="25" HorizontalAlignment="Center"></Label>
+
         </StackPanel>
 
+    
 
-        <Canvas DockPanel.Dock="Right" Background="Blue">
-
-        </Canvas>
-
-
-
-
+        <ItemsControl ItemsSource="{Binding Shapes}" Background="AliceBlue">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <Canvas/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemContainerStyle>
+                <Style TargetType="ContentPresenter">
+                    <Setter Property="Canvas.Left" Value="{Binding X}"/>
+                    <Setter Property="Canvas.Top" Value="{Binding Y}"/>
+                </Style>
+            </ItemsControl.ItemContainerStyle>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <!--<Rectangle Width="{Binding Width}" Height="{Binding Height}" Fill="Black" />-->
+                    <local:Shape DataContext="{Binding}"></local:Shape>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
 
     </DockPanel>
-
-
 
 </RibbonWindow>
