@@ -7,11 +7,12 @@
          Height="600"
          Width="800">
 
+
     <Window.Resources>
         <ResourceDictionary>
-            <ControlTemplate x:Key="template1">
-                <Ellipse Width="60" Height="30" Fill="Black"/>
-            </ControlTemplate>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Resources/ShapesDictionary.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>
 
@@ -40,6 +41,8 @@
 
             <Label Content="{Binding Version}" Height="25" HorizontalAlignment="Center"></Label>
 
+            <Button Content="Add Shape" Command="{Binding AddShapeCommand}"></Button>
+
         </StackPanel>
 
     
@@ -59,7 +62,8 @@
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
                     <!--<Rectangle Width="{Binding Width}" Height="{Binding Height}" Fill="Black" />-->
-                    <local:Shape DataContext="{Binding}"></local:Shape>
+                    <!--<local:Shape DataContext="{Binding}"></local:Shape>-->
+                    <ContentPresenter Content="{Binding}"></ContentPresenter>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>

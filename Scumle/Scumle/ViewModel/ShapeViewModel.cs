@@ -11,12 +11,12 @@ namespace Scumle.ViewModel
 
     class ShapeViewModel : ViewModelBase<Shape>
     {
-        protected Shape Shape { get; }
 
         public ShapeViewModel(Shape shape) : base(shape)
         {
         }
 
+        #region Properties
         public double X
         {
             get { return Model.X; }
@@ -34,6 +34,7 @@ namespace Scumle.ViewModel
             get { return Model.Name; }
             set { SetValue(value); }
         }
+        #endregion
 
         internal void MoveDelta(object sender, DragDeltaEventArgs e)
         {

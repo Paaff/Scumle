@@ -64,12 +64,15 @@
     <Compile Include="Model\TextConverter.cs" />
     <Compile Include="ViewModel\ShapeViewModel.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
-    <Compile Include="ViewModel\ViewModelMain.cs" />
+    <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="View\Ribbon.xaml.cs">
       <DependentUpon>Ribbon.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Shape.xaml.cs">
       <DependentUpon>Shape.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\UserControls\ShapeUserControl.xaml.cs">
+      <DependentUpon>ShapeUserControl.xaml</DependentUpon>
     </Compile>
     <Page Include="View\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -83,11 +86,19 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="View\Resources\ShapesDictionary.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\Ribbon.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Shape.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\UserControls\ShapeUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
