@@ -30,7 +30,7 @@
             <TextBlock VerticalAlignment="Center" HorizontalAlignment="Left"> Status / Error Message</TextBlock>
         </Border>
 
-        <StackPanel DockPanel.Dock="Left" Width="175" >
+        <StackPanel DockPanel.Dock="Left" Width="175">
             <Expander Header="Arrows">
 
                 <StackPanel>
@@ -45,8 +45,6 @@
 
         </StackPanel>
 
-    
-
         <ItemsControl ItemsSource="{Binding Shapes}" Background="AliceBlue">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
@@ -59,13 +57,6 @@
                     <Setter Property="Canvas.Top" Value="{Binding Y}"/>
                 </Style>
             </ItemsControl.ItemContainerStyle>
-            <ItemsControl.ItemTemplate>
-                <DataTemplate>
-                    <!--<Rectangle Width="{Binding Width}" Height="{Binding Height}" Fill="Black" />-->
-                    <!--<local:Shape DataContext="{Binding}"></local:Shape>-->
-                    <ContentPresenter Content="{Binding}"></ContentPresenter>
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
         </ItemsControl>
 
     </DockPanel>
