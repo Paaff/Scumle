@@ -24,5 +24,7 @@ namespace Scumle.View
         {
             InitializeComponent();
         }
+
+
     }
 }

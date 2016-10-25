@@ -13,12 +13,13 @@
         <RibbonTab Header="Home">
 
             <RibbonGroup Header="Clipboard">
-                <RibbonMenuButton x:Name="Clipboard" Label="Paste" HorizontalAlignment="Left">
-                    <RibbonMenuItem x:Name="test" Header="Keep Text"></RibbonMenuItem>
-                </RibbonMenuButton>
 
-                <RibbonMenuButton x:Name="Cut" Label="Cut" HorizontalAlignment="Right"/>
-                <RibbonMenuButton x:Name="Copy" Label="Copy"/>
+                <RibbonButton x:Name="Clipboard" Label="Paste" LargeImageSource="/Images/Paste.png"/>
+
+                <RibbonButton x:Name="Cut" Label="Cut" SmallImageSource="/Images/Cut.png"/>
+
+                <RibbonButton x:Name="Copy" Label="Copy" SmallImageSource="/Images/Copy.png"/>
+
 
             </RibbonGroup>
 
@@ -33,7 +34,20 @@
 
         </RibbonTab>
 
-        <RibbonTab Header="Design"></RibbonTab>
+        <RibbonTab Header="Design">
+            
+            <RibbonGroup Header="View">
+                <RibbonMenuButton Label="Zoom">
+                    <RibbonMenuItem Header="50%" Command="{Binding ChangeZoomCommand}"
+                               CommandParameter="0,5"/>
+                    <RibbonMenuItem Header="100%" Command="{Binding ChangeZoomCommand}"
+                                    CommandParameter="1"/>
+                </RibbonMenuButton>
+            </RibbonGroup>
+            
+        </RibbonTab>
+        
+           
 
         <RibbonTab Header="Help" />
 

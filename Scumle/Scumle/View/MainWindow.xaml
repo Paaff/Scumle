@@ -41,7 +41,7 @@
 
         <Grid>
             <Grid.LayoutTransform>
-                <ScaleTransform ScaleX="2" ScaleY="2"></ScaleTransform>
+                <ScaleTransform ScaleX="{Binding Zoom}" ScaleY="{Binding Zoom}"></ScaleTransform>
             </Grid.LayoutTransform>
             <ItemsControl ItemsSource="{Binding Shapes}" Background="AliceBlue">
                 <ItemsControl.ItemsPanel>
