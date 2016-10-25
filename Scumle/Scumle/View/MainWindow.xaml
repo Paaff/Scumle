@@ -16,11 +16,7 @@
         </ResourceDictionary>
     </Window.Resources>
 
-
-
     <DockPanel LastChildFill="True">
-
-
 
         <local:Ribbon DockPanel.Dock="Top"/>
 
@@ -52,7 +48,7 @@
 
         <Grid>
             <Grid.LayoutTransform>
-                <ScaleTransform ScaleX="2" ScaleY="2"></ScaleTransform>
+                <ScaleTransform ScaleX="{Binding Zoom}" ScaleY="{Binding Zoom}"></ScaleTransform>
             </Grid.LayoutTransform>
             <ItemsControl ItemsSource="{Binding Shapes}" Background="White" Margin="35,-32,271,236">
                 <ItemsControl.ItemsPanel>

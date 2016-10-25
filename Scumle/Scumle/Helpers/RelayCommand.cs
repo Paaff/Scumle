@@ -80,6 +80,7 @@ namespace Scumle.Helpers
 
         bool ICommand.CanExecute(object parameter)
         {
+            if(!(parameter is T)) throw new ArgumentNullException($"{parameter.GetType().Name}");
             if (_TargetCanExecuteMethod != null)
             {
                 T tparm = (T)parameter;

@@ -9,7 +9,7 @@ using System.Windows.Controls.Primitives;
 namespace Scumle.Model
 {
     class Shape
-    {
+    {   
 
         public Shape(double X, double Y, String Name)
         {
@@ -22,7 +22,6 @@ namespace Scumle.Model
 
         public double X { get; set; }
         public double Y { get; set; }
-
         public double Width { get; set; }
         public double Height { get; set; }
         public String Name { get; set; }
