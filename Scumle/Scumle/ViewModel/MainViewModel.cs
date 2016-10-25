@@ -55,11 +55,7 @@ namespace Scumle.ViewModel
 
         public void ChangeZoom(string value)
         {   
-            
             Zoom = Double.Parse(value);
-            MessageBox.Show(Double.Parse(value).ToString());
-
-
         }
 
     }
