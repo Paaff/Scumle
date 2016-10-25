@@ -6,6 +6,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 
 namespace Scumle.ViewModel
@@ -14,8 +15,17 @@ namespace Scumle.ViewModel
     {
 
         private int Num = 0;
+        private double _zoom = 1.0;
 
-        public double Zoom { get; set; } = 1.0;
+        public double Zoom
+        {
+            get { return _zoom; }
+            set
+            {
+                _zoom = value;
+                OnPropertyChanged();
+            }
+        }
 
         public ObservableCollection<ShapeViewModel> Shapes { get; }
 
@@ -30,14 +40,26 @@ namespace Scumle.ViewModel
             };
 
             AddShapeCommand = new RelayCommand(AddShape);
+            ChangeZoomCommand = new RelayCommand<string>(ChangeZoom);
 
         }
+
+        public RelayCommand<string> ChangeZoomCommand { get; set; }
 
         public RelayCommand AddShapeCommand { get; private set; }
 
         public void AddShape()
         {
             Shapes.Add(new ShapeViewModel(new Shape(50, 50, "My shape " + Num++)));
+        }
+
+        public void ChangeZoom(string value)
+        {   
+            
+            Zoom = Double.Parse(value);
+            MessageBox.Show(Double.Parse(value).ToString());
+
+
         }
 
     }
