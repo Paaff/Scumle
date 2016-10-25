@@ -45,20 +45,24 @@
 
         </StackPanel>
 
-        <ItemsControl ItemsSource="{Binding Shapes}" Background="AliceBlue">
-            <ItemsControl.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <Canvas/>
-                </ItemsPanelTemplate>
-            </ItemsControl.ItemsPanel>
-            <ItemsControl.ItemContainerStyle>
-                <Style TargetType="ContentPresenter">
-                    <Setter Property="Canvas.Left" Value="{Binding X}"/>
-                    <Setter Property="Canvas.Top" Value="{Binding Y}"/>
-                </Style>
-            </ItemsControl.ItemContainerStyle>
-        </ItemsControl>
-
+        <Grid>
+            <Grid.LayoutTransform>
+                <ScaleTransform ScaleX="2" ScaleY="2"></ScaleTransform>
+            </Grid.LayoutTransform>
+            <ItemsControl ItemsSource="{Binding Shapes}" Background="AliceBlue">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <Canvas/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemContainerStyle>
+                    <Style TargetType="ContentPresenter">
+                        <Setter Property="Canvas.Left" Value="{Binding X}"/>
+                        <Setter Property="Canvas.Top" Value="{Binding Y}"/>
+                    </Style>
+                </ItemsControl.ItemContainerStyle>
+            </ItemsControl>
+        </Grid>
     </DockPanel>
 
 </RibbonWindow>

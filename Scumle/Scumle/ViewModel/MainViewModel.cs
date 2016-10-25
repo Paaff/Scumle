@@ -15,6 +15,8 @@ namespace Scumle.ViewModel
 
         private int Num = 0;
 
+        public double Zoom { get; set; } = 1.0;
+
         public ObservableCollection<ShapeViewModel> Shapes { get; }
 
         public String Version { get; } = "Version 1.0.0";
