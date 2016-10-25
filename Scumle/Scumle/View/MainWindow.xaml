@@ -16,15 +16,9 @@
         </ResourceDictionary>
     </Window.Resources>
 
-
-
     <DockPanel LastChildFill="True">
 
-
-
         <local:Ribbon DockPanel.Dock="Top"/>
-         
-        
 
         <Border  DockPanel.Dock="Bottom" BorderThickness="2" BorderBrush="Black">
             <TextBlock VerticalAlignment="Center" HorizontalAlignment="Left"> Status / Error Message</TextBlock>

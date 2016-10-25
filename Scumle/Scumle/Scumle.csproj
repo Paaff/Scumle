@@ -61,10 +61,10 @@
     <Compile Include="Helpers\RelayCommand.cs" />
     <Compile Include="Model\Scumle.cs" />
     <Compile Include="Model\Shape.cs" />
-    <Compile Include="Model\TextConverter.cs" />
     <Compile Include="ViewModel\ShapeViewModel.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
+    <Compile Include="View\Behaviour\MouseScroll.cs" />
     <Compile Include="View\Ribbon.xaml.cs">
       <DependentUpon>Ribbon.xaml</DependentUpon>
     </Compile>
