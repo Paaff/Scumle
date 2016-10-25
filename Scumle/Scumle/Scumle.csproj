@@ -62,6 +62,7 @@
     <Compile Include="Model\Scumle.cs" />
     <Compile Include="Model\Shape.cs" />
     <Compile Include="Model\TextConverter.cs" />
+    <Compile Include="ViewModel\UMLClassViewModel.cs" />
     <Compile Include="ViewModel\ShapeViewModel.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />

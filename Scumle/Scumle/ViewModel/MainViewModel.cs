@@ -25,8 +25,8 @@ namespace Scumle.ViewModel
         {
             Shapes = new ObservableCollection<ShapeViewModel>()
             {
-                new ShapeViewModel(new Shape(10, 10, "My frist shape")),
-                new ShapeViewModel(new Shape(100, 100, "My second shape"))
+                new UMLClassViewModel(new Shape(50, 50, "My frist shape")),
+                new UMLClassViewModel(new Shape(100, 100, "My second shape"))
             };
 
             AddShapeCommand = new RelayCommand(AddShape);

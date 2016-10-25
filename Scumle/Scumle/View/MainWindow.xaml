@@ -23,33 +23,38 @@
 
 
         <local:Ribbon DockPanel.Dock="Top"/>
-         
-        
 
-        <Border  DockPanel.Dock="Bottom" BorderThickness="2" BorderBrush="Black">
-            <TextBlock VerticalAlignment="Center" HorizontalAlignment="Left"> Status / Error Message</TextBlock>
+
+
+        <Border  DockPanel.Dock="Bottom" BorderThickness="0,1,0,0" BorderBrush="Black">
+            <Grid>
+                <TextBlock VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2"> Status / Error Message</TextBlock>
+                <Label Content="{Binding Version}" Height="25" HorizontalAlignment="Right"></Label>
+            </Grid>
         </Border>
 
-        <StackPanel DockPanel.Dock="Left" Width="175">
-            <Expander Header="Arrows">
+        <Border BorderThickness="0 0 1 0" BorderBrush="Gray">
+            <StackPanel DockPanel.Dock="Left" Width="175" Margin="1">
+                <TextBlock Text="Shapes" IsEnabled="False" HorizontalAlignment="Center" FontSize="15"/>
+                <Separator/>
+                <Expander Header="Arrows">
 
-                <StackPanel>
-                    <Rectangle Width="10" Height="10" Fill="YellowGreen"></Rectangle>
-                </StackPanel>
+                    <StackPanel>
+                        <Rectangle Width="10" Height="10" Fill="YellowGreen"></Rectangle>
+                    </StackPanel>
 
-            </Expander>
+                </Expander>
 
-            <Label Content="{Binding Version}" Height="25" HorizontalAlignment="Center"></Label>
+                <Button Content="Add Shape" Command="{Binding AddShapeCommand}" Margin="5,5,5,0"></Button>
 
-            <Button Content="Add Shape" Command="{Binding AddShapeCommand}"></Button>
-
-        </StackPanel>
+            </StackPanel>
+        </Border>
 
         <Grid>
             <Grid.LayoutTransform>
                 <ScaleTransform ScaleX="2" ScaleY="2"></ScaleTransform>
             </Grid.LayoutTransform>
-            <ItemsControl ItemsSource="{Binding Shapes}" Background="AliceBlue">
+            <ItemsControl ItemsSource="{Binding Shapes}" Background="White" Margin="35,-32,271,236">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
                         <Canvas/>
