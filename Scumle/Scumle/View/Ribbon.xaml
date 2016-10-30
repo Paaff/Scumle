@@ -7,28 +7,68 @@
       d:DesignHeight="150" d:DesignWidth="600"
       >
 
+    
     <Ribbon>
 
-
+        
+        
         <RibbonTab Header="Home">
 
+            <RibbonGroup Header="File">
+
+                <StackPanel Orientation="Vertical">
+                    <RibbonButton x:Name="Open" Label="Open" SmallImageSource="/Images/Open.png"/>
+                    <RibbonButton x:Name="Save" Label="Save" SmallImageSource="/Images/Save.png"/>
+                </StackPanel>
+                
+            </RibbonGroup>
+            
             <RibbonGroup Header="Clipboard">
 
-                <RibbonButton x:Name="Clipboard" Label="Paste" LargeImageSource="/Images/Paste.png"/>
+                <RibbonButton x:Name="Clipboard" Label="Paste" LargeImageSource="/Images/Paste.png"
+                              Command="ApplicationCommands.Paste"/>
 
-                <RibbonButton x:Name="Cut" Label="Cut" SmallImageSource="/Images/Cut.png"/>
+                <RibbonButton x:Name="Cut" Label="Cut" SmallImageSource="/Images/Cut.png"
+                              Command="ApplicationCommands.Cut"/>
 
-                <RibbonButton x:Name="Copy" Label="Copy" SmallImageSource="/Images/Copy.png"/>
+                <RibbonButton x:Name="Copy" Label="Copy" SmallImageSource="/Images/Copy.png"
+                              Command="ApplicationCommands.Copy"/>
 
 
+            </RibbonGroup>
+
+            <RibbonGroup Header="View">
+                <RibbonMenuButton Label="Zoom" LargeImageSource="/Images/Search.png">
+                    <RibbonMenuItem Header="50%" Command="{Binding ChangeZoomCommand}"
+                               CommandParameter="0,5"/>
+                    <RibbonMenuItem Header="100%" Command="{Binding ChangeZoomCommand}"
+                                    CommandParameter="1"/>
+                </RibbonMenuButton>
             </RibbonGroup>
 
             <RibbonGroup Header="Font">
 
+               
+
+                <StackPanel Orientation="Horizontal">
+                    <RibbonButton Label="B" FontWeight="Bold"/>
+                    <RibbonButton Label="U" />
+                    <RibbonButton Label="I" FontStyle="Italic"/>
+                </StackPanel>
+                
             </RibbonGroup>
 
             <RibbonGroup Header="Tools">
-
+                <StackPanel Orientation="Horizontal">
+                    <RibbonButton x:Name="Undo" SmallImageSource="/Images/Undo.png"
+                                  Command="ApplicationCommands.Undo"
+                                  ToolTip="Undo"/>
+                    <RibbonButton x:Name="Redo" SmallImageSource="/Images/Redo.png"
+                                  Command="ApplicationCommands.Redo"
+                                  ToolTip="Redo"/>
+                 
+                </StackPanel>
+              
             </RibbonGroup>
 
 
@@ -36,14 +76,7 @@
 
         <RibbonTab Header="Design">
             
-            <RibbonGroup Header="View">
-                <RibbonMenuButton Label="Zoom">
-                    <RibbonMenuItem Header="50%" Command="{Binding ChangeZoomCommand}"
-                               CommandParameter="0,5"/>
-                    <RibbonMenuItem Header="100%" Command="{Binding ChangeZoomCommand}"
-                                    CommandParameter="1"/>
-                </RibbonMenuButton>
-            </RibbonGroup>
+            
             
         </RibbonTab>
         
