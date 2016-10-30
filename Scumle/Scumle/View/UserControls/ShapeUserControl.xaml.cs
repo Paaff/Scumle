@@ -28,17 +28,41 @@ namespace Scumle.View.UserControls
             InitializeComponent();
         }
 
+        private ShapeViewModel Shape
+        {
+            get { return DataContext as ShapeViewModel; }
+        }
+
         private void ShapeMove(object sender, DragDeltaEventArgs e)
         {
             if (IsResizing) return;
-            ShapeViewModel shape = DataContext as ShapeViewModel;
-            shape.MoveDelta(sender, e);
+            Shape.MoveDelta(sender, e);
         }
 
         private void ShapeResize(object sender, DragDeltaEventArgs e)
         {
-            ShapeViewModel shape = DataContext as ShapeViewModel;
-            shape.ShapeResize(sender, e);
+            Shape.ShapeResize(sender, e);
+        }
+
+        private void ShapeResizeE(object sender, DragDeltaEventArgs e)
+        {
+            Shape.ShapeResizeHorizontal(e.HorizontalChange);
+        }
+        private void ShapeResizeS(object sender, DragDeltaEventArgs e)
+        {
+            Shape.ShapeResizeVertical(e.VerticalChange);
+        }
+
+        private void ShapeResizeW(object sender, DragDeltaEventArgs e)
+        {
+            Shape.ShapeResizeHorizontal(-e.HorizontalChange);
+            Shape.ShapeMoveHorizontal(e.HorizontalChange);
+        }
+
+        private void ShapeResizeN(object sender, DragDeltaEventArgs e)
+        {
+            Shape.ShapeResizeVertical(-e.VerticalChange);
+            Shape.ShapeMoveVertical(e.VerticalChange);
         }
 
         private void StartResize(object sender, DragStartedEventArgs e)

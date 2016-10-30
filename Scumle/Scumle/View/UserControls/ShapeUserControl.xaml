@@ -34,6 +34,11 @@
                 <Thumb DragDelta="ShapeResize" HorizontalAlignment="Left" VerticalAlignment="Top"></Thumb>
                 <Thumb DragDelta="ShapeResize" HorizontalAlignment="Right" VerticalAlignment="Bottom"></Thumb>
                 <Thumb DragDelta="ShapeResize" HorizontalAlignment="Left" VerticalAlignment="Bottom"></Thumb>
+
+                <Thumb DragDelta="ShapeResizeE" HorizontalAlignment="Right" VerticalAlignment="Center"></Thumb>
+                <Thumb DragDelta="ShapeResizeW" HorizontalAlignment="Left" VerticalAlignment="Center"></Thumb>
+                <Thumb DragDelta="ShapeResizeN" HorizontalAlignment="Center" VerticalAlignment="Top"></Thumb>
+                <Thumb DragDelta="ShapeResizeS" HorizontalAlignment="Center" VerticalAlignment="Bottom"></Thumb>
                 <!-- Dynamic content for shape-->
                 <ContentPresenter Margin="3" Content="{Binding}" Width="{Binding Width}" Height="{Binding Height}"></ContentPresenter>
             </Grid>
