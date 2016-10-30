@@ -36,14 +36,35 @@ namespace Scumle.View.UserControls
         private void ShapeMove(object sender, DragDeltaEventArgs e)
         {
             if (IsResizing) return;
-            Shape.MoveDelta(sender, e);
+            Shape.MoveDelta(e.HorizontalChange, e.VerticalChange);
         }
 
-        private void ShapeResize(object sender, DragDeltaEventArgs e)
+        #region Shape Resize Corners
+        private void ShapeResizeSE(object sender, DragDeltaEventArgs e)
         {
-            Shape.ShapeResize(sender, e);
+            Shape.ShapeResize(e.HorizontalChange, e.VerticalChange);
         }
 
+        private void ShapeResizeSW(object sender, DragDeltaEventArgs e)
+        {
+            Shape.ShapeResize(-e.HorizontalChange, e.VerticalChange);
+            Shape.MoveDelta(e.HorizontalChange, 0);
+        }
+
+        private void ShapeResizeNE(object sender, DragDeltaEventArgs e)
+        {
+            Shape.ShapeResize(e.HorizontalChange, -e.VerticalChange);
+            Shape.MoveDelta(0, e.VerticalChange);
+        }
+
+        private void ShapeResizeNW(object sender, DragDeltaEventArgs e)
+        {
+            Shape.ShapeResize(-e.HorizontalChange, -e.VerticalChange);
+            Shape.MoveDelta(e.HorizontalChange, e.VerticalChange);
+        }
+        #endregion
+
+        #region Shape Resize Sides
         private void ShapeResizeE(object sender, DragDeltaEventArgs e)
         {
             Shape.ShapeResizeHorizontal(e.HorizontalChange);
@@ -64,6 +85,7 @@ namespace Scumle.View.UserControls
             Shape.ShapeResizeVertical(-e.VerticalChange);
             Shape.ShapeMoveVertical(e.VerticalChange);
         }
+        #endregion
 
         private void StartResize(object sender, DragStartedEventArgs e)
         {

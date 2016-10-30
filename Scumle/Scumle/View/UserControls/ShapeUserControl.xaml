@@ -30,10 +30,10 @@
         <ControlTemplate TargetType="{x:Type Thumb}">
             <Grid>
                 <!-- Static content for shape-->
-                <Thumb DragDelta="ShapeResize" HorizontalAlignment="Right" VerticalAlignment="Top"></Thumb>
-                <Thumb DragDelta="ShapeResize" HorizontalAlignment="Left" VerticalAlignment="Top"></Thumb>
-                <Thumb DragDelta="ShapeResize" HorizontalAlignment="Right" VerticalAlignment="Bottom"></Thumb>
-                <Thumb DragDelta="ShapeResize" HorizontalAlignment="Left" VerticalAlignment="Bottom"></Thumb>
+                <Thumb DragDelta="ShapeResizeNE" HorizontalAlignment="Right" VerticalAlignment="Top"></Thumb>
+                <Thumb DragDelta="ShapeResizeNW" HorizontalAlignment="Left" VerticalAlignment="Top"></Thumb>
+                <Thumb DragDelta="ShapeResizeSE" HorizontalAlignment="Right" VerticalAlignment="Bottom"></Thumb>
+                <Thumb DragDelta="ShapeResizeSW" HorizontalAlignment="Left" VerticalAlignment="Bottom"></Thumb>
 
                 <Thumb DragDelta="ShapeResizeE" HorizontalAlignment="Right" VerticalAlignment="Center"></Thumb>
                 <Thumb DragDelta="ShapeResizeW" HorizontalAlignment="Left" VerticalAlignment="Center"></Thumb>
