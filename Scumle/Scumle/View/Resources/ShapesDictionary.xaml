@@ -4,22 +4,15 @@
                     xmlns:vm="clr-namespace:Scumle.ViewModel"
                     xmlns:uc="clr-namespace:Scumle.View.UserControls">
 
-    <ControlTemplate x:Key="DefaultShape">
-        <Ellipse Width="20" Height="20" Fill="black"></Ellipse>
-    </ControlTemplate>
+    <DataTemplate DataType="{x:Type vm:ShapeViewModel}">
+        <Ellipse Width="20" Height="20" Fill="Blue"></Ellipse>
+    </DataTemplate>
 
-    <ControlTemplate x:Key="UMLShapeTemplate">
+    <DataTemplate DataType="{x:Type vm:UMLClassViewModel}">
         <StackPanel Background="Gray">
             <Label Content="{Binding Name}" FontSize="12"></Label>
             <TextBox AcceptsReturn="True" TextWrapping="Wrap" />
         </StackPanel>
-    </ControlTemplate>
-
-    <DataTemplate DataType="{x:Type vm:ShapeViewModel}">
-        <uc:ShapeUserControl Template="{StaticResource DefaultShape}"></uc:ShapeUserControl>
-    </DataTemplate>
-    <DataTemplate DataType="{x:Type vm:UMLClassViewModel}">
-        <uc:ShapeUserControl Template="{StaticResource UMLShapeTemplate}"></uc:ShapeUserControl>
     </DataTemplate>
 </ResourceDictionary>
     

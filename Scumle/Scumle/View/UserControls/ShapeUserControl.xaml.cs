@@ -24,6 +24,7 @@ namespace Scumle.View.UserControls
     {
         public ShapeUserControl()
         {
+            
             InitializeComponent();
         }
 

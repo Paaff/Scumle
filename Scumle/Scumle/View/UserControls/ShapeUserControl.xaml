@@ -6,5 +6,15 @@
              xmlns:local="clr-namespace:Scumle.View.UserControls"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300"
-       DragDelta="ShapeMove">
+             DragDelta="ShapeMove">
+    <Thumb.Template>
+        <ControlTemplate TargetType="{x:Type Thumb}">
+            <StackPanel>
+                <!-- Static content for shape-->
+                <Label>I'm a shape</Label>
+                <!-- Dynamic content for shape-->
+                <ContentPresenter Content="{Binding}"></ContentPresenter>
+            </StackPanel>
+        </ControlTemplate>
+    </Thumb.Template>
 </Thumb>
