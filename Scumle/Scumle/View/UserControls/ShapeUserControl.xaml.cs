@@ -46,7 +46,7 @@ namespace Scumle.View.UserControls
             IsResizing = true;
         }
 
-        private void EndResize(object sender, DragEventArgs e)
+        private void EndResize(object sender, DragCompletedEventArgs e)
         {
             IsResizing = false;
         }

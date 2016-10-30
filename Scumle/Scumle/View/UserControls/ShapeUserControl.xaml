@@ -11,7 +11,7 @@
         <ResourceDictionary>
             <Style TargetType="Thumb">
                 <EventSetter Event="DragStarted" Handler="StartResize"></EventSetter>
-                <EventSetter Event="DragOver" Handler="EndResize"></EventSetter>
+                <EventSetter Event="DragCompleted" Handler="EndResize"></EventSetter>
                 <Setter Property="Panel.ZIndex" Value="1"></Setter>
                 <Setter Property="Template">
                     <Setter.Value>
