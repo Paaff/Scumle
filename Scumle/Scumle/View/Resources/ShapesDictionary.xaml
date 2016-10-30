@@ -5,7 +5,7 @@
                     xmlns:uc="clr-namespace:Scumle.View.UserControls">
 
     <DataTemplate DataType="{x:Type vm:ShapeViewModel}">
-        <Ellipse Width="20" Height="20" Fill="Blue"></Ellipse>
+        <Ellipse Fill="Blue"></Ellipse>
     </DataTemplate>
 
     <DataTemplate DataType="{x:Type vm:UMLClassViewModel}">

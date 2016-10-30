@@ -29,6 +29,18 @@ namespace Scumle.ViewModel
             set { SetValue(value); }
         }
 
+        public double Width
+        {
+            get { return Model.Width; }
+            set { SetValue(value); }
+        }
+
+        public double Height
+        {
+            get { return Model.Height; }
+            set { SetValue(value); }
+        }
+
         public string Name
         {
             get { return Model.Name; }
@@ -41,6 +53,13 @@ namespace Scumle.ViewModel
             Model.MoveDelta(e.HorizontalChange, e.VerticalChange);
             OnPropertyChanged(nameof(X));
             OnPropertyChanged(nameof(Y));
+        }
+
+        internal void ShapeResize(object sender, DragDeltaEventArgs e)
+        {
+            Model.Resize(e.HorizontalChange, e.VerticalChange);
+            OnPropertyChanged(nameof(Width));
+            OnPropertyChanged(nameof(Height));
         }
     }
 }

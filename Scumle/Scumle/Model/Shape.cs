@@ -32,5 +32,10 @@ namespace Scumle.Model
             this.Y += Y;
         }
 
+        internal void Resize(double dX, double dY)
+        {
+            Width += dX;
+            Height += dY;
+        }
     }
 }

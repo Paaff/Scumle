@@ -7,14 +7,36 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300"
              DragDelta="ShapeMove">
+    <Thumb.Resources>
+        <ResourceDictionary>
+            <Style TargetType="Thumb">
+                <EventSetter Event="DragStarted" Handler="StartResize"></EventSetter>
+                <EventSetter Event="DragOver" Handler="EndResize"></EventSetter>
+                <Setter Property="Panel.ZIndex" Value="1"></Setter>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate>
+                            <Border BorderBrush="LightGray" Width="6" Height="6" BorderThickness="1">
+                                <Rectangle Fill="White"></Rectangle>
+                            </Border>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+        </ResourceDictionary>
+    </Thumb.Resources>
+    
     <Thumb.Template>
         <ControlTemplate TargetType="{x:Type Thumb}">
-            <StackPanel>
+            <Grid>
                 <!-- Static content for shape-->
-                <Label>I'm a shape</Label>
+                <Thumb DragDelta="ShapeResize" HorizontalAlignment="Right" VerticalAlignment="Top"></Thumb>
+                <Thumb DragDelta="ShapeResize" HorizontalAlignment="Left" VerticalAlignment="Top"></Thumb>
+                <Thumb DragDelta="ShapeResize" HorizontalAlignment="Right" VerticalAlignment="Bottom"></Thumb>
+                <Thumb DragDelta="ShapeResize" HorizontalAlignment="Left" VerticalAlignment="Bottom"></Thumb>
                 <!-- Dynamic content for shape-->
-                <ContentPresenter Content="{Binding}"></ContentPresenter>
-            </StackPanel>
+                <ContentPresenter Margin="3" Content="{Binding}" Width="{Binding Width}" Height="{Binding Height}"></ContentPresenter>
+            </Grid>
         </ControlTemplate>
     </Thumb.Template>
 </Thumb>

@@ -11,6 +11,8 @@ namespace Scumle.ViewModel
     {
         public UMLClassViewModel(Shape shape) : base(shape)
         {
+            Width = 150;
+            Height = 75;
         }
     }
 }

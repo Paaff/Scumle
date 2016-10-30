@@ -22,16 +22,33 @@ namespace Scumle.View.UserControls
     /// </summary>
     public partial class ShapeUserControl : Thumb
     {
+        private bool IsResizing = false;
         public ShapeUserControl()
         {
-            
             InitializeComponent();
         }
 
         private void ShapeMove(object sender, DragDeltaEventArgs e)
         {
+            if (IsResizing) return;
             ShapeViewModel shape = DataContext as ShapeViewModel;
             shape.MoveDelta(sender, e);
+        }
+
+        private void ShapeResize(object sender, DragDeltaEventArgs e)
+        {
+            ShapeViewModel shape = DataContext as ShapeViewModel;
+            shape.ShapeResize(sender, e);
+        }
+
+        private void StartResize(object sender, DragStartedEventArgs e)
+        {
+            IsResizing = true;
+        }
+
+        private void EndResize(object sender, DragEventArgs e)
+        {
+            IsResizing = false;
         }
     }
 }
