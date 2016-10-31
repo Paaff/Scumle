@@ -47,7 +47,7 @@
             </StackPanel>
         </Border>
 
-        <Grid>
+        <Grid x:Name="Diagram">
             <Grid.LayoutTransform>
                 <ScaleTransform ScaleX="{Binding Zoom}" ScaleY="{Binding Zoom}"></ScaleTransform>
             </Grid.LayoutTransform>
