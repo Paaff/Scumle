@@ -54,7 +54,7 @@
                 <Grid.LayoutTransform>
                     <ScaleTransform ScaleX="{Binding Zoom}" ScaleY="{Binding Zoom}"></ScaleTransform>
                 </Grid.LayoutTransform>
-                <ItemsControl ItemsSource="{Binding Shapes}" Background="Bisque" Height="750" Width="1250">
+                <ItemsControl ItemsSource="{Binding Shapes}" Background="White" Height="750" Width="1250">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
                             <Canvas/>

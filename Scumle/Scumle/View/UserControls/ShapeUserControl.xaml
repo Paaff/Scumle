@@ -10,10 +10,12 @@
              DragDelta="ShapeMove">
     <Thumb.Resources>
         <ResourceDictionary>
+            <BooleanToVisibilityConverter x:Key="BoolToVis"/>
             <Style TargetType="Thumb">
                 <EventSetter Event="DragStarted" Handler="StartResize"></EventSetter>
                 <EventSetter Event="DragCompleted" Handler="EndResize"></EventSetter>
                 <Setter Property="LayoutTransform" Value="{Binding ElementName=Diagram, Path=LayoutTransform.Inverse}"></Setter>
+                <Setter Property="Visibility" Value="{Binding IsSelected, Converter={StaticResource BoolToVis}, FallbackValue=Hidden}"></Setter>
                 <Setter Property="Panel.ZIndex" Value="1"></Setter>
                 <Setter Property="Template">
                     <Setter.Value>

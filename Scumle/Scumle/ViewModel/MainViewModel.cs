@@ -35,9 +35,25 @@ namespace Scumle.ViewModel
 
         public ObservableCollection<ShapeViewModel> Shapes { get; }
 
-        public ObservableCollection<ShapeViewModel> Selected { get; }
+        public ObservableCollection<ShapeViewModel> Selected { get; } = new ObservableCollection<ShapeViewModel>();
 
         public String Version { get; } = "Version 1.0.0";
+
+        internal void SelectShape(ShapeViewModel shape)
+        {
+            DeselectAllShapes();
+            Selected.Add(shape);
+            shape.IsSelected = true;
+        }
+
+        internal void DeselectAllShapes()
+        {
+            foreach (ShapeViewModel shape in Selected)
+            {
+                shape.IsSelected = false;
+            }
+            Selected.Clear();
+        }
         #endregion
 
         #region Commands
@@ -72,7 +88,6 @@ namespace Scumle.ViewModel
         }
         #endregion
        
-
         #region Methods
                
         public void AddShape()

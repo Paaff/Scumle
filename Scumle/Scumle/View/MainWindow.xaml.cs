@@ -23,9 +23,16 @@ namespace Scumle.View
             InitializeComponent();
         }
 
+        private MainViewModel Main
+        {
+            get { return DataContext as MainViewModel; }
+        }
+
         private void SelectShape(object sender, MouseButtonEventArgs e)
         {
-            
+            FrameworkElement elem = sender as FrameworkElement;
+            ShapeViewModel shape = elem.DataContext as ShapeViewModel;
+            Main.SelectShape(shape);
         }
 
     }

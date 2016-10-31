@@ -39,11 +39,6 @@ namespace Scumle.View.UserControls
             Shape.ShapeMove(e.HorizontalChange, e.VerticalChange);
         }
 
-        private void SelectShape(object sender, MouseButtonEventArgs e)
-        {
-
-        }
-
         #region Shape Resize Corners
         private void ShapeResizeSE(object sender, DragDeltaEventArgs e)
         {
