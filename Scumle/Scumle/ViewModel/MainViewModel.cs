@@ -1,8 +1,10 @@
-﻿using Scumle.Helpers;
+﻿using Microsoft.Win32;
+using Scumle.Helpers;
 using Scumle.Model;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,10 +15,14 @@ namespace Scumle.ViewModel
 {
     class MainViewModel : ViewModelBase<Model.Scumle>
     {
-
+        #region Fields
         private int Num = 0;
         private double _zoom = 1.0;
+        #endregion
 
+        #region Properties
+
+        
         public double Zoom
         {
             get { return _zoom; }
@@ -30,7 +36,21 @@ namespace Scumle.ViewModel
         public ObservableCollection<ShapeViewModel> Shapes { get; }
 
         public String Version { get; } = "Version 1.0.0";
+        #endregion
 
+        #region Commands
+
+        public RelayCommand<string> ChangeZoomCommand { get; set; }
+
+        public RelayCommand AddShapeCommand { get; private set; }
+
+        public RelayCommand SaveWorkspaceCommand { get; }
+
+        public RelayCommand OpenWorkspaceCommand { get; }
+
+        #endregion
+
+        #region Constructor
         public MainViewModel(Model.Scumle scumle) : base(scumle)
         {
             Shapes = new ObservableCollection<ShapeViewModel>()
@@ -41,13 +61,18 @@ namespace Scumle.ViewModel
 
             AddShapeCommand = new RelayCommand(AddShape);
             ChangeZoomCommand = new RelayCommand<string>(ChangeZoom);
+            SaveWorkspaceCommand = new RelayCommand(SaveWorkspace);
+            OpenWorkspaceCommand = new RelayCommand(OpenWorkspace);
+
+          
+          
 
         }
+        #endregion
+       
 
-        public RelayCommand<string> ChangeZoomCommand { get; set; }
-
-        public RelayCommand AddShapeCommand { get; private set; }
-
+        #region Methods
+               
         public void AddShape()
         {
             Shapes.Add(new ShapeViewModel(new Shape(50, 50, "My shape " + Num++)));
@@ -58,6 +83,36 @@ namespace Scumle.ViewModel
             Zoom = Double.Parse(value);
         }
 
+        public void SaveWorkspace()
+        {
+            SaveFileDialog save = new SaveFileDialog();
+            save.DefaultExt = ".scumle";
+            save.Filter = "(.scumle)|*.scumle";
+            if (save.ShowDialog() == true)
+                File.WriteAllText(save.FileName, "Testing");
+               
+        }
+
+        public void OpenWorkspace()
+        {
+
+            OpenFileDialog open = new OpenFileDialog();
+            open.DefaultExt = ".scumle";
+            open.Filter = "(.scumle)|*.scumle";
+          
+            // Testing:
+            
+            // Show open file dialog box
+            Nullable<bool> result = open.ShowDialog();
+
+            // Process open file dialog box results
+            if (result == true)
+            {
+                // 
+                string filename = open.FileName;
+            }
+        }
+        #endregion
     }
 
 }

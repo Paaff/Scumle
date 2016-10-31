@@ -7,27 +7,33 @@
       d:DesignHeight="150" d:DesignWidth="600"
       >
 
-    
+
     <Ribbon>
 
-        
-        
         <RibbonTab Header="Home">
 
             <RibbonGroup Header="File">
-
+                <!-- Add commands for New, Open, Save functionality -->
                 <StackPanel Orientation="Vertical">
-                    <RibbonButton x:Name="Open" Label="Open" SmallImageSource="/Images/Open.png"/>
-                    <RibbonButton x:Name="Save" Label="Save" SmallImageSource="/Images/Save.png"/>
+                    <RibbonButton x:Name="New" Label="New" SmallImageSource="/Images/New.png"/>
+                    <RibbonButton x:Name="Open" Label="Open" SmallImageSource="/Images/Open.png"
+                                  Command="{Binding OpenWorkspaceCommand}"/>
+                    <RibbonButton x:Name="Save" Label="Save" SmallImageSource="/Images/Save.png"
+                                  Command="{Binding SaveWorkspaceCommand}"/>
                 </StackPanel>
-                
+
             </RibbonGroup>
-            
+
+            <!-- Add command for copy, cut and paste that have 3 options -->
             <RibbonGroup Header="Clipboard">
 
-                <RibbonButton x:Name="Clipboard" Label="Paste" LargeImageSource="/Images/Paste.png"
-                              Command="ApplicationCommands.Paste"/>
+                <RibbonMenuButton x:Name="Paste" Label="Paste" LargeImageSource="/Images/Paste.png">
+                    <RibbonMenuItem Header="Paste"/>
+                    <RibbonMenuItem Header="Paste Only Shape"/>
+                    <RibbonMenuItem Header="Paste Only Text" Command="ApplicationCommands.Paste"/>
+                </RibbonMenuButton>
 
+                <!-- For cut and copy make sure that they can tell the difference of what is in the clipboard -->
                 <RibbonButton x:Name="Cut" Label="Cut" SmallImageSource="/Images/Cut.png"
                               Command="ApplicationCommands.Cut"/>
 
@@ -36,7 +42,8 @@
 
 
             </RibbonGroup>
-
+            <!-- Zoom needs to be more generic (DK vs US layout might f up). 
+                 Zoom should also work on mouse scrolling-->
             <RibbonGroup Header="View">
                 <RibbonMenuButton Label="Zoom" LargeImageSource="/Images/Search.png">
                     <RibbonMenuItem Header="50%" Command="{Binding ChangeZoomCommand}"
@@ -48,16 +55,17 @@
 
             <RibbonGroup Header="Font">
 
-               
 
+                <!-- This need to work on both highlighted text and as a general setting. -->
                 <StackPanel Orientation="Horizontal">
                     <RibbonButton Label="B" FontWeight="Bold"/>
                     <RibbonButton Label="U" />
                     <RibbonButton Label="I" FontStyle="Italic"/>
                 </StackPanel>
-                
-            </RibbonGroup>
 
+            </RibbonGroup>
+            <!-- There needs to be an undo and redo queue which goes back and restores previous "versions"
+                of the shapes. -->
             <RibbonGroup Header="Tools">
                 <StackPanel Orientation="Horizontal">
                     <RibbonButton x:Name="Undo" SmallImageSource="/Images/Undo.png"
@@ -66,23 +74,26 @@
                     <RibbonButton x:Name="Redo" SmallImageSource="/Images/Redo.png"
                                   Command="ApplicationCommands.Redo"
                                   ToolTip="Redo"/>
-                 
+
                 </StackPanel>
-              
+
+                <RibbonButton Label="Delete" LargeImageSource="/Images/Delete.png"/>
+
             </RibbonGroup>
 
 
         </RibbonTab>
 
         <RibbonTab Header="Design">
-            
-            
-            
-        </RibbonTab>
-        
-           
 
-        <RibbonTab Header="Help" />
+
+
+        </RibbonTab>
+
+
+
+        <RibbonTab Header="Help">
+        </RibbonTab>
 
 
     </Ribbon>
