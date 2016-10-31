@@ -30,15 +30,15 @@
         <ControlTemplate TargetType="{x:Type Thumb}">
             <Grid>
                 <!-- Static content for shape-->
-                <Thumb DragDelta="ShapeResizeNE" HorizontalAlignment="Right" VerticalAlignment="Top"></Thumb>
-                <Thumb DragDelta="ShapeResizeNW" HorizontalAlignment="Left" VerticalAlignment="Top"></Thumb>
-                <Thumb DragDelta="ShapeResizeSE" HorizontalAlignment="Right" VerticalAlignment="Bottom"></Thumb>
-                <Thumb DragDelta="ShapeResizeSW" HorizontalAlignment="Left" VerticalAlignment="Bottom"></Thumb>
+                <Thumb DragDelta="ShapeResizeNE" Cursor="SizeNESW"  HorizontalAlignment="Right" VerticalAlignment="Top"></Thumb>
+                <Thumb DragDelta="ShapeResizeNW" Cursor="SizeNWSE" HorizontalAlignment="Left" VerticalAlignment="Top"></Thumb>
+                <Thumb DragDelta="ShapeResizeSE" Cursor="SizeNWSE" HorizontalAlignment="Right" VerticalAlignment="Bottom"></Thumb>
+                <Thumb DragDelta="ShapeResizeSW" Cursor="SizeNESW" HorizontalAlignment="Left" VerticalAlignment="Bottom"></Thumb>
 
-                <Thumb DragDelta="ShapeResizeE" HorizontalAlignment="Right" VerticalAlignment="Center"></Thumb>
-                <Thumb DragDelta="ShapeResizeW" HorizontalAlignment="Left" VerticalAlignment="Center"></Thumb>
-                <Thumb DragDelta="ShapeResizeN" HorizontalAlignment="Center" VerticalAlignment="Top"></Thumb>
-                <Thumb DragDelta="ShapeResizeS" HorizontalAlignment="Center" VerticalAlignment="Bottom"></Thumb>
+                <Thumb DragDelta="ShapeResizeE" Cursor="SizeWE" HorizontalAlignment="Right" VerticalAlignment="Center"></Thumb>
+                <Thumb DragDelta="ShapeResizeW" Cursor="SizeWE" HorizontalAlignment="Left" VerticalAlignment="Center"></Thumb>
+                <Thumb DragDelta="ShapeResizeN" Cursor="SizeNS" HorizontalAlignment="Center" VerticalAlignment="Top"></Thumb>
+                <Thumb DragDelta="ShapeResizeS" Cursor="SizeNS" HorizontalAlignment="Center" VerticalAlignment="Bottom"></Thumb>
                 <!-- Dynamic content for shape-->
                 <ContentPresenter Margin="3" Content="{Binding}" Width="{Binding Width}" Height="{Binding Height}"></ContentPresenter>
             </Grid>

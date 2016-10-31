@@ -48,44 +48,18 @@ namespace Scumle.ViewModel
         }
         #endregion
 
-        internal void MoveDelta(double dX, double dY)
+        internal void ShapeMove(double dX, double dY)
         {
             Model.MoveDelta(dX, dY);
             OnPropertyChanged(nameof(X));
             OnPropertyChanged(nameof(Y));
         }
 
-        #region Resizing
         internal void ShapeResize(double dX, double dY)
         {
             Model.Resize(dX, dY);
             OnPropertyChanged(nameof(Width));
             OnPropertyChanged(nameof(Height));
         }
-
-        internal void ShapeResizeHorizontal(double dX)
-        {
-            Model.Resize(dX, 0);
-            OnPropertyChanged(nameof(Width));
-        }
-
-        internal void ShapeMoveHorizontal(double dX)
-        {
-            Model.MoveDelta(dX, 0);
-            OnPropertyChanged(nameof(X));
-        }
-
-        internal void ShapeResizeVertical(double dY)
-        {
-            Model.Resize(0, dY);
-            OnPropertyChanged(nameof(Height));
-        }
-
-        internal void ShapeMoveVertical(double dX)
-        {
-            Model.MoveDelta(0, dX);
-            OnPropertyChanged(nameof(Y));
-        }
-        #endregion
     }
 }
