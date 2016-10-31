@@ -7,7 +7,6 @@
       d:DesignHeight="150" d:DesignWidth="600"
       >
 
-
     <Ribbon>
 
         <RibbonTab Header="Home">
@@ -15,7 +14,8 @@
             <RibbonGroup Header="File">
                 <!-- Add commands for New, Open, Save functionality -->
                 <StackPanel Orientation="Vertical">
-                    <RibbonButton x:Name="New" Label="New" SmallImageSource="/Images/New.png"/>
+                    <RibbonButton x:Name="New" Label="New" SmallImageSource="/Images/New.png"
+                                  Command="{Binding NewWorkspaceCommand}"/>
                     <RibbonButton x:Name="Open" Label="Open" SmallImageSource="/Images/Open.png"
                                   Command="{Binding OpenWorkspaceCommand}"/>
                     <RibbonButton x:Name="Save" Label="Save" SmallImageSource="/Images/Save.png"

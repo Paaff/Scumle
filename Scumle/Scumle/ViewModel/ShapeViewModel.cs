@@ -92,10 +92,6 @@ namespace Scumle.ViewModel
             }
         }
 
-        internal void Select()
-        {
-            throw new NotImplementedException();
-        }
         #endregion
 
         internal void ShapeMove(double dX, double dY)
