@@ -29,7 +29,7 @@
             </Style>
         </ResourceDictionary>
     </Thumb.Resources>
-    
+
     <Thumb.Template>
         <ControlTemplate TargetType="{x:Type Thumb}">
             <Grid>

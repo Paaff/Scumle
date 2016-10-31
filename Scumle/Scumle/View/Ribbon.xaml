@@ -77,7 +77,7 @@
 
                 </StackPanel>
 
-                <RibbonButton Label="Delete" LargeImageSource="/Images/Delete.png"/>
+                <RibbonButton Label="Delete" Command="{Binding DeleteSelectedShapesCommand}" LargeImageSource="/Images/Delete.png"/>
 
             </RibbonGroup>
 
