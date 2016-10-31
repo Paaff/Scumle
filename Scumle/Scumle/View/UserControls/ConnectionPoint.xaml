@@ -1,0 +1,12 @@
+﻿<UserControl x:Class="Scumle.View.UserControls.ConnectionPoint"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Scumle.View.UserControls"
+      mc:Ignorable="d" 
+      d:DesignHeight="8" d:DesignWidth="8">
+    <UserControl.Content>
+        <Ellipse Width="8" Height="8" Fill="Yellow" Stroke="LightGray" StrokeThickness="1"></Ellipse>
+    </UserControl.Content>
+</UserControl>

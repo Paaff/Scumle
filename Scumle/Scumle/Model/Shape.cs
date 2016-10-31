@@ -9,9 +9,9 @@ using System.Windows.Controls.Primitives;
 
 namespace Scumle.Model
 {
-   
+
     public class Shape
-    {   
+    {
 
         public Shape(double X, double Y, String Name)
         {
@@ -23,8 +23,8 @@ namespace Scumle.Model
         }
 
         // For XML Serialization
-       public Shape() {}
-        
+        public Shape() { }
+
 
         public double X { get; set; }
         public double Y { get; set; }

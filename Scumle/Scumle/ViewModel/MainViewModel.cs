@@ -35,6 +35,8 @@ namespace Scumle.ViewModel
 
         public ObservableCollection<ShapeViewModel> Selected { get; } = new ObservableCollection<ShapeViewModel>();
 
+        public ObservableCollection<LineViewModel> Lines { get; } = new ObservableCollection<LineViewModel>();
+
         public String Version { get; } = "Version 1.0.0";
         #endregion
 
@@ -57,11 +59,15 @@ namespace Scumle.ViewModel
         #region Constructor
         public MainViewModel(Model.Scumle scumle) : base(scumle)
         {
-            Shapes = new ObservableCollection<ShapeViewModel>()
-            {
-                new UMLClassViewModel(new Shape(50, 50, "My frist shape")),
-                new UMLClassViewModel(new Shape(100, 100, "My second shape"))
-            };
+            ShapeViewModel uml1 = new UMLClassViewModel(new Shape(50, 50, "My frist shape"));
+            ShapeViewModel uml2 = new UMLClassViewModel(new Shape(100, 100, "My second shape"));
+            Shapes = new ObservableCollection<ShapeViewModel>() { uml1, uml2 };
+
+            ConnectionPointViewModel cp1 = uml1.ConnectionPoints.ElementAt(0);
+            ConnectionPointViewModel cp2 = uml2.ConnectionPoints.ElementAt(1);
+
+            Lines.Add(new LineViewModel(cp1, cp2));
+
 
             AddShapeCommand = new RelayCommand(AddShape);
             ChangeZoomCommand = new RelayCommand<string>(ChangeZoom);

@@ -1,6 +1,7 @@
 ﻿using Scumle.Model;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,13 +17,41 @@ namespace Scumle.ViewModel
 
         public ShapeViewModel(Shape shape) : base(shape)
         {
+            AddInitalConnectionPoints();
         }
 
         public ShapeViewModel() : base(new Shape(0, 0, "")) {
-          
+
         }
-      
+
+        private void AddInitalConnectionPoints()
+        {
+            ConnectionPoints.Add(new ConnectionPointViewModel(this)
+            {
+                Vertical = VerticalAlignment.Top,
+                Horizontal = HorizontalAlignment.Center
+            });
+            ConnectionPoints.Add(new ConnectionPointViewModel(this)
+            {
+                Vertical = VerticalAlignment.Bottom,
+                Horizontal = HorizontalAlignment.Center
+            });
+            ConnectionPoints.Add(new ConnectionPointViewModel(this)
+            {
+                Vertical = VerticalAlignment.Center,
+                Horizontal = HorizontalAlignment.Left
+            });
+            ConnectionPoints.Add(new ConnectionPointViewModel(this)
+            {
+                Vertical = VerticalAlignment.Center,
+                Horizontal = HorizontalAlignment.Right
+            });
+        }
+
         #region Properties
+        public ObservableCollection<ConnectionPointViewModel> ConnectionPoints { get; }
+            = new ObservableCollection<ConnectionPointViewModel>();
+
         public double X
         {
             get { return Model.X; }
