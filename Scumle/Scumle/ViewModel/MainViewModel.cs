@@ -47,8 +47,10 @@ namespace Scumle.ViewModel
         public RelayCommand SaveWorkspaceCommand { get; }
 
         public RelayCommand OpenWorkspaceCommand { get; }
-
+ 
         public RelayCommand DeleteSelectedShapesCommand { get; }
+
+        public RelayCommand NewWorkspaceCommand { get; }
 
         #endregion
 
@@ -65,10 +67,13 @@ namespace Scumle.ViewModel
             ChangeZoomCommand = new RelayCommand<string>(ChangeZoom);
             SaveWorkspaceCommand = new RelayCommand(SaveWorkspace);
             OpenWorkspaceCommand = new RelayCommand(OpenWorkspace);
+            NewWorkspaceCommand = new RelayCommand(NewWorkspace);
             DeleteSelectedShapesCommand = new RelayCommand(DeleteSelectedShapes, HasSelectedShapes);
 
 
         }
+
+ 
         #endregion
 
         #region Methods
@@ -149,6 +154,13 @@ namespace Scumle.ViewModel
                
             }
         }
+
+        //TODO: Implement adding a new "window pane" instead of just deleting the one we have.
+        public void NewWorkspace()
+        {
+            Shapes.Clear();
+        }
+
         #endregion
     }
 

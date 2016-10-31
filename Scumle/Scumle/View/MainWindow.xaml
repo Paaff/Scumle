@@ -9,6 +9,9 @@
          Width="800">
     <Window.InputBindings>
         <KeyBinding Key="Delete" Command="{Binding DeleteSelectedShapesCommand}"></KeyBinding>
+        <KeyBinding Modifiers="Ctrl" Key="O"  Command="{Binding OpenWorkspaceCommand}"></KeyBinding>
+        <KeyBinding Modifiers="Ctrl" Key="S"  Command="{Binding SaveWorkspaceCommand}"></KeyBinding>
+        <KeyBinding Modifiers="Ctrl" Key="N"  Command="{Binding NewWorkspaceCommand}"></KeyBinding>
     </Window.InputBindings>
 
     <Window.Resources>
