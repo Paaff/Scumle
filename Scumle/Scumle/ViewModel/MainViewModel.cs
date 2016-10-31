@@ -16,13 +16,11 @@ namespace Scumle.ViewModel
     class MainViewModel : ViewModelBase<Model.Scumle>
     {
         #region Fields
-        private int Num = 0;
+        private int _num = 0;
         private double _zoom = 1.0;
         #endregion
 
         #region Properties
-
-        
         public double Zoom
         {
             get { return _zoom; }
@@ -34,6 +32,8 @@ namespace Scumle.ViewModel
         }
 
         public ObservableCollection<ShapeViewModel> Shapes { get; }
+
+        public ObservableCollection<ShapeViewModel> Selected { get; } = new ObservableCollection<ShapeViewModel>();
 
         public String Version { get; } = "Version 1.0.0";
         #endregion
@@ -47,6 +47,8 @@ namespace Scumle.ViewModel
         public RelayCommand SaveWorkspaceCommand { get; }
 
         public RelayCommand OpenWorkspaceCommand { get; }
+
+        public RelayCommand DeleteSelectedShapesCommand { get; }
 
         #endregion
 
@@ -63,24 +65,53 @@ namespace Scumle.ViewModel
             ChangeZoomCommand = new RelayCommand<string>(ChangeZoom);
             SaveWorkspaceCommand = new RelayCommand(SaveWorkspace);
             OpenWorkspaceCommand = new RelayCommand(OpenWorkspace);
+            DeleteSelectedShapesCommand = new RelayCommand(DeleteSelectedShapes, HasSelectedShapes);
 
-          
-          
 
         }
         #endregion
-       
 
         #region Methods
-               
+        internal void SelectShape(ShapeViewModel shape)
+        {
+            DeselectAllShapes();
+            Selected.Add(shape);
+            shape.IsSelected = true;
+            DeleteSelectedShapesCommand.RaiseCanExecuteChanged();
+        }
+
+        internal void DeselectAllShapes()
+        {
+            foreach (ShapeViewModel shape in Selected)
+            {
+                shape.IsSelected = false;
+            }
+            Selected.Clear();
+        }
+
         public void AddShape()
         {
-            Shapes.Add(new ShapeViewModel(new Shape(50, 50, "My shape " + Num++)));
+            Shapes.Add(new ShapeViewModel(new Shape(50, 50, "My shape " + _num++)));
         }
 
         public void ChangeZoom(string value)
         {   
             Zoom = Double.Parse(value);
+        }
+
+        public void DeleteSelectedShapes()
+        {
+            foreach (ShapeViewModel shape in Selected)
+            {
+                Shapes.Remove(shape);
+            }
+            Selected.Clear();
+            DeleteSelectedShapesCommand.RaiseCanExecuteChanged();
+        }
+
+        public bool HasSelectedShapes()
+        {
+            return Selected.Count > 0;
         }
 
         public void SaveWorkspace()

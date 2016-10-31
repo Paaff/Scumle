@@ -7,7 +7,9 @@
          Title="Window1"
          Height="600"
          Width="800">
-
+    <Window.InputBindings>
+        <KeyBinding Key="Delete" Command="{Binding DeleteSelectedShapesCommand}"></KeyBinding>
+    </Window.InputBindings>
 
     <Window.Resources>
         <ResourceDictionary>
@@ -49,13 +51,12 @@
 
         <!-- ScrollViewer wraps any element, so that if the content is bigger than the window, it 
             makes it scrollable -->
-
-        <ScrollViewer>
+        <ScrollViewer HorizontalScrollBarVisibility="Visible">
             <Grid x:Name="Diagram">
                 <Grid.LayoutTransform>
                     <ScaleTransform ScaleX="{Binding Zoom}" ScaleY="{Binding Zoom}"></ScaleTransform>
                 </Grid.LayoutTransform>
-                <ItemsControl ItemsSource="{Binding Shapes}" Background="Bisque">
+                <ItemsControl ItemsSource="{Binding Shapes}" Background="White" Height="750" Width="1250">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
                             <Canvas/>
@@ -63,6 +64,7 @@
                     </ItemsControl.ItemsPanel>
                     <ItemsControl.ItemContainerStyle>
                         <Style TargetType="ContentPresenter">
+                            <EventSetter Event="PreviewMouseLeftButtonUp" Handler="SelectShape"></EventSetter>
                             <Setter Property="Canvas.Left" Value="{Binding X}"/>
                             <Setter Property="Canvas.Top" Value="{Binding Y}"/>
                         </Style>

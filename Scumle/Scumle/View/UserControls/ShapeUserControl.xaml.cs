@@ -96,5 +96,10 @@ namespace Scumle.View.UserControls
         {
             IsResizing = false;
         }
+
+        private void CopyShape(object sender, ExecutedRoutedEventArgs e)
+        {
+            MessageBox.Show("Copy shape!");
+        }
     }
 }

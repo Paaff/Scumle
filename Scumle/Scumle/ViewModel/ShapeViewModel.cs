@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls.Primitives;
 
 namespace Scumle.ViewModel
@@ -11,6 +12,7 @@ namespace Scumle.ViewModel
 
     public class ShapeViewModel : ViewModelBase<Shape>
     {
+        private bool _isSelected = false;
 
         public ShapeViewModel(Shape shape) : base(shape)
         {
@@ -47,6 +49,21 @@ namespace Scumle.ViewModel
         {
             get { return Model.Name; }
             set { SetValue(value); }
+        }
+
+        public bool IsSelected
+        {
+            get { return _isSelected; }
+            set
+            {
+                _isSelected = value;
+                OnPropertyChanged();
+            }
+        }
+
+        internal void Select()
+        {
+            throw new NotImplementedException();
         }
         #endregion
 

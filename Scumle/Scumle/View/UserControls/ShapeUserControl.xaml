@@ -4,15 +4,18 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Scumle.View.UserControls"
+             xmlns:vm="clr-namespace:Scumle.ViewModel"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300"
              DragDelta="ShapeMove">
     <Thumb.Resources>
         <ResourceDictionary>
+            <BooleanToVisibilityConverter x:Key="BoolToVis"/>
             <Style TargetType="Thumb">
                 <EventSetter Event="DragStarted" Handler="StartResize"></EventSetter>
                 <EventSetter Event="DragCompleted" Handler="EndResize"></EventSetter>
                 <Setter Property="LayoutTransform" Value="{Binding ElementName=Diagram, Path=LayoutTransform.Inverse}"></Setter>
+                <Setter Property="Visibility" Value="{Binding IsSelected, Converter={StaticResource BoolToVis}, FallbackValue=Hidden}"></Setter>
                 <Setter Property="Panel.ZIndex" Value="1"></Setter>
                 <Setter Property="Template">
                     <Setter.Value>
@@ -26,7 +29,7 @@
             </Style>
         </ResourceDictionary>
     </Thumb.Resources>
-    
+
     <Thumb.Template>
         <ControlTemplate TargetType="{x:Type Thumb}">
             <Grid>
