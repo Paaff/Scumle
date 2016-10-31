@@ -47,32 +47,34 @@
             </StackPanel>
         </Border>
 
-        <Grid x:Name="Diagram">
-            <Grid.LayoutTransform>
-                <ScaleTransform ScaleX="{Binding Zoom}" ScaleY="{Binding Zoom}"></ScaleTransform>
-            </Grid.LayoutTransform>
-            <ItemsControl ItemsSource="{Binding Shapes}" Background="Bisque">
-                <ItemsControl.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <Canvas/>
-                    </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>
-                <ItemsControl.ItemContainerStyle>
-                    <Style TargetType="ContentPresenter">
-                        <EventSetter Event="PreviewMouseLeftButtonUp" Handler="SelectShape"></EventSetter>
-                        <Setter Property="Canvas.Left" Value="{Binding X}"/>
-                        <Setter Property="Canvas.Top" Value="{Binding Y}"/>
-                    </Style>
-                </ItemsControl.ItemContainerStyle>
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <Grid>
+        <!-- ScrollViewer wraps any element, so that if the content is bigger than the window, it 
+            makes it scrollable -->
+        <ScrollViewer HorizontalScrollBarVisibility="Visible">
+            <Grid x:Name="Diagram">
+                <Grid.LayoutTransform>
+                    <ScaleTransform ScaleX="{Binding Zoom}" ScaleY="{Binding Zoom}"></ScaleTransform>
+                </Grid.LayoutTransform>
+                <ItemsControl ItemsSource="{Binding Shapes}" Background="Bisque" Height="750" Width="1250">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <Canvas/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemContainerStyle>
+                        <Style TargetType="ContentPresenter">
+                            <EventSetter Event="PreviewMouseLeftButtonUp" Handler="SelectShape"></EventSetter>
+                            <Setter Property="Canvas.Left" Value="{Binding X}"/>
+                            <Setter Property="Canvas.Top" Value="{Binding Y}"/>
+                        </Style>
+                    </ItemsControl.ItemContainerStyle>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
                             <uc:ShapeUserControl></uc:ShapeUserControl>
-                        </Grid>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>
-        </Grid>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </Grid>
+        </ScrollViewer>
     </DockPanel>
 
 </RibbonWindow>
