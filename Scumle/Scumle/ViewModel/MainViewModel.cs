@@ -29,6 +29,8 @@ namespace Scumle.ViewModel
 
         public ObservableCollection<ShapeViewModel> Shapes { get; }
 
+        public ObservableCollection<ShapeViewModel> Selected { get; }
+
         public String Version { get; } = "Version 1.0.0";
 
         public MainViewModel(Model.Scumle scumle) : base(scumle)

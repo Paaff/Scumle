@@ -8,6 +8,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Controls.Ribbon;
+using System.Windows.Input;
 
 namespace Scumle.View
 {
@@ -20,6 +21,11 @@ namespace Scumle.View
         {
             this.DataContext = new MainViewModel(new Model.Scumle());
             InitializeComponent();
+        }
+
+        private void SelectShape(object sender, MouseButtonEventArgs e)
+        {
+            
         }
 
     }
