@@ -31,7 +31,7 @@ namespace Scumle.ViewModel
             }
         }
 
-        public ObservableCollection<ShapeViewModel> Shapes { get; }
+        public ObservableCollection<ShapeViewModel> Shapes { get;}
 
         public ObservableCollection<ShapeViewModel> Selected { get; } = new ObservableCollection<ShapeViewModel>();
 
@@ -141,7 +141,12 @@ namespace Scumle.ViewModel
             if (result == true)
             {
                 loadedShapes = GenericSerializer.convertFromXML<ObservableCollection<ShapeViewModel>>(Path.GetFullPath(open.FileName));
-                MessageBox.Show(loadedShapes.Count + "");
+                Shapes.Clear();
+                foreach(var item in loadedShapes)
+                {
+                    Shapes.Add(item);
+                }
+               
             }
         }
         #endregion

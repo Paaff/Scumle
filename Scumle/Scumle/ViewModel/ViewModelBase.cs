@@ -26,7 +26,7 @@ namespace Scumle.ViewModel
         protected void SetValue<Value>(Value value, [CallerMemberName] string propertyName = null)
         {
             
-            if(Model != null) { 
+         
             var propertyInfo = Model.GetType().GetProperty(propertyName);
             var currentValue = propertyInfo.GetValue(Model);
             if (!Equals(currentValue, value))
@@ -34,7 +34,7 @@ namespace Scumle.ViewModel
                 propertyInfo.SetValue(Model, value);
                 OnPropertyChanged(propertyName);
             }
-            }
+            
         }
 
         public event PropertyChangedEventHandler PropertyChanged = delegate { };

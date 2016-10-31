@@ -18,7 +18,9 @@ namespace Scumle.ViewModel
         {
         }
 
-        public ShapeViewModel() : base () { }
+        public ShapeViewModel() : base(new Shape(0, 0, "")) {
+          
+        }
       
         #region Properties
         public double X
