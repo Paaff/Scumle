@@ -84,12 +84,12 @@ namespace Scumle.ViewModel
         }
 
         public void SaveWorkspace()
-        {
+        {            
             SaveFileDialog save = new SaveFileDialog();
             save.DefaultExt = ".scumle";
             save.Filter = "(.scumle)|*.scumle";
             if (save.ShowDialog() == true)
-                File.WriteAllText(save.FileName, "Testing");
+                GenericSerializer.convertToXML<ObservableCollection<ShapeViewModel>>(Shapes, Path.GetFullPath(save.FileName));
                
         }
 
@@ -99,17 +99,18 @@ namespace Scumle.ViewModel
             OpenFileDialog open = new OpenFileDialog();
             open.DefaultExt = ".scumle";
             open.Filter = "(.scumle)|*.scumle";
-          
-            // Testing:
-            
+            ObservableCollection<ShapeViewModel> loadedShapes = new ObservableCollection<ShapeViewModel>();
+
+
+
             // Show open file dialog box
             Nullable<bool> result = open.ShowDialog();
 
             // Process open file dialog box results
             if (result == true)
             {
-                // 
-                string filename = open.FileName;
+                loadedShapes = GenericSerializer.convertFromXML<ObservableCollection<ShapeViewModel>>(Path.GetFullPath(open.FileName));
+                MessageBox.Show(loadedShapes.Count + "");
             }
         }
         #endregion

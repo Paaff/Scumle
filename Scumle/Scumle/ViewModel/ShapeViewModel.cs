@@ -9,13 +9,15 @@ using System.Windows.Controls.Primitives;
 namespace Scumle.ViewModel
 {
 
-    class ShapeViewModel : ViewModelBase<Shape>
+    public class ShapeViewModel : ViewModelBase<Shape>
     {
 
         public ShapeViewModel(Shape shape) : base(shape)
         {
         }
 
+        public ShapeViewModel() : base () { }
+      
         #region Properties
         public double X
         {

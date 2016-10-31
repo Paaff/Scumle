@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Scumle.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -8,7 +9,8 @@ using System.Windows.Controls.Primitives;
 
 namespace Scumle.Model
 {
-    class Shape
+   
+    public class Shape
     {   
 
         public Shape(double X, double Y, String Name)
@@ -19,6 +21,10 @@ namespace Scumle.Model
             this.Height = 25;
             this.Name = Name;
         }
+
+        // For XML Serialization
+       public Shape() {}
+        
 
         public double X { get; set; }
         public double Y { get; set; }
