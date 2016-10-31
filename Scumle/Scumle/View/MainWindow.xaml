@@ -46,19 +46,19 @@
 
             </StackPanel>
         </Border>
-        
+
         <!-- ScrollViewer wraps any element, so that if the content is bigger than the window, it 
             makes it scrollable -->
+
         <ScrollViewer>
-            <Grid>
+            <Grid x:Name="Diagram">
                 <Grid.LayoutTransform>
                     <ScaleTransform ScaleX="{Binding Zoom}" ScaleY="{Binding Zoom}"></ScaleTransform>
                 </Grid.LayoutTransform>
-
                 <ItemsControl ItemsSource="{Binding Shapes}" Background="Bisque">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
-                            <Canvas Width="500" Height="500"/>
+                            <Canvas/>
                         </ItemsPanelTemplate>
                     </ItemsControl.ItemsPanel>
                     <ItemsControl.ItemContainerStyle>
@@ -73,7 +73,6 @@
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
-
             </Grid>
         </ScrollViewer>
     </DockPanel>
