@@ -4,6 +4,19 @@
                     xmlns:vm="clr-namespace:Scumle.ViewModel"
                     xmlns:uc="clr-namespace:Scumle.View.UserControls">
 
+    <Style x:Key="ShapeConnection" TargetType="Line">
+        <Setter Property="X1" Value="20"/>
+        <Setter Property="Y1" Value="20"/>
+        <Setter Property="X2" Value="100"/>
+        <Setter Property="Y2" Value="100"/>
+        <Setter Property="StrokeThickness" Value="5"/>
+        <Setter Property="Stroke" Value="Red"/>
+    </Style>
+
+    <DataTemplate DataType="{x:Type vm:LineViewModel}">
+        <Line Style="{StaticResource ShapeConnection}" />
+    </DataTemplate>
+
     <DataTemplate DataType="{x:Type vm:ShapeViewModel}">
         <Ellipse Fill="Blue"></Ellipse>
     </DataTemplate>

@@ -27,9 +27,6 @@
                     </Setter.Value>
                 </Setter>
             </Style>
-            <Style TargetType="local:ConnectionPoint">
-                <Setter Property="Panel.ZIndex" Value="1"></Setter>
-            </Style>
         </ResourceDictionary>
     </Thumb.Resources>
 
@@ -47,10 +44,25 @@
                 <Thumb DragDelta="ShapeResizeN" Cursor="SizeNS" HorizontalAlignment="Center" VerticalAlignment="Top"></Thumb>
                 <Thumb DragDelta="ShapeResizeS" Cursor="SizeNS" HorizontalAlignment="Center" VerticalAlignment="Bottom"></Thumb>
 
-                <local:ConnectionPoint HorizontalAlignment="Center" VerticalAlignment="Top"></local:ConnectionPoint>
-                <local:ConnectionPoint HorizontalAlignment="Center" VerticalAlignment="Bottom"></local:ConnectionPoint>
-                <local:ConnectionPoint HorizontalAlignment="Left" VerticalAlignment="Center"></local:ConnectionPoint>
-                <local:ConnectionPoint HorizontalAlignment="Right" VerticalAlignment="Center"></local:ConnectionPoint>
+                <ItemsControl ItemsSource="{Binding ConnectionPoints}" Panel.ZIndex="1">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <Grid/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemContainerStyle>
+                        <Style TargetType="ContentPresenter">
+                            <Setter Property="HorizontalAlignment" Value="{Binding Horizontal}"/>
+                            <Setter Property="VerticalAlignment" Value="{Binding Vertical}"/>
+                        </Style>
+                    </ItemsControl.ItemContainerStyle>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <local:ConnectionPoint></local:ConnectionPoint>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+                
                 <!-- Dynamic content for shape-->
                 <ContentPresenter Margin="4" Content="{Binding}" Width="{Binding Width}" Height="{Binding Height}"></ContentPresenter>
             </Grid>

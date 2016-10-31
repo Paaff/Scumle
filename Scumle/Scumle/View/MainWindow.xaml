@@ -22,9 +22,7 @@
     <DockPanel LastChildFill="True">
 
         <local:Ribbon DockPanel.Dock="Top"/>
-
-
-
+        
         <Border  DockPanel.Dock="Bottom" BorderThickness="0,1,0,0" BorderBrush="Black">
             <Grid>
                 <TextBlock VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2"> Status / Error Message</TextBlock>
@@ -74,6 +72,15 @@
                             <uc:ShapeUserControl></uc:ShapeUserControl>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
+                </ItemsControl>
+                
+                <!-- Lines -->
+                <ItemsControl ItemsSource="{Binding Lines}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <Canvas/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
                 </ItemsControl>
             </Grid>
         </ScrollViewer>
