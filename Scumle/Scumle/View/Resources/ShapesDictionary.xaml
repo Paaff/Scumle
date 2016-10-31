@@ -9,12 +9,12 @@
         <Setter Property="Y1" Value="20"/>
         <Setter Property="X2" Value="100"/>
         <Setter Property="Y2" Value="100"/>
-        <Setter Property="StrokeThickness" Value="5"/>
-        <Setter Property="Stroke" Value="Red"/>
+        <Setter Property="StrokeThickness" Value="1"/>
+        <Setter Property="Stroke" Value="Black"/>
     </Style>
 
     <DataTemplate DataType="{x:Type vm:LineViewModel}">
-        <Line Style="{StaticResource ShapeConnection}" />
+        <Line Style="{StaticResource ShapeConnection}"/>
     </DataTemplate>
 
     <DataTemplate DataType="{x:Type vm:ShapeViewModel}">
