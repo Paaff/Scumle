@@ -60,8 +60,12 @@
     </ApplicationDefinition>
     <Compile Include="Helpers\GenericSerializer.cs" />
     <Compile Include="Helpers\RelayCommand.cs" />
+    <Compile Include="Model\ConnectionPoint.cs" />
+    <Compile Include="Model\Line.cs" />
     <Compile Include="Model\Scumle.cs" />
     <Compile Include="Model\Shape.cs" />
+    <Compile Include="ViewModel\ConnectionPointViewModel.cs" />
+    <Compile Include="ViewModel\LineViewModel.cs" />
     <Compile Include="ViewModel\UMLClassViewModel.cs" />
     <Compile Include="ViewModel\ShapeViewModel.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
@@ -69,6 +73,9 @@
     <Compile Include="View\Behaviour\MouseScroll.cs" />
     <Compile Include="View\Ribbon.xaml.cs">
       <DependentUpon>Ribbon.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\UserControls\ConnectionPoint.xaml.cs">
+      <DependentUpon>ConnectionPoint.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\UserControls\ShapeUserControl.xaml.cs">
       <DependentUpon>ShapeUserControl.xaml</DependentUpon>
@@ -90,6 +97,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Ribbon.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\UserControls\ConnectionPoint.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
