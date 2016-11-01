@@ -37,7 +37,8 @@ namespace TestMVVM
 
         private void AddShape()
         {
-            Shapes.Add(new Circle(100, 100));
+            Random random = new Random();
+            Shapes.Add(new Circle(random.Next(0, 450), random.Next(0, 250)));
         }
 
 
