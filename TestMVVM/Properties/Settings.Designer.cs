@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Scumle.View.Properties
+namespace TestMVVM.Properties
 {
 
 

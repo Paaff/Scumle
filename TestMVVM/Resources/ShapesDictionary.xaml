@@ -1,0 +1,13 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:TestMVVM.Resources"
+                    xmlns:model="clr-namespace:TestMVVM.Model.Shapes;assembly=TestMVVM.Model">
+    
+    <DataTemplate DataType="{x:Type model:Circle}">
+        <Ellipse Fill="Blue" Width="20" Height="20"></Ellipse>
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type model:Square}">
+        <Rectangle Fill="Red" Width="20" Height="20"></Rectangle>
+    </DataTemplate>
+</ResourceDictionary>

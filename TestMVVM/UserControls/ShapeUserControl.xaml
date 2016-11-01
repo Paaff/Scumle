@@ -1,0 +1,24 @@
+﻿<Thumb x:Class="TestMVVM.ShapeUserControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:TestMVVM"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:gala="http://www.galasoft.ch/mvvmlight"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <!-- Trigger for thumb DragDelta anables shape to move around -->
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="DragDelta">
+            <gala:EventToCommand Command="{Binding MoveShapeCommand}" PassEventArgsToCommand="True" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    
+    <!-- Display shape content by loading datatemplate for resources-->
+    <Thumb.Template>
+        <ControlTemplate>
+            <ContentPresenter Content="{Binding}"></ContentPresenter>
+        </ControlTemplate>
+    </Thumb.Template>
+</Thumb>

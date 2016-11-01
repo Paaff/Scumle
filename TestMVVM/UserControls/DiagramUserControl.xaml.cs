@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Scumle.View
+namespace TestMVVM
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for DiagramUserControl.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class DiagramUserControl : Grid
     {
-        public MainWindow()
+        public DiagramUserControl()
         {
             InitializeComponent();
         }
