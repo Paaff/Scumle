@@ -86,8 +86,9 @@
     <Compile Include="Model\Shape.cs" />
     <Compile Include="Model\Shapes\Eclipse.cs" />
     <Compile Include="Model\Shapes\UMLClass.cs" />
-    <Compile Include="UndeRedo\AddShapeUndoRedo.cs" />
-    <Compile Include="UndeRedo\IUndoRedoCommand.cs" />
+    <Compile Include="UndeRedo\Commands\ShapeAddCommand.cs" />
+    <Compile Include="UndeRedo\Commands\ShapeRemoveCommand.cs" />
+    <Compile Include="UndeRedo\UndoRedoCommand.cs" />
     <Compile Include="UndeRedo\UndoRedoController.cs" />
     <Compile Include="ViewModel\ConnectionPointViewModel.cs" />
     <Compile Include="ViewModel\LineViewModel.cs" />
@@ -203,7 +204,7 @@
     <Resource Include="Images\Zoom-Out.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
   </Target>
