@@ -63,6 +63,7 @@
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
                 
+                
                 <!-- Dynamic content for shape-->
                 <ContentPresenter Margin="4" Content="{Binding}" Width="{Binding Width}" Height="{Binding Height}"></ContentPresenter>
             </Grid>
