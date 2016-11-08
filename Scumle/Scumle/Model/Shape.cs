@@ -12,7 +12,8 @@ namespace Scumle.Model
 
     public class Shape
     {
-
+        private double _width;
+        private double _height;
         public Shape(double X, double Y, String Name)
         {
             this.Width = 25;
@@ -28,8 +29,25 @@ namespace Scumle.Model
 
         public double X { get; set; }
         public double Y { get; set; }
-        public double Width { get; set; }
-        public double Height { get; set; }
+
+        public double Width
+        {
+            get { return _width; }
+            set
+            {
+                if (value < 0) return;
+                _width = value;
+            }
+        }
+        public double Height
+        {
+            get { return _height; }
+            set
+            {
+                if (value < 0) return;
+                _height = value;
+            }
+        }
         public String Name { get; set; }
 
         public void MoveDelta(double X, double Y)
