@@ -3,6 +3,8 @@
          xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
          xmlns:local="clr-namespace:Scumle.View"
          xmlns:uc="clr-namespace:Scumle.View.UserControls"
+         xmlns:gala="http://www.galasoft.ch/mvvmlight"
+         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
          
          Title="Window1"
          Height="600"
@@ -37,16 +39,21 @@
             <StackPanel DockPanel.Dock="Left" Width="175" Margin="1">
                 <TextBlock Text="Shapes" IsEnabled="False" HorizontalAlignment="Center" FontSize="15"/>
                 <Separator/>
-                <Expander Header="Arrows">
-
+                <Expander Header="UML">
                     <StackPanel>
                         <Rectangle Width="10" Height="10" Fill="YellowGreen"></Rectangle>
                     </StackPanel>
-
                 </Expander>
+                <Button Content="Add Shape" Command="{Binding SetShapeSelectionCommand}" Margin="5,5,5,0"></Button>
 
-                <Button Content="Add Shape" Command="{Binding AddShapeCommand}" Margin="5,5,5,0"></Button>
-
+                <TextBlock Text="Connectors" IsEnabled="False" HorizontalAlignment="Center" FontSize="15" Margin="0,20,0,0"/>
+                <Separator/>
+                <Expander Header="UML">
+                    <StackPanel>
+                        <Rectangle Width="10" Height="10" Fill="YellowGreen"></Rectangle>
+                    </StackPanel>
+                </Expander>
+                <Button Content="Add Connection" Command="{Binding SetShapeSelectionCommand}" Margin="5,5,5,0"></Button>
             </StackPanel>
         </Border>
 
@@ -54,6 +61,11 @@
             makes it scrollable -->
         <ScrollViewer HorizontalScrollBarVisibility="Visible">
             <Grid x:Name="Diagram">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="MouseLeftButtonUp">
+                        <gala:EventToCommand Command="{Binding AddShapeCommand}" PassEventArgsToCommand="True"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
                 <Grid.LayoutTransform>
                     <ScaleTransform ScaleX="{Binding Zoom}" ScaleY="{Binding Zoom}"></ScaleTransform>
                 </Grid.LayoutTransform>

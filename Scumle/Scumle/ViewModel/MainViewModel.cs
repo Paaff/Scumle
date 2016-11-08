@@ -1,5 +1,5 @@
-﻿using Microsoft.Win32;
-using Scumle.Helpers;
+﻿using GalaSoft.MvvmLight.Command;
+using Microsoft.Win32;
 using Scumle.Model;
 using System;
 using System.Collections.Generic;
@@ -18,6 +18,8 @@ namespace Scumle.ViewModel
         #region Fields
         private int _num = 0;
         private double _zoom = 1.0;
+        private bool _isAddingLine;
+        private bool _isAddingShape;
         #endregion
 
         #region Properties
@@ -44,7 +46,7 @@ namespace Scumle.ViewModel
 
         public RelayCommand<string> ChangeZoomCommand { get; set; }
 
-        public RelayCommand AddShapeCommand { get; private set; }
+        public RelayCommand SetShapeSelectionCommand { get;}
 
         public RelayCommand SaveWorkspaceCommand { get; }
 
@@ -53,6 +55,8 @@ namespace Scumle.ViewModel
         public RelayCommand DeleteSelectedShapesCommand { get; }
 
         public RelayCommand NewWorkspaceCommand { get; }
+
+        public RelayCommand<MouseButtonEventArgs> AddShapeCommand { get; }
 
         #endregion
 
@@ -68,8 +72,8 @@ namespace Scumle.ViewModel
 
             Lines.Add(new LineViewModel(cp1, cp2));
 
-
-            AddShapeCommand = new RelayCommand(AddShape);
+            AddShapeCommand = new RelayCommand<MouseButtonEventArgs>(AddShape);
+            SetShapeSelectionCommand = new RelayCommand(SetShapeSelection);
             ChangeZoomCommand = new RelayCommand<string>(ChangeZoom);
             SaveWorkspaceCommand = new RelayCommand(SaveWorkspace);
             OpenWorkspaceCommand = new RelayCommand(OpenWorkspace);
@@ -100,9 +104,19 @@ namespace Scumle.ViewModel
             Selected.Clear();
         }
 
-        public void AddShape()
+        public void SetShapeSelection()
         {
-            Shapes.Add(new ShapeViewModel(new Shape(50, 50, "My shape " + _num++)));
+            _isAddingShape = true;
+        }
+
+        public void AddShape(MouseButtonEventArgs e)
+        {
+            if (_isAddingShape)
+            {
+                var mousePosition = e.MouseDevice.GetPosition(e.Source as IInputElement);
+                Shapes.Add(new ShapeViewModel(new Shape(mousePosition.X, mousePosition.Y, "My shape " + _num++)));
+                _isAddingShape = false;
+            }
         }
 
         public void ChangeZoom(string value)
@@ -131,7 +145,7 @@ namespace Scumle.ViewModel
             save.DefaultExt = ".scumle";
             save.Filter = "(.scumle)|*.scumle";
             if (save.ShowDialog() == true)
-                GenericSerializer.convertToXML<ObservableCollection<ShapeViewModel>>(Shapes, Path.GetFullPath(save.FileName));
+                Helpers.GenericSerializer.convertToXML<ObservableCollection<ShapeViewModel>>(Shapes, Path.GetFullPath(save.FileName));
                
         }
 
@@ -151,7 +165,7 @@ namespace Scumle.ViewModel
             // Process open file dialog box results
             if (result == true)
             {
-                loadedShapes = GenericSerializer.convertFromXML<ObservableCollection<ShapeViewModel>>(Path.GetFullPath(open.FileName));
+                loadedShapes = Helpers.GenericSerializer.convertFromXML<ObservableCollection<ShapeViewModel>>(Path.GetFullPath(open.FileName));
                 Shapes.Clear();
                 foreach(var item in loadedShapes)
                 {
