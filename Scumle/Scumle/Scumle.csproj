@@ -84,8 +84,9 @@
     <Compile Include="Model\Line.cs" />
     <Compile Include="Model\Scumle.cs" />
     <Compile Include="Model\Shape.cs" />
-    <Compile Include="UndeRedo\AddShapeUndoRedo.cs" />
-    <Compile Include="UndeRedo\IUndoRedoCommand.cs" />
+    <Compile Include="UndeRedo\Commands\ShapeAddCommand.cs" />
+    <Compile Include="UndeRedo\Commands\ShapeRemoveCommand.cs" />
+    <Compile Include="UndeRedo\UndoRedoCommand.cs" />
     <Compile Include="UndeRedo\UndoRedoController.cs" />
     <Compile Include="ViewModel\ConnectionPointViewModel.cs" />
     <Compile Include="ViewModel\LineViewModel.cs" />

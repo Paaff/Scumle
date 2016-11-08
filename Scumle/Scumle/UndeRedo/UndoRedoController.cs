@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GalaSoft.MvvmLight.Command;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,8 +11,18 @@ namespace Scumle.UndeRedo
     {
         public static UndoRedoController Instance { get; } = new UndoRedoController();
 
-        private readonly Stack<IUndoRedoCommand> undoStack = new Stack<IUndoRedoCommand>();
-        private readonly Stack<IUndoRedoCommand> redoStack = new Stack<IUndoRedoCommand>();
+        private readonly Stack<UndoRedoCommand> undoStack = new Stack<UndoRedoCommand>();
+        private readonly Stack<UndoRedoCommand> redoStack = new Stack<UndoRedoCommand>();
+
+        public RelayCommand UndoCommand => new RelayCommand(Undo, CanUndo);
+        public RelayCommand RedoCommand => new RelayCommand(Redo, CanRedo);
+
+
+        internal void UpdateCommandStatus()
+        {
+            UndoCommand.RaiseCanExecuteChanged();
+            RedoCommand.RaiseCanExecuteChanged();
+        }
 
         private UndoRedoController() { }
 
@@ -19,26 +30,29 @@ namespace Scumle.UndeRedo
 
         public bool CanRedo() => redoStack.Count() > 0;
 
-        public void Add(IUndoRedoCommand command)
+        public void Add(UndoRedoCommand command)
         {
             undoStack.Push(command);
             redoStack.Clear();
+            UpdateCommandStatus();
         }
 
         public void Undo()
         {
             if (!CanUndo()) throw new InvalidOperationException();
-            IUndoRedoCommand command = undoStack.Pop();
+            UndoRedoCommand command = undoStack.Pop();
             redoStack.Push(command);
             command.Undo();
+            UpdateCommandStatus();
         }
 
         public void Redo()
         {
             if (!CanRedo()) throw new InvalidOperationException();
-            IUndoRedoCommand command = redoStack.Pop();
+            UndoRedoCommand command = redoStack.Pop();
             undoStack.Push(command);
             command.Redo();
+            UpdateCommandStatus();
         }
 
     }

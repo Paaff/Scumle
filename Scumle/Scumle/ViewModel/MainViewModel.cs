@@ -2,6 +2,7 @@
 using Microsoft.Win32;
 using Scumle.Model;
 using Scumle.UndeRedo;
+using Scumle.UndeRedo.Commands;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -44,7 +45,7 @@ namespace Scumle.ViewModel
 
         public ObservableCollection<ShapeViewModel> Shapes { get;}
 
-        public ObservableCollection<ShapeViewModel> Selected { get; } = new ObservableCollection<ShapeViewModel>();
+        public List<ShapeViewModel> Selected { get; } = new List<ShapeViewModel>();
 
         public ObservableCollection<LineViewModel> Lines { get; } = new ObservableCollection<LineViewModel>();
 
@@ -63,6 +64,8 @@ namespace Scumle.ViewModel
         public RelayCommand RedoCommand { get; }
 
         public RelayCommand<MouseButtonEventArgs> AddShapeCommand { get; }
+
+        public UndoRedoController UndoRedo = UndoRedoController.Instance;
 
         #endregion
 
@@ -85,8 +88,8 @@ namespace Scumle.ViewModel
             OpenWorkspaceCommand = new RelayCommand(OpenWorkspace);
             NewWorkspaceCommand = new RelayCommand(NewWorkspace);
             DeleteSelectedShapesCommand = new RelayCommand(DeleteSelectedShapes, HasSelectedShapes);
-            RedoCommand = new RelayCommand(Redo, UndoRedoController.Instance.CanRedo);
-            UndoCommand = new RelayCommand(Undo, UndoRedoController.Instance.CanUndo);
+            RedoCommand = UndoRedoController.Instance.RedoCommand;
+            UndoCommand = UndoRedoController.Instance.UndoCommand;
         }
 
 
@@ -156,10 +159,7 @@ namespace Scumle.ViewModel
             {
                 var mousePosition = e.MouseDevice.GetPosition(e.Source as IInputElement);
                 ShapeViewModel shape = new ShapeViewModel(new Shape(mousePosition.X, mousePosition.Y, "My shape " + _num++));
-                Shapes.Add(shape);
-                UndoRedoController.Instance.Add(new AddShapeUndoRedo(Shapes, shape));
-                UndoCommand.RaiseCanExecuteChanged();
-                RedoCommand.RaiseCanExecuteChanged();
+                new ShapeAddCommand(Shapes, shape).Execute();
                 _isAddingShape = false;
                 _cursor = System.Windows.Input.Cursors.Arrow;
                 RaisePropertyChanged("Cursor");
@@ -174,12 +174,27 @@ namespace Scumle.ViewModel
 
         public void DeleteSelectedShapes()
         {
-            foreach (ShapeViewModel shape in Selected)
-            {
-                Shapes.Remove(shape);
-            }
+            new ShapeRemoveCommand(Shapes, Lines, Selected).Execute();
             Selected.Clear();
             DeleteSelectedShapesCommand.RaiseCanExecuteChanged();
+        }
+
+        public void DeleteShape(ShapeViewModel shape)
+        {
+            shape.IsSelected = false;
+            Shapes.Remove(shape);
+            RemoveLines(shape);
+        }
+
+        public void RemoveLines(ShapeViewModel shape)
+        {
+            foreach (LineViewModel line in Lines.ToList())
+            {
+                if (line.From.Shape == shape || line.To.Shape == shape)
+                {
+                    Lines.Remove(line);
+                }
+            }
         }
 
         public bool HasSelectedShapes()
