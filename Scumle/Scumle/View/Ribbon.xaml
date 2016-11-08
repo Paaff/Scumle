@@ -68,14 +68,14 @@
                 of the shapes. -->
             <RibbonGroup Header="Tools">
                 <StackPanel Orientation="Horizontal">
-                    <RibbonButton x:Name="Undo" SmallImageSource="/Images/Undo.png"
+                    <RibbonButton x:Name="Undo" Label="Undo" LargeImageSource="/Images/Undo.png"
                                   Command="{Binding UndoCommand}"
                                   ToolTip="Undo"/>
-                    <RibbonButton x:Name="Redo" SmallImageSource="/Images/Redo.png"
+                    <RibbonButton x:Name="Redo" Label="Redo" LargeImageSource="/Images/Redo.png"
                                   Command="{Binding RedoCommand}"
                                   ToolTip="Redo"/>
 
-                </StackPanel>
+                </StackPanel> 
 
                 <RibbonButton Label="Delete" Command="{Binding DeleteSelectedShapesCommand}" LargeImageSource="/Images/Delete.png"/>
 

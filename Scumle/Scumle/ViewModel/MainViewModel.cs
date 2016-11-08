@@ -77,8 +77,8 @@ namespace Scumle.ViewModel
             OpenWorkspaceCommand = new RelayCommand(OpenWorkspace);
             NewWorkspaceCommand = new RelayCommand(NewWorkspace);
             DeleteSelectedShapesCommand = new RelayCommand(DeleteSelectedShapes, HasSelectedShapes);
-            RedoCommand = new RelayCommand(UndoRedoController.Instance.Redo, UndoRedoController.Instance.CanRedo);
-            UndoCommand = new RelayCommand(UndoRedoController.Instance.Undo, UndoRedoController.Instance.CanUndo);
+            RedoCommand = new RelayCommand(Redo, UndoRedoController.Instance.CanRedo);
+            UndoCommand = new RelayCommand(Undo, UndoRedoController.Instance.CanUndo);
         }
 
  
@@ -102,6 +102,20 @@ namespace Scumle.ViewModel
             Selected.Clear();
         }
 
+        public void Undo()
+        {
+            UndoRedoController.Instance.Undo();
+            UndoCommand.RaiseCanExecuteChanged();
+            RedoCommand.RaiseCanExecuteChanged();
+        }
+
+        public void Redo()
+        {
+            UndoRedoController.Instance.Redo();
+            UndoCommand.RaiseCanExecuteChanged();
+            RedoCommand.RaiseCanExecuteChanged();
+        }
+
         public void SetShapeSelection()
         {
             _isAddingShape = true;
@@ -115,6 +129,8 @@ namespace Scumle.ViewModel
                 ShapeViewModel shape = new ShapeViewModel(new Shape(mousePosition.X, mousePosition.Y, "My shape " + _num++));
                 Shapes.Add(shape);
                 UndoRedoController.Instance.Add(new AddShapeUndoRedo(Shapes, shape));
+                UndoCommand.RaiseCanExecuteChanged();
+                RedoCommand.RaiseCanExecuteChanged();
                 _isAddingShape = false;
             }
             
