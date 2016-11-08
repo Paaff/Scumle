@@ -19,10 +19,7 @@ namespace Scumle.ViewModel
         {
             AddInitalConnectionPoints();
         }
-
-        public ShapeViewModel() : base(new Shape(0, 0, "")) {
-
-        }
+            
 
         private void AddInitalConnectionPoints()
         {

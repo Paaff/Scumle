@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace Scumle.Model
 {
+    
     class Line
     {
         public Line(ConnectionPoint from, ConnectionPoint to)

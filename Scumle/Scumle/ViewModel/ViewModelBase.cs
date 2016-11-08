@@ -9,19 +9,16 @@ using System.Xml.Serialization;
 
 namespace Scumle.ViewModel
 {
-    [XmlInclude(typeof(UMLClassViewModel))]
+    
     public class ViewModelBase<T> : INotifyPropertyChanged
     {
-        [XmlIgnoreAttribute]
+    
         public T Model { get; private set; }
 
         public ViewModelBase(T model)
         {
             Model = model;
-        }
-
-        // For XML serialization 
-        public ViewModelBase() { }
+        }       
 
         protected void SetValue<Value>(Value value, [CallerMemberName] string propertyName = null)
         {
