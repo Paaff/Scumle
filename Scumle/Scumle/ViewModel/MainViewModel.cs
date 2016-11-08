@@ -69,8 +69,8 @@ namespace Scumle.ViewModel
         #region Constructor
         public MainViewModel(Model.Scumle scumle) : base(scumle)
         {
-            ShapeViewModel uml1 = new UMLClassViewModel(new Shape(50, 50, "My frist shape"));
-            ShapeViewModel uml2 = new UMLClassViewModel(new Shape(100, 100, "My second shape"));
+            ShapeViewModel uml1 = new UMLClassViewModel(new Shape(200, 200, "My frist shape"));
+            ShapeViewModel uml2 = new UMLClassViewModel(new Shape(50, 50, "My second shape"));
             Shapes = new ObservableCollection<ShapeViewModel>() { uml1, uml2 };
 
             ConnectionPointViewModel cp1 = uml1.ConnectionPoints.ElementAt(0);
@@ -79,7 +79,7 @@ namespace Scumle.ViewModel
             Lines.Add(new LineViewModel(cp1, cp2));
 
             AddShapeCommand = new RelayCommand<MouseButtonEventArgs>(AddShape);
-            //SetShapeSelectionCommand = new RelayCommand(SetShapeInsertion);
+            SetShapeSelectionCommand = new RelayCommand(SetShapeInsertion);
             ChangeZoomCommand = new RelayCommand<string>(ChangeZoom);
             SaveWorkspaceCommand = new RelayCommand(SaveWorkspace);
             OpenWorkspaceCommand = new RelayCommand(OpenWorkspace);
@@ -143,12 +143,11 @@ namespace Scumle.ViewModel
             RedoCommand.RaiseCanExecuteChanged();
         }
 
-        public void SetShapeSelection()
+        public void SetShapeInsertion()
         {
             _isAddingShape = true;
             _cursor = System.Windows.Input.Cursors.Cross;
-            RaisePropertyChanged("Cursor");
-            
+            RaisePropertyChanged("Cursor"); 
         }
 
         public void AddShape(MouseButtonEventArgs e)

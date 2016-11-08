@@ -99,6 +99,7 @@ namespace Scumle.ViewModel
             Model.MoveDelta(dX, dY);
             OnPropertyChanged(nameof(X));
             OnPropertyChanged(nameof(Y));
+            UpdateConnectionPoints();
         }
 
         internal void ShapeResize(double dX, double dY)
@@ -106,6 +107,15 @@ namespace Scumle.ViewModel
             Model.Resize(dX, dY);
             OnPropertyChanged(nameof(Width));
             OnPropertyChanged(nameof(Height));
+            UpdateConnectionPoints();
+        }
+
+        internal void UpdateConnectionPoints()
+        {
+            foreach (ConnectionPointViewModel c in ConnectionPoints)
+            {
+                c.PropertyChange();
+            }
         }
     }
 }

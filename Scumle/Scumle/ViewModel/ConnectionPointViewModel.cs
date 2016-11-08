@@ -20,6 +20,54 @@ namespace Scumle.ViewModel
             Shape = shape;
         }
 
+        public void PropertyChange()
+        {
+            OnPropertyChanged(nameof(CenterX));
+            OnPropertyChanged(nameof(CenterY));
+        }
+
+        public double CenterX
+        {
+           get { return getCenterX(); }
+        }
+
+        public double CenterY
+        {
+            get { return getCenterY(); }
+        }
+
+        private double getCenterX()
+        {
+            if (Horizontal == HorizontalAlignment.Right)
+            {
+                return Shape.X + Shape.Width;
+            }
+            else if (Horizontal == HorizontalAlignment.Center)
+            {
+                return Shape.X + Shape.Width / 2;
+            }
+            else
+            {
+                return Shape.X;
+            }
+        }
+
+        private double getCenterY()
+        {
+            if (Vertical == VerticalAlignment.Bottom)
+            {
+                return Shape.Y + Shape.Height;
+            }
+            else if (Vertical == VerticalAlignment.Center)
+            {
+                return Shape.Y + Shape.Height / 2;
+            }
+            else
+            {
+                return Shape.Y;
+            }
+        }
+
         public ShapeViewModel Shape
         {
             get { return _shape; }
@@ -49,7 +97,6 @@ namespace Scumle.ViewModel
                 OnPropertyChanged();
             }
         }
-        
 
     }
 }

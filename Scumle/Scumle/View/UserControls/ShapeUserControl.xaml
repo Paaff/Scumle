@@ -65,7 +65,7 @@
                 
                 
                 <!-- Dynamic content for shape-->
-                <ContentPresenter Margin="4" Content="{Binding}" Width="{Binding Width}" Height="{Binding Height}"></ContentPresenter>
+                <ContentPresenter Margin="0" Content="{Binding}" Width="{Binding Width}" Height="{Binding Height}"></ContentPresenter>
             </Grid>
         </ControlTemplate>
     </Thumb.Template>
