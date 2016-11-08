@@ -167,7 +167,10 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="View\Resources\Cursors\arrow_cursor.cur" />
+    <Resource Include="View\Resources\Cursors\shape_cursor.cur" />
+  </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\Add.png" />
     <Resource Include="Images\Cancel.png" />

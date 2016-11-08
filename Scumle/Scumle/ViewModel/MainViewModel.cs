@@ -5,6 +5,7 @@ using Scumle.UndeRedo;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -14,16 +15,23 @@ using System.Windows.Input;
 
 namespace Scumle.ViewModel
 {
-    class MainViewModel : ViewModelBase<Model.Scumle>
+    class MainViewModel : ViewModelBase<Model.Scumle>, INotifyPropertyChanged
     {
         #region Fields
         private int _num = 0;
         private double _zoom = 1.0;
         private bool _isAddingLine;
         private bool _isAddingShape;
+        private Cursor _cursor = System.Windows.Input.Cursors.Arrow;
         #endregion
 
         #region Properties
+        public Cursor Cursor
+        {
+            get { return _cursor; }
+            set { _cursor = value; }
+        }
+
         public double Zoom
         {
             get { return _zoom; }
@@ -71,7 +79,7 @@ namespace Scumle.ViewModel
             Lines.Add(new LineViewModel(cp1, cp2));
 
             AddShapeCommand = new RelayCommand<MouseButtonEventArgs>(AddShape);
-            SetShapeSelectionCommand = new RelayCommand(SetShapeSelection);
+            SetShapeSelectionCommand = new RelayCommand(SetShapeInsertion);
             ChangeZoomCommand = new RelayCommand<string>(ChangeZoom);
             SaveWorkspaceCommand = new RelayCommand(SaveWorkspace);
             OpenWorkspaceCommand = new RelayCommand(OpenWorkspace);
@@ -81,10 +89,27 @@ namespace Scumle.ViewModel
             UndoCommand = new RelayCommand(UndoRedoController.Instance.Undo, UndoRedoController.Instance.CanUndo);
         }
 
- 
+
+        #endregion
+        #region INotifyPropertyChanged Members
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
         #endregion
 
         #region Methods
+
+        private void RaisePropertyChanged(string propertyName)
+        {
+            PropertyChangedEventHandler handler = PropertyChanged;
+            if (handler != null)
+            {
+                handler(this, new PropertyChangedEventArgs(propertyName));
+            }
+        }
+        #endregion
+        #region Methods
+         
         internal void SelectShape(ShapeViewModel shape)
         {
             DeselectAllShapes();
@@ -102,9 +127,12 @@ namespace Scumle.ViewModel
             Selected.Clear();
         }
 
-        public void SetShapeSelection()
+        public void SetShapeInsertion()
         {
             _isAddingShape = true;
+            _cursor = System.Windows.Input.Cursors.Cross;
+            RaisePropertyChanged("Cursor");
+            
         }
 
         public void AddShape(MouseButtonEventArgs e)
@@ -116,6 +144,8 @@ namespace Scumle.ViewModel
                 Shapes.Add(shape);
                 UndoRedoController.Instance.Add(new AddShapeUndoRedo(Shapes, shape));
                 _isAddingShape = false;
+                _cursor = System.Windows.Input.Cursors.Arrow;
+                RaisePropertyChanged("Cursor");
             }
             
         }
@@ -183,6 +213,7 @@ namespace Scumle.ViewModel
         }
 
         #endregion
+
     }
 
 }
