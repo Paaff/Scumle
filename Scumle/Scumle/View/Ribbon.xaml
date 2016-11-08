@@ -69,10 +69,10 @@
             <RibbonGroup Header="Tools">
                 <StackPanel Orientation="Horizontal">
                     <RibbonButton x:Name="Undo" SmallImageSource="/Images/Undo.png"
-                                  Command="ApplicationCommands.Undo"
+                                  Command="{Binding UndoCommand}"
                                   ToolTip="Undo"/>
                     <RibbonButton x:Name="Redo" SmallImageSource="/Images/Redo.png"
-                                  Command="ApplicationCommands.Redo"
+                                  Command="{Binding RedoCommand}"
                                   ToolTip="Redo"/>
 
                 </StackPanel>

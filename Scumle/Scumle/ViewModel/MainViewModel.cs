@@ -1,6 +1,7 @@
 ﻿using Microsoft.Win32;
 using Scumle.Helpers;
 using Scumle.Model;
+using Scumle.UndeRedo;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -43,16 +44,13 @@ namespace Scumle.ViewModel
         #region Commands
 
         public RelayCommand<string> ChangeZoomCommand { get; set; }
-
         public RelayCommand AddShapeCommand { get; private set; }
-
         public RelayCommand SaveWorkspaceCommand { get; }
-
         public RelayCommand OpenWorkspaceCommand { get; }
- 
         public RelayCommand DeleteSelectedShapesCommand { get; }
-
         public RelayCommand NewWorkspaceCommand { get; }
+        public RelayCommand UndoCommand { get; }
+        public RelayCommand RedoCommand { get; }
 
         #endregion
 
@@ -75,8 +73,8 @@ namespace Scumle.ViewModel
             OpenWorkspaceCommand = new RelayCommand(OpenWorkspace);
             NewWorkspaceCommand = new RelayCommand(NewWorkspace);
             DeleteSelectedShapesCommand = new RelayCommand(DeleteSelectedShapes, HasSelectedShapes);
-
-
+            RedoCommand = new RelayCommand(UndoRedoController.Instance.Redo, UndoRedoController.Instance.CanRedo);
+            UndoCommand = new RelayCommand(UndoRedoController.Instance.Undo, UndoRedoController.Instance.CanUndo);
         }
 
  
@@ -102,7 +100,9 @@ namespace Scumle.ViewModel
 
         public void AddShape()
         {
-            Shapes.Add(new ShapeViewModel(new Shape(50, 50, "My shape " + _num++)));
+            ShapeViewModel shape = new ShapeViewModel(new Shape(50, 50, "My shape " + _num++));
+            Shapes.Add(shape);
+            UndoRedoController.Instance.Add(new AddShapeUndoRedo(Shapes, shape));
         }
 
         public void ChangeZoom(string value)
