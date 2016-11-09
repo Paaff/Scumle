@@ -1,6 +1,7 @@
 ﻿using GalaSoft.MvvmLight.Command;
 using Microsoft.Win32;
 using Scumle.Model;
+using Scumle.Model.Shapes;
 using Scumle.UndeRedo;
 using Scumle.UndeRedo.Commands;
 using System;
@@ -43,7 +44,7 @@ namespace Scumle.ViewModel
             }
         }
 
-        public ObservableCollection<ShapeViewModel> Shapes { get;}
+        public ObservableCollection<ShapeViewModel> Shapes { get; }
 
         public List<ShapeViewModel> Selected { get; } = new List<ShapeViewModel>();
 
@@ -55,7 +56,7 @@ namespace Scumle.ViewModel
         #region Commands
 
         public RelayCommand<string> ChangeZoomCommand { get; set; }
-        public RelayCommand SetShapeSelectionCommand { get;}
+        public RelayCommand SetShapeSelectionCommand { get; }
         public RelayCommand SaveWorkspaceCommand { get; }
         public RelayCommand OpenWorkspaceCommand { get; }
         public RelayCommand DeleteSelectedShapesCommand { get; }
@@ -72,8 +73,8 @@ namespace Scumle.ViewModel
         #region Constructor
         public MainViewModel(Model.Scumle scumle) : base(scumle)
         {
-            ShapeViewModel uml1 = new UMLClassViewModel(new Shape(200, 200, "My frist shape"));
-            ShapeViewModel uml2 = new UMLClassViewModel(new Shape(50, 50, "My second shape"));
+            ShapeViewModel uml1 = new UMLClassViewModel(new UMLClass(200, 200, "My frist shape"));
+            ShapeViewModel uml2 = new UMLClassViewModel(new UMLClass(50, 50, "My second shape"));
             Shapes = new ObservableCollection<ShapeViewModel>() { uml1, uml2 };
 
             ConnectionPointViewModel cp1 = uml1.ConnectionPoints.ElementAt(0);
@@ -114,7 +115,7 @@ namespace Scumle.ViewModel
         #endregion
 
         #region Methods
-         
+
         internal void SelectShape(ShapeViewModel shape)
         {
             DeselectAllShapes();
@@ -150,7 +151,7 @@ namespace Scumle.ViewModel
         {
             _isAddingShape = true;
             _cursor = System.Windows.Input.Cursors.Cross;
-            RaisePropertyChanged("Cursor"); 
+            RaisePropertyChanged("Cursor");
         }
 
         public void AddShape(MouseButtonEventArgs e)
@@ -164,11 +165,11 @@ namespace Scumle.ViewModel
                 _cursor = System.Windows.Input.Cursors.Arrow;
                 RaisePropertyChanged("Cursor");
             }
-            
+
         }
 
         public void ChangeZoom(string value)
-        {   
+        {
             Zoom = Double.Parse(value);
         }
 
@@ -203,13 +204,23 @@ namespace Scumle.ViewModel
         }
 
         public void SaveWorkspace()
-        {            
+        {
             SaveFileDialog save = new SaveFileDialog();
             save.DefaultExt = ".scumle";
             save.Filter = "(.scumle)|*.scumle";
             if (save.ShowDialog() == true)
-                Helpers.GenericSerializer.convertToXML<ObservableCollection<ShapeViewModel>>(Shapes, Path.GetFullPath(save.FileName));
-               
+            {
+                List<Shape> modelsToSave = new List<Shape>();
+
+                foreach (var ViewModel in Shapes)
+                {
+                    modelsToSave.Add(ViewModel.Model);
+                }
+
+                Helpers.GenericSerializer.convertToXML(modelsToSave, Path.GetFullPath(save.FileName));
+            }
+
+
         }
 
         public void OpenWorkspace()
@@ -218,7 +229,7 @@ namespace Scumle.ViewModel
             OpenFileDialog open = new OpenFileDialog();
             open.DefaultExt = ".scumle";
             open.Filter = "(.scumle)|*.scumle";
-            ObservableCollection<ShapeViewModel> loadedShapes = new ObservableCollection<ShapeViewModel>();
+            List<Shape> loadedModels = new List<Shape>();
 
 
 
@@ -228,13 +239,20 @@ namespace Scumle.ViewModel
             // Process open file dialog box results
             if (result == true)
             {
-                loadedShapes = Helpers.GenericSerializer.convertFromXML<ObservableCollection<ShapeViewModel>>(Path.GetFullPath(open.FileName));
+                loadedModels = Helpers.GenericSerializer.convertFromXML<List<Shape>>(Path.GetFullPath(open.FileName));
                 Shapes.Clear();
-                foreach(var item in loadedShapes)
+                foreach (var loadedModel in loadedModels)
                 {
-                    Shapes.Add(item);
+                    if (loadedModel is UMLClass)
+                    {
+                        Shapes.Add(new UMLClassViewModel(loadedModel));
+                    }
+                    else
+                    {
+                        Shapes.Add(new ShapeViewModel(loadedModel));
+                    }
                 }
-               
+
             }
         }
 

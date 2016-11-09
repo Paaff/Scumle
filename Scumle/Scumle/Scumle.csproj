@@ -84,6 +84,8 @@
     <Compile Include="Model\Line.cs" />
     <Compile Include="Model\Scumle.cs" />
     <Compile Include="Model\Shape.cs" />
+    <Compile Include="Model\Shapes\Eclipse.cs" />
+    <Compile Include="Model\Shapes\UMLClass.cs" />
     <Compile Include="UndeRedo\Commands\ShapeAddCommand.cs" />
     <Compile Include="UndeRedo\Commands\ShapeMoveCommand.cs" />
     <Compile Include="UndeRedo\Commands\ShapeRemoveCommand.cs" />
@@ -203,7 +205,7 @@
     <Resource Include="Images\Zoom-Out.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
   </Target>

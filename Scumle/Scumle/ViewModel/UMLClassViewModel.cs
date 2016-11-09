@@ -14,8 +14,6 @@ namespace Scumle.ViewModel
             Width = 150;
             Height = 75;
         }
-
-        // For Serialization        
-        public UMLClassViewModel() { }
+               
     }
 }
