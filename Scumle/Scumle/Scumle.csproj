@@ -87,6 +87,7 @@
     <Compile Include="Model\Shapes\Eclipse.cs" />
     <Compile Include="Model\Shapes\UMLClass.cs" />
     <Compile Include="UndeRedo\Commands\ShapeAddCommand.cs" />
+    <Compile Include="UndeRedo\Commands\ShapeMoveCommand.cs" />
     <Compile Include="UndeRedo\Commands\ShapeRemoveCommand.cs" />
     <Compile Include="UndeRedo\UndoRedoCommand.cs" />
     <Compile Include="UndeRedo\UndoRedoController.cs" />
