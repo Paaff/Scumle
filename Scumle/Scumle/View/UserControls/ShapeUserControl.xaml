@@ -5,9 +5,19 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Scumle.View.UserControls"
              xmlns:vm="clr-namespace:Scumle.ViewModel"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:gala="http://www.galasoft.ch/mvvmlight"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300"
              DragDelta="ShapeMove">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="DragStarted">
+            <gala:EventToCommand Command="{Binding MoveStartedCommand}" PassEventArgsToCommand="True"></gala:EventToCommand>
+        </i:EventTrigger>
+        <i:EventTrigger EventName="DragCompleted">
+            <gala:EventToCommand Command="{Binding MoveCompletedCommand}" PassEventArgsToCommand="True"></gala:EventToCommand>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
     <Thumb.Resources>
         <ResourceDictionary>
             <BooleanToVisibilityConverter x:Key="BoolToVis"/>

@@ -1,4 +1,6 @@
-﻿using Scumle.Model;
+﻿using GalaSoft.MvvmLight.Command;
+using Scumle.Model;
+using Scumle.UndeRedo.Commands;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -8,12 +10,18 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls.Primitives;
 
+
 namespace Scumle.ViewModel
 {
 
     public class ShapeViewModel : ViewModelBase<Shape>
     {
         private bool _isSelected = false;
+        private Point oldPos;
+        private Point newPos;
+
+        public RelayCommand MoveStartedCommand => new RelayCommand(MoveStarted);
+        public RelayCommand MoveCompletedCommand => new RelayCommand(MoveCompleted);
 
         public ShapeViewModel(Shape shape) : base(shape)
         {
@@ -22,6 +30,20 @@ namespace Scumle.ViewModel
 
         public ShapeViewModel() : base(new Shape(0, 0, "")) {
 
+        }
+
+        private void MoveStarted()
+        {
+            oldPos = new Point(X, Y);
+        }
+
+        private void MoveCompleted()
+        {
+            newPos = new Point(X, Y);
+            if (!oldPos.Equals(newPos))
+            {
+                new ShapeMoveCommand(this, oldPos, newPos).Execute();
+            }
         }
 
         private void AddInitalConnectionPoints()
@@ -61,13 +83,13 @@ namespace Scumle.ViewModel
         public double Y
         {
             get { return Model.Y; }
-            set { SetValue(value); }
+            set { SetValue(value); UpdateConnectionPoints(); }
         }
 
         public double Width
         {
             get { return Model.Width; }
-            set { SetValue(value); }
+            set { SetValue(value); UpdateConnectionPoints(); }
         }
 
         public double Height
