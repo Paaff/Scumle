@@ -7,7 +7,8 @@ using System.Threading.Tasks;
 namespace Scumle.Model.Shapes
 {
     [Serializable]
-    public class UMLClass : Shape    {  
+    public class UMLClass : Shape
+    {
 
         public UMLClass(double X, double Y, string Name) : base(X, Y, Name)
         {

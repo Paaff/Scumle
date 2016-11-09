@@ -12,7 +12,7 @@ using System.Xml.Serialization;
 namespace Scumle.Model
 {
    [XmlInclude(typeof(UMLClass))]
-    [XmlInclude(typeof(Eclipse))]
+   [XmlInclude(typeof(Eclipse))]
     public class Shape
     {
         private double _width;

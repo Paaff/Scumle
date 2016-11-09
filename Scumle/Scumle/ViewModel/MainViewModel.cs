@@ -159,7 +159,7 @@ namespace Scumle.ViewModel
             if (_isAddingShape)
             {
                 var mousePosition = e.MouseDevice.GetPosition(e.Source as IInputElement);
-                ShapeViewModel shape = new ShapeViewModel(new Shape(mousePosition.X, mousePosition.Y, "My shape " + _num++));
+                ShapeViewModel shape = new ShapeViewModel(new Eclipse(mousePosition.X, mousePosition.Y, "My shape " + _num++));
                 new ShapeAddCommand(Shapes, shape).Execute();
                 _isAddingShape = false;
                 _cursor = System.Windows.Input.Cursors.Arrow;
