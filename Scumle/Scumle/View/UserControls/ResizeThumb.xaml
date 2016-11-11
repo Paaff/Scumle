@@ -9,13 +9,13 @@
              xmlns:vm="clr-namespace:Scumle.ViewModel"
              mc:Ignorable="d" 
              d:DesignHeight="8" d:DesignWidth="8"
-             d:DataContext="{d:DesignInstance Type=vm:ShapeViewModel, IsDesignTimeCreatable=True}">
+             d:DataContext="{d:DesignInstance Type=vm:ShapeViewModel}">
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="DragStarted">
             <gala:EventToCommand Command="{Binding ResizeStartedCommand}"></gala:EventToCommand>
         </i:EventTrigger>
         <i:EventTrigger EventName="DragCompleted">
-            <gala:EventToCommand Command="{Binding ResizeCompletedCommand}"></gala:EventToCommand>
+            <gala:EventToCommand Command="{Binding ResizeCompletedCommand}" PassEventArgsToCommand="True"></gala:EventToCommand>
         </i:EventTrigger>
     </i:Interaction.Triggers>
     <Thumb.Resources>

@@ -27,7 +27,7 @@ namespace Scumle.ViewModel
         public ICommand MoveStartedCommand => new RelayCommand(MoveStartedEvent);
         public ICommand MoveCompletedCommand => new RelayCommand(MoveCompletedEvent);
         public ICommand ResizeStartedCommand => new RelayCommand(ResizeStartedEvent);
-        public ICommand ResizeCompletedCommand => new RelayCommand(ResizeCompletedEvent);
+        public ICommand ResizeCompletedCommand => new RelayCommand<DragCompletedEventArgs>(ResizeCompletedEvent);
 
         public ShapeViewModel(Shape shape) : base(shape)
         {
@@ -42,13 +42,11 @@ namespace Scumle.ViewModel
 
         private void MoveStartedEvent()
         {
-            if (isResizing) return;
             oldPos = new Point(X, Y);
         }
 
         private void MoveCompletedEvent()
         {
-            if (isResizing) return;
             newPos = new Point(X, Y);
             if (!oldPos.Equals(newPos))
             {
@@ -63,8 +61,9 @@ namespace Scumle.ViewModel
             oldSize = new Size(Width, Height);
         }
 
-        private void ResizeCompletedEvent()
+        private void ResizeCompletedEvent(DragCompletedEventArgs e)
         {
+            e.Handled = true;
             isResizing = false;
             newPos = new Point(X, Y);
             newSize = new Size(Width, Height);
