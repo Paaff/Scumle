@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls.Primitives;
-
+using System.Windows.Input;
 
 namespace Scumle.ViewModel
 {
@@ -17,29 +17,60 @@ namespace Scumle.ViewModel
     public class ShapeViewModel : ViewModelBase<Shape>
     {
         private bool _isSelected = false;
+        private bool isResizing = false;
         private Point oldPos;
         private Point newPos;
+        private Size oldSize;
+        private Size newSize;
 
-        public RelayCommand MoveStartedCommand => new RelayCommand(MoveStarted);
-        public RelayCommand MoveCompletedCommand => new RelayCommand(MoveCompleted);
+        public ICommand ShapeMoveCommand => new RelayCommand<DragDeltaEventArgs>(ShapeMoveEvent);
+        public ICommand MoveStartedCommand => new RelayCommand(MoveStartedEvent);
+        public ICommand MoveCompletedCommand => new RelayCommand(MoveCompletedEvent);
+        public ICommand ResizeStartedCommand => new RelayCommand(ResizeStartedEvent);
+        public ICommand ResizeCompletedCommand => new RelayCommand(ResizeCompletedEvent);
 
         public ShapeViewModel(Shape shape) : base(shape)
         {
             AddInitalConnectionPoints();
         }
-            
-
-        private void MoveStarted()
+        
+        private void ShapeMoveEvent(DragDeltaEventArgs e)
         {
+            if (isResizing) return;
+            ShapeMove(e.HorizontalChange, e.VerticalChange);
+        } 
+
+        private void MoveStartedEvent()
+        {
+            if (isResizing) return;
             oldPos = new Point(X, Y);
         }
 
-        private void MoveCompleted()
+        private void MoveCompletedEvent()
         {
+            if (isResizing) return;
             newPos = new Point(X, Y);
             if (!oldPos.Equals(newPos))
             {
                 new ShapeMoveCommand(this, oldPos, newPos).Execute();
+            }
+        }
+
+        private void ResizeStartedEvent()
+        {
+            isResizing = true;
+            oldPos = new Point(X, Y);
+            oldSize = new Size(Width, Height);
+        }
+
+        private void ResizeCompletedEvent()
+        {
+            isResizing = false;
+            newPos = new Point(X, Y);
+            newSize = new Size(Width, Height);
+            if (!oldSize.Equals(newSize))
+            {
+                new ShapeResizeCommand(this, oldPos, newPos, oldSize, newSize).Execute();
             }
         }
 
@@ -74,7 +105,7 @@ namespace Scumle.ViewModel
         public double X
         {
             get { return Model.X; }
-            set { SetValue(value); }
+            set { SetValue(value); UpdateConnectionPoints(); }
         }
 
         public double Y
@@ -92,7 +123,7 @@ namespace Scumle.ViewModel
         public double Height
         {
             get { return Model.Height; }
-            set { SetValue(value); }
+            set { SetValue(value); UpdateConnectionPoints(); }
         }
 
         public string Name

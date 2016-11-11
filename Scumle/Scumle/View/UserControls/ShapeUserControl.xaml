@@ -8,9 +8,11 @@
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:gala="http://www.galasoft.ch/mvvmlight"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300"
-             DragDelta="ShapeMove">
+             d:DesignHeight="300" d:DesignWidth="300">
     <i:Interaction.Triggers>
+        <i:EventTrigger EventName="DragDelta">
+            <gala:EventToCommand Command="{Binding ShapeMoveCommand}" PassEventArgsToCommand="True"></gala:EventToCommand>
+        </i:EventTrigger>
         <i:EventTrigger EventName="DragStarted">
             <gala:EventToCommand Command="{Binding MoveStartedCommand}" PassEventArgsToCommand="True"></gala:EventToCommand>
         </i:EventTrigger>
@@ -18,41 +20,20 @@
             <gala:EventToCommand Command="{Binding MoveCompletedCommand}" PassEventArgsToCommand="True"></gala:EventToCommand>
         </i:EventTrigger>
     </i:Interaction.Triggers>
-    <Thumb.Resources>
-        <ResourceDictionary>
-            <BooleanToVisibilityConverter x:Key="BoolToVis"/>
-            <Style TargetType="Thumb">
-                <EventSetter Event="DragStarted" Handler="StartResize"></EventSetter>
-                <EventSetter Event="DragCompleted" Handler="EndResize"></EventSetter>
-                <Setter Property="LayoutTransform" Value="{Binding ElementName=Diagram, Path=LayoutTransform.Inverse}"></Setter>
-                <Setter Property="Visibility" Value="{Binding IsSelected, Converter={StaticResource BoolToVis}, FallbackValue=Hidden}"></Setter>
-                <Setter Property="Panel.ZIndex" Value="1"></Setter>
-                <Setter Property="Template">
-                    <Setter.Value>
-                        <ControlTemplate>
-                            <Border BorderBrush="LightGray" Width="8" Height="8" BorderThickness="1">
-                                <Rectangle Fill="White"></Rectangle>
-                            </Border>
-                        </ControlTemplate>
-                    </Setter.Value>
-                </Setter>
-            </Style>
-        </ResourceDictionary>
-    </Thumb.Resources>
-
+    
     <Thumb.Template>
         <ControlTemplate TargetType="{x:Type Thumb}">
             <Grid>
                 <!-- Static content for shape-->
-                <Thumb DragDelta="ShapeResizeNE" Cursor="SizeNESW"  HorizontalAlignment="Right" VerticalAlignment="Top"></Thumb>
-                <Thumb DragDelta="ShapeResizeNW" Cursor="SizeNWSE" HorizontalAlignment="Left" VerticalAlignment="Top"></Thumb>
-                <Thumb DragDelta="ShapeResizeSE" Cursor="SizeNWSE" HorizontalAlignment="Right" VerticalAlignment="Bottom"></Thumb>
-                <Thumb DragDelta="ShapeResizeSW" Cursor="SizeNESW" HorizontalAlignment="Left" VerticalAlignment="Bottom"></Thumb>
+                <local:ResizeThumb DragDelta="ShapeResizeNE" Cursor="SizeNESW"  HorizontalAlignment="Right" VerticalAlignment="Top"></local:ResizeThumb>
+                <local:ResizeThumb DragDelta="ShapeResizeNW" Cursor="SizeNWSE" HorizontalAlignment="Left" VerticalAlignment="Top"></local:ResizeThumb>
+                <local:ResizeThumb DragDelta="ShapeResizeSE" Cursor="SizeNWSE" HorizontalAlignment="Right" VerticalAlignment="Bottom"></local:ResizeThumb>
+                <local:ResizeThumb DragDelta="ShapeResizeSW" Cursor="SizeNESW" HorizontalAlignment="Left" VerticalAlignment="Bottom"></local:ResizeThumb>
 
-                <Thumb DragDelta="ShapeResizeE" Cursor="SizeWE" HorizontalAlignment="Right" VerticalAlignment="Center"></Thumb>
-                <Thumb DragDelta="ShapeResizeW" Cursor="SizeWE" HorizontalAlignment="Left" VerticalAlignment="Center"></Thumb>
-                <Thumb DragDelta="ShapeResizeN" Cursor="SizeNS" HorizontalAlignment="Center" VerticalAlignment="Top"></Thumb>
-                <Thumb DragDelta="ShapeResizeS" Cursor="SizeNS" HorizontalAlignment="Center" VerticalAlignment="Bottom"></Thumb>
+                <local:ResizeThumb DragDelta="ShapeResizeE" Cursor="SizeWE" HorizontalAlignment="Right" VerticalAlignment="Center"></local:ResizeThumb>
+                <local:ResizeThumb DragDelta="ShapeResizeW" Cursor="SizeWE" HorizontalAlignment="Left" VerticalAlignment="Center"></local:ResizeThumb>
+                <local:ResizeThumb DragDelta="ShapeResizeN" Cursor="SizeNS" HorizontalAlignment="Center" VerticalAlignment="Top"></local:ResizeThumb>
+                <local:ResizeThumb DragDelta="ShapeResizeS" Cursor="SizeNS" HorizontalAlignment="Center" VerticalAlignment="Bottom"></local:ResizeThumb>
 
                 <ItemsControl ItemsSource="{Binding ConnectionPoints}" Panel.ZIndex="1">
                     <ItemsControl.ItemsPanel>

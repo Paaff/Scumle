@@ -89,6 +89,7 @@
     <Compile Include="UndeRedo\Commands\ShapeAddCommand.cs" />
     <Compile Include="UndeRedo\Commands\ShapeMoveCommand.cs" />
     <Compile Include="UndeRedo\Commands\ShapeRemoveCommand.cs" />
+    <Compile Include="UndeRedo\Commands\ShapeResizeCommand.cs" />
     <Compile Include="UndeRedo\UndoRedoCommand.cs" />
     <Compile Include="UndeRedo\UndoRedoController.cs" />
     <Compile Include="ViewModel\ConnectionPointViewModel.cs" />
@@ -106,6 +107,9 @@
     </Compile>
     <Compile Include="View\UserControls\LineUserControl.xaml.cs">
       <DependentUpon>LineUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\UserControls\ResizeThumb.xaml.cs">
+      <DependentUpon>ResizeThumb.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\UserControls\ShapeUserControl.xaml.cs">
       <DependentUpon>ShapeUserControl.xaml</DependentUpon>
@@ -135,6 +139,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\UserControls\LineUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\UserControls\ResizeThumb.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
