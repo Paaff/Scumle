@@ -6,10 +6,11 @@
          xmlns:gala="http://www.galasoft.ch/mvvmlight"
          xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
          
-         Title="Window1"
+         Title="Scumle UML Editor"
          Height="600"
          Width="800"
-         Cursor="{Binding Cursor}">
+         Cursor="{Binding Cursor}"
+         Icon="/Images/scumle.ico">
     
     <!--<Window.Style>
     <Style TargetType="Window">

@@ -8,21 +8,63 @@
       >
 
     <Ribbon>
+        <Ribbon.QuickAccessToolBar>
+            <RibbonQuickAccessToolBar>
+                <DockPanel>
+                    <RibbonButton DockPanel.Dock="Right" SmallImageSource="/Images/Redo.png"
+                                       ToolTip="Undo" Command="{Binding UndoRedo.RedoCommand}"/>
+                    <RibbonButton DockPanel.Dock="Right" SmallImageSource="/Images/Undo.png"
+                                       ToolTip="Undo" Command="{Binding UndoRedo.UndoCommand}"/>
+                    <RibbonButton DockPanel.Dock="Right" SmallImageSource="/Images/Save.png"
+                                       ToolTip="Save" Command="{Binding SaveWorkspaceCommand}"/>
+                </DockPanel>
+            </RibbonQuickAccessToolBar>
+        </Ribbon.QuickAccessToolBar>
+
+        <Ribbon.ApplicationMenu>
+
+            <RibbonApplicationMenu>
+
+                <RibbonApplicationMenuItem Header="New" ImageSource="/Images/New.png" Command="{Binding NewWorkspaceCommand}"/>
+
+                <RibbonApplicationMenuItem Header="Open" ImageSource="/Images/Open.png" Command="{Binding OpenWorkspaceCommand}"/>
+                
+                <RibbonApplicationMenuItem Header="Save" ImageSource="/Images/Save.png" Command="{Binding SaveWorkspaceCommand}"/>
+
+                <RibbonApplicationMenuItem Header="Save as" ImageSource="/Images/Saveas.png" Command="{Binding SaveWorkspaceCommand}"/>
+
+                <RibbonApplicationMenuItem Header="Export as .PNG" ImageSource="/Images/Picture.png"/>
+
+                <RibbonApplicationMenuItem Header="Exit" ImageSource="/Images/Exit.png"/>
+
+                <RibbonApplicationMenu.SmallImageSource>
+                    <DrawingImage>
+                        <DrawingImage.Drawing>
+                            <GlyphRunDrawing ForegroundBrush="White">
+                                <GlyphRunDrawing.GlyphRun>
+                                    <GlyphRun
+                            CaretStops="{x:Null}" 
+                            ClusterMap="{x:Null}" 
+                            IsSideways="False" 
+                            GlyphOffsets="{x:Null}" 
+                            GlyphIndices="41 76 79 72" 
+                            FontRenderingEmSize="14" 
+                            DeviceFontName="{x:Null}" 
+                            AdvanceWidths="6 3 3 7">
+                                        <GlyphRun.GlyphTypeface>
+                                            <GlyphTypeface FontUri="C:\WINDOWS\Fonts\SEGOEUI.TTF"/>
+                                        </GlyphRun.GlyphTypeface>
+                                    </GlyphRun>
+                                </GlyphRunDrawing.GlyphRun>
+                            </GlyphRunDrawing>
+                        </DrawingImage.Drawing>
+                    </DrawingImage>
+                </RibbonApplicationMenu.SmallImageSource>
+
+            </RibbonApplicationMenu>
+        </Ribbon.ApplicationMenu>
 
         <RibbonTab Header="Home">
-
-            <RibbonGroup Header="File">
-                <!-- Add commands for New, Open, Save functionality -->
-                <StackPanel Orientation="Vertical">
-                    <RibbonButton x:Name="New" Label="New" SmallImageSource="/Images/New.png"
-                                  Command="{Binding NewWorkspaceCommand}"/>
-                    <RibbonButton x:Name="Open" Label="Open" SmallImageSource="/Images/Open.png"
-                                  Command="{Binding OpenWorkspaceCommand}"/>
-                    <RibbonButton x:Name="Save" Label="Save" SmallImageSource="/Images/Save.png"
-                                  Command="{Binding SaveWorkspaceCommand}"/>
-                </StackPanel>
-
-            </RibbonGroup>
 
             <!-- Add command for copy, cut and paste that have 3 options -->
             <RibbonGroup Header="Clipboard">
@@ -67,15 +109,6 @@
             <!-- There needs to be an undo and redo queue which goes back and restores previous "versions"
                 of the shapes. -->
             <RibbonGroup Header="Tools">
-                <StackPanel Orientation="Horizontal">
-                    <RibbonButton x:Name="Undo" Label="Undo" LargeImageSource="/Images/Undo.png"
-                                  Command="{Binding UndoRedo.UndoCommand}"
-                                  ToolTip="Undo"/>
-                    <RibbonButton x:Name="Redo" Label="Redo" LargeImageSource="/Images/Redo.png"
-                                  Command="{Binding UndoRedo.RedoCommand}"
-                                  ToolTip="Redo"/>
-
-                </StackPanel> 
 
                 <RibbonButton Label="Delete" Command="{Binding DeleteSelectedShapesCommand}" LargeImageSource="/Images/Delete.png"/>
 
