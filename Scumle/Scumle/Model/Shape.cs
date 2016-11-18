@@ -20,10 +20,8 @@ namespace Scumle.Model
                 
         public Shape(double X, double Y, String Name)
         {
-            this.Width = 25;
-            this.Height = 25;
-            this.X = X-Width/2;
-            this.Y = Y-Height/2;
+            this.X = X;
+            this.Y = Y;
             this.Name = Name;
          
         }

@@ -63,8 +63,9 @@ namespace Scumle.ViewModel
         public RelayCommand NewWorkspaceCommand { get; }
         public RelayCommand UndoCommand { get; }
         public RelayCommand RedoCommand { get; }
-
-        public RelayCommand<MouseButtonEventArgs> AddShapeCommand { get; }
+        public RelayCommand<MouseButtonEventArgs> MouseDownGridCommand { get; }
+        public RelayCommand<MouseEventArgs> MouseMoveGridCommand { get; }
+        public RelayCommand<MouseButtonEventArgs> MouseUpGridCommand { get; }
 
         public UndoRedoController UndoRedo = UndoRedoController.Instance;
 
@@ -82,7 +83,9 @@ namespace Scumle.ViewModel
 
             Lines.Add(new LineViewModel(cp1, cp2));
 
-            AddShapeCommand = new RelayCommand<MouseButtonEventArgs>(AddShape);
+            MouseDownGridCommand = new RelayCommand<MouseButtonEventArgs>(GridMouseDown);
+            MouseMoveGridCommand = new RelayCommand<MouseEventArgs>(GridMouseMove);
+            MouseUpGridCommand = new RelayCommand<MouseButtonEventArgs>(GridMouseUp);
             SetShapeSelectionCommand = new RelayCommand(SetShapeInsertion);
             ChangeZoomCommand = new RelayCommand<string>(ChangeZoom);
             SaveWorkspaceCommand = new RelayCommand(SaveWorkspace);
@@ -102,7 +105,7 @@ namespace Scumle.ViewModel
 
         #endregion
 
-        #region Methods
+        #region PropetyChanged
 
         private void RaisePropertyChanged(string propertyName)
         {
@@ -114,8 +117,7 @@ namespace Scumle.ViewModel
         }
         #endregion
 
-        #region Methods
-
+        #region selection
         internal void SelectShape(ShapeViewModel shape)
         {
             DeselectAllShapes();
@@ -132,6 +134,36 @@ namespace Scumle.ViewModel
             }
             Selected.Clear();
         }
+        public bool HasSelectedShapes()
+        {
+            return Selected.Count > 0;
+        }
+        public void SelectMultipleShapes()
+        {
+            //TODO Implement adding of shapes based on selection
+        }
+        #endregion
+
+        #region GridMouseEventHandling
+        public void GridMouseDown(MouseButtonEventArgs args)
+        {
+            if (_isAddingShape)
+            {
+                AddShape(args);
+            }
+        }
+        public void GridMouseMove(MouseEventArgs args)
+        {
+
+        }
+        public void GridMouseUp(MouseButtonEventArgs args)
+        {
+
+        }
+
+        #endregion
+
+        #region Methods
 
         public void Undo()
         {
@@ -155,17 +187,13 @@ namespace Scumle.ViewModel
         }
 
         public void AddShape(MouseButtonEventArgs e)
-        {
-            if (_isAddingShape)
-            {
+        {        
                 var mousePosition = e.MouseDevice.GetPosition(e.Source as IInputElement);
-                ShapeViewModel shape = new ShapeViewModel(new Eclipse(mousePosition.X, mousePosition.Y, "My shape " + _num++));
+                ShapeViewModel shape = new UMLClassViewModel(new Eclipse(mousePosition.X, mousePosition.Y, "My shape " + _num++));
                 new ShapeAddCommand(Shapes, shape).Execute();
                 _isAddingShape = false;
                 _cursor = System.Windows.Input.Cursors.Arrow;
                 RaisePropertyChanged("Cursor");
-            }
-
         }
 
         public void ChangeZoom(string value)
@@ -196,11 +224,6 @@ namespace Scumle.ViewModel
                     Lines.Remove(line);
                 }
             }
-        }
-
-        public bool HasSelectedShapes()
-        {
-            return Selected.Count > 0;
         }
 
         public void SaveWorkspace()

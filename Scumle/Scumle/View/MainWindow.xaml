@@ -77,8 +77,14 @@
         <ScrollViewer HorizontalScrollBarVisibility="Visible">
             <Grid x:Name="Diagram">
                 <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="MouseLeftButtonDown">
+                        <gala:EventToCommand Command="{Binding MouseDownGridCommand}" PassEventArgsToCommand="True"/>
+                    </i:EventTrigger>
+                    <i:EventTrigger EventName="MouseMove">
+                        <gala:EventToCommand Command="{Binding MouseMoveGridCommand}" PassEventArgsToCommand="True"/>
+                    </i:EventTrigger>
                     <i:EventTrigger EventName="MouseLeftButtonUp">
-                        <gala:EventToCommand Command="{Binding AddShapeCommand}" PassEventArgsToCommand="True"/>
+                        <gala:EventToCommand Command="{Binding MouseUpGridCommand}" PassEventArgsToCommand="True"/>
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
                 <Grid.LayoutTransform>
