@@ -72,7 +72,9 @@ namespace Scumle.ViewModel
         public RelayCommand<MouseEventArgs> MouseMoveGridCommand { get; }
         public RelayCommand<MouseButtonEventArgs> MouseUpGridCommand { get; }
         public RelayCommand EscCommand { get; }
+        public RelayCommand SelectAllCommand { get; }
         public UndoRedoController UndoRedo = UndoRedoController.Instance;
+
 
         #endregion
 
@@ -88,6 +90,7 @@ namespace Scumle.ViewModel
 
             Lines.Add(new LineViewModel(cp1, cp2));
 
+            SelectAllCommand = new RelayCommand(SelectAll);
             EscCommand = new RelayCommand(Escape);
             MouseDownGridCommand = new RelayCommand<MouseButtonEventArgs>(GridMouseDown);
             MouseMoveGridCommand = new RelayCommand<MouseEventArgs>(GridMouseMove);
@@ -102,7 +105,7 @@ namespace Scumle.ViewModel
             UndoCommand = UndoRedoController.Instance.UndoCommand;
         }
 
-        
+       
         #endregion
 
         #region INotifyPropertyChanged Members
@@ -124,6 +127,18 @@ namespace Scumle.ViewModel
         #endregion
 
         #region selection
+        private void SelectAll()
+        {
+            foreach (ShapeViewModel i in Shapes)
+            {
+                SelectShape(i, false);
+                
+            }
+        }
+        private void Escape()
+        {
+            DeselectAllShapes();
+        }
         internal void SelectShape(ShapeViewModel shape, bool clearSelection)
         {
             if (clearSelection)
@@ -163,10 +178,10 @@ namespace Scumle.ViewModel
                 _isMouseDownOnGrid = true;
                 e.MouseDevice.Target.CaptureMouse();
                 StartingPoint = e.MouseDevice.GetPosition(e.Source as IInputElement);
-            }           
+            }
             if (_isAddingShape)
             {
-                AddShape(StartingPoint);
+                AddShape(e);
             }
         }
         public void GridMouseMove(MouseEventArgs e)
@@ -217,12 +232,6 @@ namespace Scumle.ViewModel
         #endregion
 
         #region Methods
-
-        private void Escape()
-        {
-            DeselectAllShapes();
-        }
-
         public void Undo()
         {
             UndoRedoController.Instance.Undo();
@@ -244,9 +253,10 @@ namespace Scumle.ViewModel
             RaisePropertyChanged("Cursor");
         }
 
-        public void AddShape(Point p)
-        {        
-                ShapeViewModel shape = new UMLClassViewModel(new Eclipse(p.X, p.Y, "My shape " + _num++));
+        public void AddShape(MouseButtonEventArgs e)
+        {
+            Point p = e.MouseDevice.GetPosition(e.Source as IInputElement);
+            ShapeViewModel shape = new UMLClassViewModel(new Eclipse(p.X, p.Y, "My shape " + _num++));
                 new ShapeAddCommand(Shapes, shape).Execute();
                 _isAddingShape = false;
                 _cursor = System.Windows.Input.Cursors.Arrow;

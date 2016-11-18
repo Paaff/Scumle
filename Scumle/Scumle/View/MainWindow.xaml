@@ -27,6 +27,7 @@
         <KeyBinding Modifiers="Ctrl" Key="O"  Command="{Binding OpenWorkspaceCommand}"></KeyBinding>
         <KeyBinding Modifiers="Ctrl" Key="S"  Command="{Binding SaveWorkspaceCommand}"></KeyBinding>
         <KeyBinding Modifiers="Ctrl" Key="N"  Command="{Binding NewWorkspaceCommand}"></KeyBinding>
+        <KeyBinding Modifiers="Ctrl" Key="A"  Command="{Binding SelectAllCommand}"></KeyBinding>
         <KeyBinding Gesture="CTRL+Z" Command="{Binding UndoCommand}"/>
         <KeyBinding Gesture="CTRL+Y" Command="{Binding RedoCommand}"/>
         <KeyBinding Gesture="Escape" Command="{Binding EscCommand}"/>
