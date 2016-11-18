@@ -29,6 +29,7 @@
         <KeyBinding Modifiers="Ctrl" Key="N"  Command="{Binding NewWorkspaceCommand}"></KeyBinding>
         <KeyBinding Gesture="CTRL+Z" Command="{Binding UndoCommand}"/>
         <KeyBinding Gesture="CTRL+Y" Command="{Binding RedoCommand}"/>
+        <KeyBinding Gesture="Escape" Command="{Binding EscCommand}"/>
     </Window.InputBindings>
 
     <Window.Resources>
@@ -76,6 +77,10 @@
             makes it scrollable -->
         <ScrollViewer HorizontalScrollBarVisibility="Visible">
             <Grid x:Name="Diagram">
+                <Grid.LayoutTransform>
+                    <ScaleTransform ScaleX="{Binding Zoom}" ScaleY="{Binding Zoom}"></ScaleTransform>
+                </Grid.LayoutTransform>
+
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="MouseLeftButtonDown">
                         <gala:EventToCommand Command="{Binding MouseDownGridCommand}" PassEventArgsToCommand="True"/>
@@ -87,9 +92,7 @@
                         <gala:EventToCommand Command="{Binding MouseUpGridCommand}" PassEventArgsToCommand="True"/>
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
-                <Grid.LayoutTransform>
-                    <ScaleTransform ScaleX="{Binding Zoom}" ScaleY="{Binding Zoom}"></ScaleTransform>
-                </Grid.LayoutTransform>
+
                 <ItemsControl ItemsSource="{Binding Shapes}" Background="White" Height="750" Width="1250">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
@@ -124,8 +127,18 @@
                         </Style>
                     </ItemsControl.ItemContainerStyle>
                 </ItemsControl>
+
+                <Canvas>
+                    <Border Canvas.Left="{Binding SelectionX}" 
+                            Canvas.Top="{Binding SelectionY}" 
+                            Width="{Binding SelectionWidth}"
+                            Height="{Binding SelectionHeight}"
+                        BorderBrush="Black" BorderThickness="0.8">
+                        <Rectangle Fill="SteelBlue" Opacity=".15"/>
+                    </Border>
+                </Canvas>
             </Grid>
         </ScrollViewer>
     </DockPanel>
 
-</RibbonWindow>
+</RibbonWindow> 

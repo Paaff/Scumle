@@ -9,7 +9,7 @@
              xmlns:gala="http://www.galasoft.ch/mvvmlight"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
-    <i:Interaction.Triggers>
+        <i:Interaction.Triggers>
         <i:EventTrigger EventName="DragDelta">
             <gala:EventToCommand Command="{Binding ShapeMoveCommand}" PassEventArgsToCommand="True"></gala:EventToCommand>
         </i:EventTrigger>

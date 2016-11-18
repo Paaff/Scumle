@@ -25,15 +25,20 @@ namespace Scumle.ViewModel
         private bool _isAddingLine;
         private bool _isAddingShape;
         private Cursor _cursor = System.Windows.Input.Cursors.Arrow;
+        private bool _isMouseDownOnGrid;
         #endregion
 
         #region Properties
+        public double SelectionX { get; set; }
+        public double SelectionY { get; set; }
+        public double SelectionWidth { get; set; }
+        public double SelectionHeight { get; set; }
+        private Point StartingPoint { get; set; }
         public Cursor Cursor
         {
             get { return _cursor; }
             set { _cursor = value; }
         }
-
         public double Zoom
         {
             get { return _zoom; }
@@ -66,7 +71,7 @@ namespace Scumle.ViewModel
         public RelayCommand<MouseButtonEventArgs> MouseDownGridCommand { get; }
         public RelayCommand<MouseEventArgs> MouseMoveGridCommand { get; }
         public RelayCommand<MouseButtonEventArgs> MouseUpGridCommand { get; }
-
+        public RelayCommand EscCommand { get; }
         public UndoRedoController UndoRedo = UndoRedoController.Instance;
 
         #endregion
@@ -83,6 +88,7 @@ namespace Scumle.ViewModel
 
             Lines.Add(new LineViewModel(cp1, cp2));
 
+            EscCommand = new RelayCommand(Escape);
             MouseDownGridCommand = new RelayCommand<MouseButtonEventArgs>(GridMouseDown);
             MouseMoveGridCommand = new RelayCommand<MouseEventArgs>(GridMouseMove);
             MouseUpGridCommand = new RelayCommand<MouseButtonEventArgs>(GridMouseUp);
@@ -96,7 +102,7 @@ namespace Scumle.ViewModel
             UndoCommand = UndoRedoController.Instance.UndoCommand;
         }
 
-
+        
         #endregion
 
         #region INotifyPropertyChanged Members
@@ -118,12 +124,19 @@ namespace Scumle.ViewModel
         #endregion
 
         #region selection
-        internal void SelectShape(ShapeViewModel shape)
+        internal void SelectShape(ShapeViewModel shape, bool clearSelection)
         {
-            DeselectAllShapes();
-            Selected.Add(shape);
-            shape.IsSelected = true;
-            DeleteSelectedShapesCommand.RaiseCanExecuteChanged();
+            if (clearSelection)
+            {
+                DeselectAllShapes();
+                Selected.Add(shape);
+                shape.IsSelected = true;
+                DeleteSelectedShapesCommand.RaiseCanExecuteChanged();
+            } else {
+                Selected.Add(shape);
+                shape.IsSelected = true;
+                DeleteSelectedShapesCommand.RaiseCanExecuteChanged();
+            }
         }
 
         internal void DeselectAllShapes()
@@ -133,37 +146,82 @@ namespace Scumle.ViewModel
                 shape.IsSelected = false;
             }
             Selected.Clear();
+            DeleteSelectedShapesCommand.RaiseCanExecuteChanged();
         }
         public bool HasSelectedShapes()
         {
             return Selected.Count > 0;
         }
-        public void SelectMultipleShapes()
-        {
-            //TODO Implement adding of shapes based on selection
-        }
         #endregion
 
         #region GridMouseEventHandling
-        public void GridMouseDown(MouseButtonEventArgs args)
+        public void GridMouseDown(MouseButtonEventArgs e)
         {
+            if(!_isAddingShape && !_isAddingLine)
+            {
+                DeselectAllShapes();
+                _isMouseDownOnGrid = true;
+                e.MouseDevice.Target.CaptureMouse();
+                StartingPoint = e.MouseDevice.GetPosition(e.Source as IInputElement);
+            }           
             if (_isAddingShape)
             {
-                AddShape(args);
+                AddShape(StartingPoint);
             }
         }
-        public void GridMouseMove(MouseEventArgs args)
+        public void GridMouseMove(MouseEventArgs e)
         {
+            Point curPos = e.MouseDevice.GetPosition(e.Source as IInputElement);
+            if (_isMouseDownOnGrid)
+            {
+                SelectionX = Math.Min(StartingPoint.X, curPos.X);
+                SelectionY = Math.Min(StartingPoint.Y, curPos.Y);
+                SelectionHeight = Math.Abs(curPos.Y - StartingPoint.Y);
+                SelectionWidth = Math.Abs(curPos.X - StartingPoint.X);
+                RaisePropertyChanged("SelectionX");
+                RaisePropertyChanged("SelectionY");
+                RaisePropertyChanged("SelectionHeight");
+                RaisePropertyChanged("SelectionWidth");
+            }
 
         }
-        public void GridMouseUp(MouseButtonEventArgs args)
+        public void GridMouseUp(MouseButtonEventArgs e)
         {
-
+            if (_isMouseDownOnGrid)
+            {
+                Point endingPoint = e.MouseDevice.GetPosition(e.Source as IInputElement);
+                double minX = Math.Min(StartingPoint.X, endingPoint.X);
+                double minY = Math.Min(StartingPoint.Y, endingPoint.Y);
+                double maxX = Math.Max(StartingPoint.X, endingPoint.X);
+                double maxY = Math.Max(StartingPoint.Y, endingPoint.Y);
+                foreach (ShapeViewModel i in Shapes)
+                {
+                    if (!(i.X > maxX || i.X + i.Width < minX || i.Y > maxY || i.Y + i.Height < minY))
+                    {
+                        SelectShape(i, false);
+                    }
+                }
+                _isMouseDownOnGrid = false;
+                e.MouseDevice.Target.ReleaseMouseCapture();
+                SelectionX = 0;
+                SelectionY = 0;
+                SelectionHeight = 0;
+                SelectionWidth = 0;
+                RaisePropertyChanged("SelectionX");
+                RaisePropertyChanged("SelectionY");
+                RaisePropertyChanged("SelectionHeight");
+                RaisePropertyChanged("SelectionWidth");
+            }
         }
 
         #endregion
 
         #region Methods
+
+        private void Escape()
+        {
+            DeselectAllShapes();
+        }
 
         public void Undo()
         {
@@ -186,10 +244,9 @@ namespace Scumle.ViewModel
             RaisePropertyChanged("Cursor");
         }
 
-        public void AddShape(MouseButtonEventArgs e)
+        public void AddShape(Point p)
         {        
-                var mousePosition = e.MouseDevice.GetPosition(e.Source as IInputElement);
-                ShapeViewModel shape = new UMLClassViewModel(new Eclipse(mousePosition.X, mousePosition.Y, "My shape " + _num++));
+                ShapeViewModel shape = new UMLClassViewModel(new Eclipse(p.X, p.Y, "My shape " + _num++));
                 new ShapeAddCommand(Shapes, shape).Execute();
                 _isAddingShape = false;
                 _cursor = System.Windows.Input.Cursors.Arrow;
@@ -204,8 +261,7 @@ namespace Scumle.ViewModel
         public void DeleteSelectedShapes()
         {
             new ShapeRemoveCommand(Shapes, Lines, Selected).Execute();
-            Selected.Clear();
-            DeleteSelectedShapesCommand.RaiseCanExecuteChanged();
+            DeselectAllShapes();
         }
 
         public void DeleteShape(ShapeViewModel shape)
