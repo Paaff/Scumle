@@ -24,12 +24,27 @@ namespace Scumle.ViewModel
         private Size oldSize;
         private Size newSize;
         private Brush _shapeColor;
+        private bool _ConnectionVisibilty = false;
 
         public ICommand ShapeMoveCommand => new RelayCommand<DragDeltaEventArgs>(ShapeMoveEvent);
         public ICommand MoveStartedCommand => new RelayCommand(MoveStartedEvent);
         public ICommand MoveCompletedCommand => new RelayCommand(MoveCompletedEvent);
         public ICommand ResizeStartedCommand => new RelayCommand(ResizeStartedEvent);
         public ICommand ResizeCompletedCommand => new RelayCommand<DragCompletedEventArgs>(ResizeCompletedEvent);
+
+        public bool ConnectionVisibility
+        {
+            get
+            {
+                return _ConnectionVisibilty;
+            }
+
+            set
+            {
+                _ConnectionVisibilty = value;
+                OnPropertyChanged();
+            }
+        }
 
         public ShapeViewModel(Shape shape) : base(shape)
         {

@@ -70,7 +70,7 @@
                         <Rectangle Width="10" Height="10" Fill="YellowGreen"></Rectangle>
                     </StackPanel>
                 </Expander>
-                <Button Content="Add Connection" Command="{Binding SetShapeSelectionCommand}" Margin="5,5,5,0"></Button>
+                <Button Content="Add Connection" Command="{Binding SetLineConnectionCommand}" Margin="5,5,5,0"></Button>
             </StackPanel>
         </Border>
 

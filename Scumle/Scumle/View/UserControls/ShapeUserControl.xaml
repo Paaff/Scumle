@@ -9,7 +9,12 @@
              xmlns:gala="http://www.galasoft.ch/mvvmlight"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
-        <i:Interaction.Triggers>
+    <Thumb.Resources>
+        <ResourceDictionary> 
+            <BooleanToVisibilityConverter x:Key="BoolToVis" />
+        </ResourceDictionary>
+    </Thumb.Resources>
+    <i:Interaction.Triggers>
         <i:EventTrigger EventName="DragDelta">
             <gala:EventToCommand Command="{Binding ShapeMoveCommand}" PassEventArgsToCommand="True"></gala:EventToCommand>
         </i:EventTrigger>
@@ -35,7 +40,7 @@
                 <local:ResizeThumb DragDelta="ShapeResizeN" Cursor="SizeNS" HorizontalAlignment="Center" VerticalAlignment="Top"></local:ResizeThumb>
                 <local:ResizeThumb DragDelta="ShapeResizeS" Cursor="SizeNS" HorizontalAlignment="Center" VerticalAlignment="Bottom"></local:ResizeThumb>
 
-                <ItemsControl ItemsSource="{Binding ConnectionPoints}" Panel.ZIndex="1">
+                <ItemsControl ItemsSource="{Binding ConnectionPoints}" Panel.ZIndex="1" Visibility="{Binding ConnectionVisibility, Converter={StaticResource BoolToVis}}">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
                             <Grid/>

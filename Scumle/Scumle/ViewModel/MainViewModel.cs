@@ -65,6 +65,7 @@ namespace Scumle.ViewModel
         #endregion
 
         #region Commands
+        public RelayCommand SetLineConnectionCommand { get; }
         public RelayCommand<Canvas> ExportImageCommand { get; }
         public RelayCommand<string> ChangeZoomCommand { get; set; }
         public RelayCommand SetShapeSelectionCommand { get; }
@@ -97,6 +98,7 @@ namespace Scumle.ViewModel
 
             Lines.Add(new LineViewModel(cp1, cp2));
 
+            SetLineConnectionCommand = new RelayCommand(SetLineConnection);
             ExportImageCommand = new RelayCommand<Canvas>(ExportImage);
             SelectAllCommand = new RelayCommand(SelectAll);
             EscCommand = new RelayCommand(Escape);
@@ -115,7 +117,8 @@ namespace Scumle.ViewModel
             SelectedColor = Color.FromRgb(0, 153, 255);
         }
 
-       
+
+
         #endregion
 
         #region INotifyPropertyChanged Members
@@ -178,7 +181,14 @@ namespace Scumle.ViewModel
         #region GridMouseEventHandling
         public void GridMouseDown(MouseButtonEventArgs e)
         {
-            if(!_isAddingShape && !_isAddingLine)
+            if (_isAddingLine)
+            {
+                //TODO implement connection logic
+                EndLineConnection();
+            }
+            
+
+            if (!_isAddingShape && !_isAddingLine)
             {
                 DeselectAllShapes();
                 _isMouseDownOnGrid = true;
@@ -363,6 +373,26 @@ namespace Scumle.ViewModel
         #endregion
 
         #region methods
+        private void SetLineConnection()
+        {
+            _cursor = System.Windows.Input.Cursors.Cross;
+            RaisePropertyChanged("Cursor");
+            foreach (ShapeViewModel i in Shapes)
+            {
+                i.ConnectionVisibility = true;
+            }
+            _isAddingLine = true;
+        }
+        private void EndLineConnection()
+        {
+            _cursor = System.Windows.Input.Cursors.Arrow;
+            RaisePropertyChanged("Cursor");
+            foreach (ShapeViewModel i in Shapes)
+            {
+                i.ConnectionVisibility = false;
+            }
+            _isAddingLine = false;
+        }
         public void ColorSelected()
         {
             foreach (ShapeViewModel i in Selected)
