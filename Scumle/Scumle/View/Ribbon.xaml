@@ -2,7 +2,8 @@
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
       mc:Ignorable="d" 
       d:DesignHeight="150" d:DesignWidth="600"
       >
@@ -33,7 +34,7 @@
 
                 <RibbonApplicationMenuItem Header="Save as" ImageSource="/Images/Saveas.png" Command="{Binding SaveWorkspaceCommand}"/>
 
-                <RibbonApplicationMenuItem Header="Export as .PNG" ImageSource="/Images/Picture.png"/>
+                <RibbonApplicationMenuItem Header="Export as .PNG" ImageSource="/Images/Picture.png" Command="{Binding ExportImageCommand}" CommandParameter="{Binding ElementName=Canvas}"/>
 
                 <RibbonApplicationMenuItem Header="Exit" ImageSource="/Images/Exit.png"/>
 
@@ -69,11 +70,7 @@
             <!-- Add command for copy, cut and paste that have 3 options -->
             <RibbonGroup Header="Clipboard">
 
-                <RibbonMenuButton x:Name="Paste" Label="Paste" LargeImageSource="/Images/Paste.png">
-                    <RibbonMenuItem Header="Paste"/>
-                    <RibbonMenuItem Header="Paste Only Shape"/>
-                    <RibbonMenuItem Header="Paste Only Text" Command="ApplicationCommands.Paste"/>
-                </RibbonMenuButton>
+                <RibbonMenuButton x:Name="Paste" Label="Paste" LargeImageSource="/Images/Paste.png"/>
 
                 <!-- For cut and copy make sure that they can tell the difference of what is in the clipboard -->
                 <RibbonButton x:Name="Cut" Label="Cut" SmallImageSource="/Images/Cut.png"
@@ -82,6 +79,11 @@
                 <RibbonButton x:Name="Copy" Label="Copy" SmallImageSource="/Images/Copy.png"
                               Command="ApplicationCommands.Copy"/>
 
+
+            </RibbonGroup>
+            <RibbonGroup Header="Tools">
+
+                <RibbonButton Label="Delete" Command="{Binding DeleteSelectedShapesCommand}" LargeImageSource="/Images/Delete.png"/>
 
             </RibbonGroup>
             <!-- Zoom needs to be more generic (DK vs US layout might f up). 
@@ -95,37 +97,33 @@
                 </RibbonMenuButton>
             </RibbonGroup>
 
+            <!-- There needs to be an undo and redo queue which goes back and restores previous "versions"
+                of the shapes. -->
+
+
+        </RibbonTab>
+
+        <RibbonTab Header="Design">
             <RibbonGroup Header="Font">
-
-
                 <!-- This need to work on both highlighted text and as a general setting. -->
                 <StackPanel Orientation="Horizontal">
                     <RibbonButton Label="B" FontWeight="Bold"/>
                     <RibbonButton Label="U" />
                     <RibbonButton Label="I" FontStyle="Italic"/>
                 </StackPanel>
-
-            </RibbonGroup>
-            <!-- There needs to be an undo and redo queue which goes back and restores previous "versions"
-                of the shapes. -->
-            <RibbonGroup Header="Tools">
-
-                <RibbonButton Label="Delete" Command="{Binding DeleteSelectedShapesCommand}" LargeImageSource="/Images/Delete.png"/>
-
             </RibbonGroup>
 
-
+            <RibbonGroup Header="Color">
+                <!-- This need to work on both highlighted text and as a general setting. -->
+                <StackPanel>
+                    <xctk:ColorPicker Name="ClrPcker_Background" Margin = "5" SelectedColor="{Binding SelectedColor, Mode=TwoWay}"></xctk:ColorPicker>
+                    <Button Content="Color selected" Command="{Binding ColorSelectedCommand}" Margin="5,5,5,0"></Button>
+                </StackPanel>
+            </RibbonGroup>
         </RibbonTab>
-
-        <RibbonTab Header="Design">
-
-
-
-        </RibbonTab>
-
-
 
         <RibbonTab Header="Help">
+                
         </RibbonTab>
 
 

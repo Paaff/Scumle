@@ -22,7 +22,7 @@
     </DataTemplate>
 
     <DataTemplate DataType="{x:Type vm:UMLClassViewModel}">
-        <StackPanel Background="Gray">
+        <StackPanel Background="{Binding ShapeColor}">
             <Label Content="{Binding Name}" FontSize="12"></Label>
             <TextBox AcceptsReturn="True" TextWrapping="Wrap" />
         </StackPanel>

@@ -13,7 +13,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 namespace Scumle.ViewModel
 {
@@ -48,18 +51,21 @@ namespace Scumle.ViewModel
                 OnPropertyChanged();
             }
         }
+        public static Color SelectedColor { get; set; }
 
         public ObservableCollection<ShapeViewModel> Shapes { get; }
+        public ObservableCollection<LineViewModel> Lines { get; } = new ObservableCollection<LineViewModel>();
 
         public List<ShapeViewModel> Selected { get; } = new List<ShapeViewModel>();
 
-        public ObservableCollection<LineViewModel> Lines { get; } = new ObservableCollection<LineViewModel>();
+        public ObservableCollection<LineViewModel> CopiedLines { get; } = new ObservableCollection<LineViewModel>();
+        public List<ShapeViewModel> CopiedShapes { get; } = new List<ShapeViewModel>();
 
         public String Version { get; } = "Version 1.0.0";
         #endregion
 
         #region Commands
-
+        public RelayCommand<Canvas> ExportImageCommand { get; }
         public RelayCommand<string> ChangeZoomCommand { get; set; }
         public RelayCommand SetShapeSelectionCommand { get; }
         public RelayCommand SaveWorkspaceCommand { get; }
@@ -73,6 +79,7 @@ namespace Scumle.ViewModel
         public RelayCommand<MouseButtonEventArgs> MouseUpGridCommand { get; }
         public RelayCommand EscCommand { get; }
         public RelayCommand SelectAllCommand { get; }
+        public RelayCommand ColorSelectedCommand { get;  }
         public UndoRedoController UndoRedo = UndoRedoController.Instance;
 
 
@@ -90,6 +97,7 @@ namespace Scumle.ViewModel
 
             Lines.Add(new LineViewModel(cp1, cp2));
 
+            ExportImageCommand = new RelayCommand<Canvas>(ExportImage);
             SelectAllCommand = new RelayCommand(SelectAll);
             EscCommand = new RelayCommand(Escape);
             MouseDownGridCommand = new RelayCommand<MouseButtonEventArgs>(GridMouseDown);
@@ -101,8 +109,10 @@ namespace Scumle.ViewModel
             OpenWorkspaceCommand = new RelayCommand(OpenWorkspace);
             NewWorkspaceCommand = new RelayCommand(NewWorkspace);
             DeleteSelectedShapesCommand = new RelayCommand(DeleteSelectedShapes, HasSelectedShapes);
+            ColorSelectedCommand = new RelayCommand(ColorSelected);
             RedoCommand = UndoRedoController.Instance.RedoCommand;
             UndoCommand = UndoRedoController.Instance.UndoCommand;
+            SelectedColor = Color.FromRgb(0, 153, 255);
         }
 
        
@@ -111,10 +121,6 @@ namespace Scumle.ViewModel
         #region INotifyPropertyChanged Members
 
         public event PropertyChangedEventHandler PropertyChanged;
-
-        #endregion
-
-        #region PropetyChanged
 
         private void RaisePropertyChanged(string propertyName)
         {
@@ -231,7 +237,7 @@ namespace Scumle.ViewModel
 
         #endregion
 
-        #region Methods
+        #region undo/redo
         public void Undo()
         {
             UndoRedoController.Instance.Undo();
@@ -245,6 +251,9 @@ namespace Scumle.ViewModel
             UndoCommand.RaiseCanExecuteChanged();
             RedoCommand.RaiseCanExecuteChanged();
         }
+        #endregion
+
+        #region addShape
 
         public void SetShapeInsertion()
         {
@@ -262,12 +271,9 @@ namespace Scumle.ViewModel
                 _cursor = System.Windows.Input.Cursors.Arrow;
                 RaisePropertyChanged("Cursor");
         }
+        #endregion
 
-        public void ChangeZoom(string value)
-        {
-            Zoom = Double.Parse(value);
-        }
-
+        #region deletion
         public void DeleteSelectedShapes()
         {
             new ShapeRemoveCommand(Shapes, Lines, Selected).Execute();
@@ -291,6 +297,9 @@ namespace Scumle.ViewModel
                 }
             }
         }
+        #endregion
+
+        #region WorkSpace
 
         public void SaveWorkspace()
         {
@@ -350,6 +359,48 @@ namespace Scumle.ViewModel
         {
             Shapes.Clear();
         }
+
+        #endregion
+
+        #region methods
+        public void ColorSelected()
+        {
+            foreach (ShapeViewModel i in Selected)
+            {
+                i.ShapeColor = new SolidColorBrush(SelectedColor);
+            }
+        }
+
+        //The majority of this image conversion code is from http://stackoverflow.com/questions/4560173/save-wpf-view-as-image-preferably-png
+        public static void ExportImage(Canvas grid)
+        {
+            Size size = new Size(grid.ActualWidth, grid.ActualHeight);
+            RenderTargetBitmap img = new RenderTargetBitmap((int)size.Width, (int)size.Height, 96, 96, PixelFormats.Pbgra32);
+            DrawingVisual drawingvisual = new DrawingVisual();
+            using (DrawingContext context = drawingvisual.RenderOpen())
+            {
+                context.DrawRectangle(new VisualBrush(grid), null, new Rect(new Point(), size));
+                context.Close();
+            }
+            img.Render(drawingvisual);
+
+            SaveFileDialog save = new SaveFileDialog();
+            save.DefaultExt = ".png";
+            var fileStream = File.Create(save.FileName);
+
+            PngBitmapEncoder encoder = new PngBitmapEncoder();
+            encoder.Frames.Add(BitmapFrame.Create(img));
+            encoder.Save(fileStream);
+    
+            fileStream.Close();
+
+        }
+
+        public void ChangeZoom(string value)
+        {
+            Zoom = Double.Parse(value);
+        }
+
 
         #endregion
 

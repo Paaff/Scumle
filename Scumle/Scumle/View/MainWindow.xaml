@@ -113,7 +113,7 @@
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
-                
+
                 <!-- Lines -->
                 <ItemsControl ItemsSource="{Binding Lines}">
                     <ItemsControl.ItemsPanel>

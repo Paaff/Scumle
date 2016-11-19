@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
+using System.Windows.Media;
 
 namespace Scumle.ViewModel
 {
@@ -22,6 +23,7 @@ namespace Scumle.ViewModel
         private Point newPos;
         private Size oldSize;
         private Size newSize;
+        private Brush _shapeColor;
 
         public ICommand ShapeMoveCommand => new RelayCommand<DragDeltaEventArgs>(ShapeMoveEvent);
         public ICommand MoveStartedCommand => new RelayCommand(MoveStartedEvent);
@@ -137,6 +139,20 @@ namespace Scumle.ViewModel
             set
             {
                 _isSelected = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public Brush ShapeColor
+        {
+            get
+            {
+                return _shapeColor;
+            }
+
+            set
+            {
+                _shapeColor = value;
                 OnPropertyChanged();
             }
         }
