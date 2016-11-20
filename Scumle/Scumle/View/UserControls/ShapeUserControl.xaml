@@ -10,6 +10,11 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300"
              d:DataContext="{d:DesignInstance Type=vm:ShapeViewModel}">
+    <Thumb.Resources>
+        <ResourceDictionary>
+            <BooleanToVisibilityConverter x:Key="BoolToVis" />
+        </ResourceDictionary>
+    </Thumb.Resources>
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="DragDelta">
             <gala:EventToCommand Command="{Binding ShapeMoveCommand}" PassEventArgsToCommand="True"></gala:EventToCommand>
@@ -37,7 +42,7 @@
                 <local:ResizeThumb DragDelta="ShapeResizeS" Cursor="SizeNS" HorizontalAlignment="Center" VerticalAlignment="Bottom"></local:ResizeThumb>
                 <ContentPresenter Margin="0" Content="{Binding}" Width="{Binding Width}" Height="{Binding Height}"></ContentPresenter>
 
-                <ItemsControl ItemsSource="{Binding ConnectionPoints}" Panel.ZIndex="1">
+                <ItemsControl ItemsSource="{Binding ConnectionPoints}" Panel.ZIndex="1" Visibility="{Binding ConnectionVisibility, Converter={StaticResource BoolToVis}}">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
                             <Grid/>

@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls.Primitives;
+using System.Windows.Media;
 using System.Xml.Serialization;
 
 namespace Scumle.Model
@@ -17,13 +18,14 @@ namespace Scumle.Model
     {
         private double _width;
         private double _height;
+        private Brush _shapeColor;
                 
         public Shape(double X, double Y, String Name)
         {
             this.Width = 50;
             this.Height = 50;
-            this.X = X-Width/2;
-            this.Y = Y-Height/2;
+            this.X = X;
+            this.Y = Y;
             this.Name = Name;
          
         }
@@ -54,6 +56,19 @@ namespace Scumle.Model
             }
         }
         public String Name { get; set; }
+
+        public Brush ShapeColor
+        {
+            get
+            {
+                return _shapeColor;
+            }
+
+            set
+            {
+                _shapeColor = value;
+            }
+        }
 
         public void MoveDelta(double X, double Y)
         {

@@ -6,10 +6,11 @@
          xmlns:gala="http://www.galasoft.ch/mvvmlight"
          xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
          
-         Title="Window1"
+         Title="Scumle UML Editor"
          Height="600"
          Width="800"
-         Cursor="{Binding Cursor}">
+         Cursor="{Binding Cursor}"
+         Icon="/Images/scumle.ico">
     
     <!--<Window.Style>
     <Style TargetType="Window">
@@ -26,8 +27,10 @@
         <KeyBinding Modifiers="Ctrl" Key="O"  Command="{Binding OpenWorkspaceCommand}"></KeyBinding>
         <KeyBinding Modifiers="Ctrl" Key="S"  Command="{Binding SaveWorkspaceCommand}"></KeyBinding>
         <KeyBinding Modifiers="Ctrl" Key="N"  Command="{Binding NewWorkspaceCommand}"></KeyBinding>
+        <KeyBinding Modifiers="Ctrl" Key="A"  Command="{Binding SelectAllCommand}"></KeyBinding>
         <KeyBinding Gesture="CTRL+Z" Command="{Binding UndoCommand}"/>
         <KeyBinding Gesture="CTRL+Y" Command="{Binding RedoCommand}"/>
+        <KeyBinding Gesture="Escape" Command="{Binding EscCommand}"/>
     </Window.InputBindings>
 
     <Window.Resources>
@@ -67,7 +70,7 @@
                         <Rectangle Width="10" Height="10" Fill="YellowGreen"></Rectangle>
                     </StackPanel>
                 </Expander>
-                <Button Content="Add Connection" Command="{Binding SetShapeSelectionCommand}" Margin="5,5,5,0"></Button>
+                <Button Content="Add Connection" Command="{Binding SetLineConnectionCommand}" Margin="5,5,5,0"></Button>
             </StackPanel>
         </Border>
 
@@ -75,14 +78,22 @@
             makes it scrollable -->
         <ScrollViewer HorizontalScrollBarVisibility="Visible">
             <Grid x:Name="Diagram">
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="MouseLeftButtonUp">
-                        <gala:EventToCommand Command="{Binding AddShapeCommand}" PassEventArgsToCommand="True"/>
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
                 <Grid.LayoutTransform>
                     <ScaleTransform ScaleX="{Binding Zoom}" ScaleY="{Binding Zoom}"></ScaleTransform>
                 </Grid.LayoutTransform>
+
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="MouseLeftButtonDown">
+                        <gala:EventToCommand Command="{Binding MouseDownGridCommand}" PassEventArgsToCommand="True"/>
+                    </i:EventTrigger>
+                    <i:EventTrigger EventName="MouseMove">
+                        <gala:EventToCommand Command="{Binding MouseMoveGridCommand}" PassEventArgsToCommand="True"/>
+                    </i:EventTrigger>
+                    <i:EventTrigger EventName="MouseLeftButtonUp">
+                        <gala:EventToCommand Command="{Binding MouseUpGridCommand}" PassEventArgsToCommand="True"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+
                 <ItemsControl ItemsSource="{Binding Shapes}" Background="White" Height="750" Width="1250">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
@@ -102,7 +113,7 @@
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
-                
+
                 <!-- Lines -->
                 <ItemsControl ItemsSource="{Binding Lines}">
                     <ItemsControl.ItemsPanel>
@@ -117,8 +128,18 @@
                         </Style>
                     </ItemsControl.ItemContainerStyle>
                 </ItemsControl>
+
+                <Canvas>
+                    <Border Canvas.Left="{Binding SelectionX}" 
+                            Canvas.Top="{Binding SelectionY}" 
+                            Width="{Binding SelectionWidth}"
+                            Height="{Binding SelectionHeight}"
+                        BorderBrush="Black" BorderThickness="0.8">
+                        <Rectangle Fill="SteelBlue" Opacity=".15"/>
+                    </Border>
+                </Canvas>
             </Grid>
         </ScrollViewer>
     </DockPanel>
 
-</RibbonWindow>
+</RibbonWindow> 

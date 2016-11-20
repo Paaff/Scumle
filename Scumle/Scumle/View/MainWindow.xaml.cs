@@ -32,9 +32,13 @@ namespace Scumle.View
         {
             FrameworkElement elem = sender as FrameworkElement;
             ShapeViewModel shape = elem.DataContext as ShapeViewModel;
-            Main.SelectShape(shape);
+            bool clearSelection = true;
+            if (Keyboard.IsKeyDown(Key.LeftShift))
+            {
+                clearSelection = false;
+            }
+            Main.SelectShape(shape,clearSelection);
         }
-
     }
 
 }

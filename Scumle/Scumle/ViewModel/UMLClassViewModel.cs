@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Scumle.Model;
+using System.Windows.Media;
 
 namespace Scumle.ViewModel
 {
@@ -13,6 +14,7 @@ namespace Scumle.ViewModel
         {
             Width = 150;
             Height = 75;
+            ShapeColor = new SolidColorBrush(Color.FromRgb(0, 153, 255));
         }
                
     }
