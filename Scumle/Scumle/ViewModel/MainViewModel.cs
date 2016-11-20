@@ -31,6 +31,7 @@ namespace Scumle.ViewModel
         private ConnectionPointViewModel _connectionFrom;
         private ConnectionPointViewModel _connectionTo;
         private bool _isMouseDownOnGrid;
+        public UndoRedoController UndoRedo = UndoRedoController.Instance;
         #endregion
 
         #region Properties
@@ -67,31 +68,24 @@ namespace Scumle.ViewModel
         #endregion
 
         #region Commands
-        public RelayCommand SetLineConnectionCommand { get; }
-        public RelayCommand<Canvas> ExportImageCommand { get; }
-        public RelayCommand<string> ChangeZoomCommand { get; set; }
-        public RelayCommand SetShapeSelectionCommand { get; }
-        public RelayCommand SaveWorkspaceCommand { get; }
-        public RelayCommand OpenWorkspaceCommand { get; }
-        public RelayCommand DeleteSelectedShapesCommand { get; }
-        public RelayCommand NewWorkspaceCommand { get; }
-        public RelayCommand UndoCommand { get; }
-        public RelayCommand RedoCommand { get; }
-
-        public RelayCommand<MouseButtonEventArgs> AddShapeCommand { get; }
-
+        public ICommand SetLineConnectionCommand => new RelayCommand(SetLineConnection);
+        public ICommand ExportImageCommand => new RelayCommand<Canvas>(ExportImage);
+        public ICommand ChangeZoomCommand => new RelayCommand<string>(ChangeZoom);
+        public ICommand SetShapeSelectionCommand => new RelayCommand(SetShapeInsertion);
+        public ICommand SaveWorkspaceCommand => new RelayCommand(SaveWorkspace);
+        public ICommand OpenWorkspaceCommand => new RelayCommand(OpenWorkspace);
+        public RelayCommand DeleteSelectedShapesCommand => new RelayCommand(DeleteSelectedShapes, HasSelectedShapes);
+        public ICommand NewWorkspaceCommand => new RelayCommand(NewWorkspace);
+        public ICommand UndoCommand => UndoRedoController.Instance.UndoCommand;
+        public ICommand RedoCommand => UndoRedoController.Instance.RedoCommand;
+        public ICommand AddShapeCommand { get; } // TODO: This is not implemented?
         public ICommand LineToConnectionCommand => new RelayCommand<MouseEventArgs>(LineToConnection);
-
-        public RelayCommand<MouseButtonEventArgs> MouseDownGridCommand { get; }
-        public RelayCommand<MouseEventArgs> MouseMoveGridCommand { get; }
-        public RelayCommand<MouseButtonEventArgs> MouseUpGridCommand { get; }
-        public RelayCommand EscCommand { get; }
-        public RelayCommand SelectAllCommand { get; }
-        public RelayCommand ColorSelectedCommand { get;  }
-
-        public UndoRedoController UndoRedo = UndoRedoController.Instance;
-
-
+        public ICommand MouseDownGridCommand => new RelayCommand<MouseButtonEventArgs>(GridMouseDown);
+        public ICommand MouseMoveGridCommand => new RelayCommand<MouseEventArgs>(GridMouseMove);
+        public ICommand MouseUpGridCommand => new RelayCommand<MouseButtonEventArgs>(GridMouseUp);
+        public ICommand EscCommand => new RelayCommand(Escape);
+        public ICommand SelectAllCommand => new RelayCommand(SelectAll);
+        public ICommand ColorSelectedCommand => new RelayCommand(ColorSelected);
         #endregion
 
         #region Constructor
@@ -106,22 +100,6 @@ namespace Scumle.ViewModel
 
             Lines.Add(new LineViewModel(cp1, cp2));
 
-            SetLineConnectionCommand = new RelayCommand(SetLineConnection);
-            ExportImageCommand = new RelayCommand<Canvas>(ExportImage);
-            SelectAllCommand = new RelayCommand(SelectAll);
-            EscCommand = new RelayCommand(Escape);
-            MouseDownGridCommand = new RelayCommand<MouseButtonEventArgs>(GridMouseDown);
-            MouseMoveGridCommand = new RelayCommand<MouseEventArgs>(GridMouseMove);
-            MouseUpGridCommand = new RelayCommand<MouseButtonEventArgs>(GridMouseUp);
-            SetShapeSelectionCommand = new RelayCommand(SetShapeInsertion);
-            ChangeZoomCommand = new RelayCommand<string>(ChangeZoom);
-            SaveWorkspaceCommand = new RelayCommand(SaveWorkspace);
-            OpenWorkspaceCommand = new RelayCommand(OpenWorkspace);
-            NewWorkspaceCommand = new RelayCommand(NewWorkspace);
-            DeleteSelectedShapesCommand = new RelayCommand(DeleteSelectedShapes, HasSelectedShapes);
-            ColorSelectedCommand = new RelayCommand(ColorSelected);
-            RedoCommand = UndoRedoController.Instance.RedoCommand;
-            UndoCommand = UndoRedoController.Instance.UndoCommand;
             SelectedColor = Color.FromRgb(0, 153, 255);
         }
 
@@ -277,22 +255,6 @@ namespace Scumle.ViewModel
             }
         }
 
-        #endregion
-
-        #region undo/redo
-        public void Undo()
-        {
-            UndoRedoController.Instance.Undo();
-            UndoCommand.RaiseCanExecuteChanged();
-            RedoCommand.RaiseCanExecuteChanged();
-        }
-
-        public void Redo()
-        {
-            UndoRedoController.Instance.Redo();
-            UndoCommand.RaiseCanExecuteChanged();
-            RedoCommand.RaiseCanExecuteChanged();
-        }
         #endregion
 
         #region addShape
