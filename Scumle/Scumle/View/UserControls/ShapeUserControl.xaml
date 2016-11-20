@@ -8,7 +8,8 @@
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:gala="http://www.galasoft.ch/mvvmlight"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="300" d:DesignWidth="300"
+             d:DataContext="{d:DesignInstance Type=vm:ShapeViewModel}">
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="DragDelta">
             <gala:EventToCommand Command="{Binding ShapeMoveCommand}" PassEventArgsToCommand="True"></gala:EventToCommand>
@@ -34,6 +35,7 @@
                 <local:ResizeThumb DragDelta="ShapeResizeW" Cursor="SizeWE" HorizontalAlignment="Left" VerticalAlignment="Center"></local:ResizeThumb>
                 <local:ResizeThumb DragDelta="ShapeResizeN" Cursor="SizeNS" HorizontalAlignment="Center" VerticalAlignment="Top"></local:ResizeThumb>
                 <local:ResizeThumb DragDelta="ShapeResizeS" Cursor="SizeNS" HorizontalAlignment="Center" VerticalAlignment="Bottom"></local:ResizeThumb>
+                <ContentPresenter Margin="0" Content="{Binding}" Width="{Binding Width}" Height="{Binding Height}"></ContentPresenter>
 
                 <ItemsControl ItemsSource="{Binding ConnectionPoints}" Panel.ZIndex="1">
                     <ItemsControl.ItemsPanel>
@@ -49,14 +51,13 @@
                     </ItemsControl.ItemContainerStyle>
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <local:ConnectionPoint></local:ConnectionPoint>
+                            <local:ConnectionPoint DataContext="{Binding}"></local:ConnectionPoint>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
                 
                 
                 <!-- Dynamic content for shape-->
-                <ContentPresenter Margin="0" Content="{Binding}" Width="{Binding Width}" Height="{Binding Height}"></ContentPresenter>
             </Grid>
         </ControlTemplate>
     </Thumb.Template>

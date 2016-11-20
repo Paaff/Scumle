@@ -16,6 +16,7 @@ namespace Scumle.ViewModel
 
     public class ShapeViewModel : ViewModelBase<Shape>
     {
+        #region fields
         private bool _isSelected = false;
         private bool isResizing = false;
         private Point oldPos;
@@ -28,12 +29,14 @@ namespace Scumle.ViewModel
         public ICommand MoveCompletedCommand => new RelayCommand(MoveCompletedEvent);
         public ICommand ResizeStartedCommand => new RelayCommand(ResizeStartedEvent);
         public ICommand ResizeCompletedCommand => new RelayCommand<DragCompletedEventArgs>(ResizeCompletedEvent);
+        #endregion
 
         public ShapeViewModel(Shape shape) : base(shape)
         {
             AddInitalConnectionPoints();
         }
-        
+
+        #region Private methods
         private void ShapeMoveEvent(DragDeltaEventArgs e)
         {
             if (isResizing) return;
@@ -96,6 +99,7 @@ namespace Scumle.ViewModel
                 Horizontal = HorizontalAlignment.Right
             });
         }
+        #endregion
 
         #region Properties
         public ObservableCollection<ConnectionPointViewModel> ConnectionPoints { get; }
@@ -140,7 +144,6 @@ namespace Scumle.ViewModel
                 OnPropertyChanged();
             }
         }
-
         #endregion
 
         internal void ShapeMove(double dX, double dY)

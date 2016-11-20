@@ -25,6 +25,8 @@ namespace Scumle.ViewModel
         private bool _isAddingLine;
         private bool _isAddingShape;
         private Cursor _cursor = System.Windows.Input.Cursors.Arrow;
+        private ConnectionPointViewModel _connectionFrom;
+        private ConnectionPointViewModel _connectionTo;
         #endregion
 
         #region Properties
@@ -54,7 +56,6 @@ namespace Scumle.ViewModel
         #endregion
 
         #region Commands
-
         public RelayCommand<string> ChangeZoomCommand { get; set; }
         public RelayCommand SetShapeSelectionCommand { get; }
         public RelayCommand SaveWorkspaceCommand { get; }
@@ -65,6 +66,8 @@ namespace Scumle.ViewModel
         public RelayCommand RedoCommand { get; }
 
         public RelayCommand<MouseButtonEventArgs> AddShapeCommand { get; }
+
+        public ICommand LineToConnectionCommand => new RelayCommand<MouseEventArgs>(LineToConnection);
 
         public UndoRedoController UndoRedo = UndoRedoController.Instance;
 
@@ -103,6 +106,26 @@ namespace Scumle.ViewModel
         #endregion
 
         #region Methods
+        private void LineToConnection(MouseEventArgs e)
+        {
+            FrameworkElement source = e.Source as FrameworkElement;
+            ConnectionPointViewModel point = source.DataContext as ConnectionPointViewModel;
+            
+            if (_connectionFrom != null)
+            {
+                _connectionFrom = point;
+            }
+            else if (_connectionTo != null)
+            {
+                _connectionTo = point;
+            }
+            else
+            {
+                Lines.Add(new LineViewModel(_connectionFrom, _connectionTo));
+                _connectionFrom = null;
+                _connectionTo = null;
+            }
+        }
 
         private void RaisePropertyChanged(string propertyName)
         {

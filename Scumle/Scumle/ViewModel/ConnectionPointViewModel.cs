@@ -1,10 +1,12 @@
-﻿using Scumle.Model;
+﻿using GalaSoft.MvvmLight.CommandWpf;
+using Scumle.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Input;
 using System.Windows.Media;
 
 namespace Scumle.ViewModel
@@ -15,9 +17,16 @@ namespace Scumle.ViewModel
         private HorizontalAlignment _horizontal = HorizontalAlignment.Center;
         private VerticalAlignment _vertical = VerticalAlignment.Center;
 
+        public ICommand TestCommand => new RelayCommand(Test);
+
         public ConnectionPointViewModel(ShapeViewModel shape) : base(new ConnectionPoint())
         {
             Shape = shape;
+        }
+
+        private void Test()
+        {
+            MessageBox.Show("Test connection point");
         }
 
         public void PropertyChange()
