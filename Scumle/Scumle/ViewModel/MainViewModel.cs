@@ -31,14 +31,34 @@ namespace Scumle.ViewModel
         private ConnectionPointViewModel _connectionFrom;
         private ConnectionPointViewModel _connectionTo;
         private bool _isMouseDownOnGrid;
+        private double _selectionX;
+        private double _selectionY;
+        private double _selectionWidth;
+        private double _selectionHeight;
         public UndoRedoController UndoRedo = UndoRedoController.Instance;
         #endregion
 
         #region Properties
-        public double SelectionX { get; set; }
-        public double SelectionY { get; set; }
-        public double SelectionWidth { get; set; }
-        public double SelectionHeight { get; set; }
+        public double SelectionX
+        {
+            get { return _selectionX; }
+            set { _selectionX = value; OnPropertyChanged(); }
+        }
+        public double SelectionY
+        {
+            get { return _selectionY; }
+            set { _selectionY = value; OnPropertyChanged(); }
+        }
+        public double SelectionWidth
+        {
+            get { return _selectionWidth; }
+            set { _selectionWidth = value; OnPropertyChanged(); }
+        }
+        public double SelectionHeight
+        {
+            get { return _selectionHeight; }
+            set { _selectionHeight = value; OnPropertyChanged(); }
+        }
         private Point StartingPoint { get; set; }
         public Cursor Cursor
         {
@@ -48,12 +68,9 @@ namespace Scumle.ViewModel
         public double Zoom
         {
             get { return _zoom; }
-            set
-            {
-                _zoom = value;
-                OnPropertyChanged();
-            }
+            set { _zoom = value; OnPropertyChanged(); }
         }
+
         public static Color SelectedColor { get; set; }
 
         public ObservableCollection<ShapeViewModel> Shapes { get; }
@@ -102,15 +119,6 @@ namespace Scumle.ViewModel
 
             SelectedColor = Color.FromRgb(0, 153, 255);
         }
-
-
-
-        #endregion
-
-        #region INotifyPropertyChanged Members
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
         #endregion
 
         #region Methods
@@ -132,15 +140,6 @@ namespace Scumle.ViewModel
                 Lines.Add(new LineViewModel(_connectionFrom, _connectionTo));
                 _connectionFrom = null;
                 _connectionTo = null;
-            }
-        }
-
-        private void RaisePropertyChanged(string propertyName)
-        {
-            PropertyChangedEventHandler handler = PropertyChanged;
-            if (handler != null)
-            {
-                handler(this, new PropertyChangedEventArgs(propertyName));
             }
         }
         #endregion
@@ -219,10 +218,6 @@ namespace Scumle.ViewModel
                 SelectionY = Math.Min(StartingPoint.Y, curPos.Y);
                 SelectionHeight = Math.Abs(curPos.Y - StartingPoint.Y);
                 SelectionWidth = Math.Abs(curPos.X - StartingPoint.X);
-                RaisePropertyChanged("SelectionX");
-                RaisePropertyChanged("SelectionY");
-                RaisePropertyChanged("SelectionHeight");
-                RaisePropertyChanged("SelectionWidth");
             }
 
         }
@@ -248,10 +243,6 @@ namespace Scumle.ViewModel
                 SelectionY = 0;
                 SelectionHeight = 0;
                 SelectionWidth = 0;
-                RaisePropertyChanged("SelectionX");
-                RaisePropertyChanged("SelectionY");
-                RaisePropertyChanged("SelectionHeight");
-                RaisePropertyChanged("SelectionWidth");
             }
         }
 
@@ -263,7 +254,7 @@ namespace Scumle.ViewModel
         {
             _isAddingShape = true;
             _cursor = System.Windows.Input.Cursors.Cross;
-            RaisePropertyChanged("Cursor");
+            OnPropertyChanged("Cursor");
         }
 
         public void AddShape(MouseButtonEventArgs e)
@@ -273,7 +264,7 @@ namespace Scumle.ViewModel
                 new ShapeAddCommand(Shapes, shape).Execute();
                 _isAddingShape = false;
                 _cursor = System.Windows.Input.Cursors.Arrow;
-                RaisePropertyChanged("Cursor");
+                OnPropertyChanged("Cursor");
         }
         #endregion
 
@@ -370,7 +361,7 @@ namespace Scumle.ViewModel
         private void SetLineConnection()
         {
             _cursor = System.Windows.Input.Cursors.Cross;
-            RaisePropertyChanged("Cursor");
+            OnPropertyChanged("Cursor");
             foreach (ShapeViewModel i in Shapes)
             {
                 i.ConnectionVisibility = true;
@@ -380,7 +371,7 @@ namespace Scumle.ViewModel
         private void EndLineConnection()
         {
             _cursor = System.Windows.Input.Cursors.Arrow;
-            RaisePropertyChanged("Cursor");
+            OnPropertyChanged("Cursor");
             foreach (ShapeViewModel i in Shapes)
             {
                 i.ConnectionVisibility = false;
