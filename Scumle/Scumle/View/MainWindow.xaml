@@ -51,32 +51,46 @@
                 <Label Content="{Binding Version}" Height="25" HorizontalAlignment="Right"></Label>
             </Grid>
         </Border>
+            <Border BorderThickness="0 0 1 0" BorderBrush="Gray">
+            <ScrollViewer Margin="0,0,3,0">
+                <StackPanel DockPanel.Dock="Left" Width="175" Margin="1">
 
-        <Border BorderThickness="0 0 1 0" BorderBrush="Gray">
-            <StackPanel DockPanel.Dock="Left" Width="175" Margin="1">
-                <TextBlock Text="Shapes" IsEnabled="False" HorizontalAlignment="Center" FontSize="15"/>
-                <Separator/>
-                <Expander Header="UML">
-                    <StackPanel>
-                        <Rectangle Width="10" Height="10" Fill="YellowGreen"></Rectangle>
-                    </StackPanel>
-                </Expander>
-                <Button Content="Add Shape" Command="{Binding SetShapeSelectionCommand}" Margin="5,5,5,0"></Button>
+                    <TextBlock Text="Shapes" IsEnabled="False" HorizontalAlignment="Center" FontSize="15"/>
+                    <Separator/>
+                    <Expander Header="UML">
+                        <StackPanel>
+                            <Image Source="/Images/Shapes/uml.jpg" RenderOptions.BitmapScalingMode="Fant" Width="57" Height="57" Margin="0,2"/>
+                        </StackPanel>
+                    </Expander>
+                    <Button Content="Add Shape" Command="{Binding SetShapeSelectionCommand}" Margin="5,5,5,0"></Button>
 
-                <TextBlock Text="Connectors" IsEnabled="False" HorizontalAlignment="Center" FontSize="15" Margin="0,20,0,0"/>
-                <Separator/>
-                <Expander Header="UML">
-                    <StackPanel>
-                        <Rectangle Width="10" Height="10" Fill="YellowGreen"></Rectangle>
-                    </StackPanel>
-                </Expander>
-                <Button Content="Add Connection" Command="{Binding SetLineConnectionCommand}" Margin="5,5,5,0"></Button>
-            </StackPanel>
+                    <TextBlock Text="Connectors" IsEnabled="False" HorizontalAlignment="Center" FontSize="15" Margin="0,20,0,0"/>
+                    <Separator/>
+                    <Expander Header="Arrow Types">
+                        <StackPanel>
+                            <Image Source="/Images/Arrows/associated.jpg" RenderOptions.BitmapScalingMode="Fant" Width="57" Height="22" Margin="0,2"/>
+                            <Image Source="/Images/Arrows/dependent.jpg" RenderOptions.BitmapScalingMode="Fant" Width="57" Height="22" Margin="0,3"/>
+                            <Image Source="/Images/Arrows/inherits.jpg" RenderOptions.BitmapScalingMode="Fant" Width="57" Height="22" Margin="0,3,0,0"/>
+                            <Image Source="/Images/Arrows/has.jpg" RenderOptions.BitmapScalingMode="Fant" Width="57" Height="22" Margin="0,3"/>
+                            <Image Source="/Images/Arrows/realisation.jpg" RenderOptions.BitmapScalingMode="Fant" Width="57" Height="22" Margin="0,3"/>
+                            <Image Source="/Images/Arrows/navigate.jpg" RenderOptions.BitmapScalingMode="Fant" Width="57" Height="22" Margin="0,3,0,0"/>
+                            <Image Source="/Images/Arrows/belonging.jpg" RenderOptions.BitmapScalingMode="Fant" Width="57" Height="22" Margin="0,3"/>
+                            <Image Source="/Images/Arrows/contained.jpg" RenderOptions.BitmapScalingMode="Fant" Width="57" Height="22" Margin="0,3"/>
+                            <Image Source="/Images/Arrows/synchronous.jpg" RenderOptions.BitmapScalingMode="Fant" Width="57" Height="22" Margin="0,3"/>
+                            <Image Source="/Images/Arrows/asynchronous.jpg" RenderOptions.BitmapScalingMode="Fant" Width="57" Height="22" Margin="0,3"/>
+                        </StackPanel>
+                    </Expander>
+                    <Button Content="Add Connection" Command="{Binding SetLineConnectionCommand}" Margin="5,5,5,10"></Button>
+                </StackPanel>
+            </ScrollViewer>
         </Border>
+            
 
-        <!-- ScrollViewer wraps any element, so that if the content is bigger than the window, it 
+
+
+            <!-- ScrollViewer wraps any element, so that if the content is bigger than the window, it 
             makes it scrollable -->
-        <ScrollViewer HorizontalScrollBarVisibility="Visible">
+        <ScrollViewer HorizontalScrollBarVisibility="Visible" Margin="3,0,0,0">
             <Grid x:Name="Diagram">
                 <Grid.LayoutTransform>
                     <ScaleTransform ScaleX="{Binding Zoom}" ScaleY="{Binding Zoom}"></ScaleTransform>
