@@ -58,27 +58,49 @@
                     <TextBlock Text="Shapes" IsEnabled="False" HorizontalAlignment="Center" FontSize="15"/>
                     <Separator/>
                     <Expander Header="UML">
-                        <StackPanel>
+                        <ListBox BorderThickness="0">
+                            <ListBoxItem>
                             <Image Source="/Images/Shapes/uml.jpg" RenderOptions.BitmapScalingMode="Fant" Width="57" Height="57" Margin="0,2"/>
-                        </StackPanel>
+                            </ListBoxItem>
+                        </ListBox>
                     </Expander>
                     <Button Content="Add Shape" Command="{Binding SetShapeSelectionCommand}" Margin="5,5,5,0"></Button>
 
                     <TextBlock Text="Connectors" IsEnabled="False" HorizontalAlignment="Center" FontSize="15" Margin="0,20,0,0"/>
                     <Separator/>
                     <Expander Header="Arrow Types">
-                        <StackPanel>
+                        <ListBox BorderThickness="0">
+                            <ListBoxItem>
                             <Image Source="/Images/Arrows/associated.jpg" RenderOptions.BitmapScalingMode="Fant" Width="57" Height="22" Margin="0,2"/>
+                            </ListBoxItem>
+                            <ListBoxItem>
                             <Image Source="/Images/Arrows/dependent.jpg" RenderOptions.BitmapScalingMode="Fant" Width="57" Height="22" Margin="0,3"/>
+                            </ListBoxItem>
+                            <ListBoxItem>
                             <Image Source="/Images/Arrows/inherits.jpg" RenderOptions.BitmapScalingMode="Fant" Width="57" Height="22" Margin="0,3,0,0"/>
+                            </ListBoxItem>
+                            <ListBoxItem>
                             <Image Source="/Images/Arrows/has.jpg" RenderOptions.BitmapScalingMode="Fant" Width="57" Height="22" Margin="0,3"/>
+                            </ListBoxItem>
+                            <ListBoxItem>
                             <Image Source="/Images/Arrows/realisation.jpg" RenderOptions.BitmapScalingMode="Fant" Width="57" Height="22" Margin="0,3"/>
+                            </ListBoxItem>
+                            <ListBoxItem>
                             <Image Source="/Images/Arrows/navigate.jpg" RenderOptions.BitmapScalingMode="Fant" Width="57" Height="22" Margin="0,3,0,0"/>
+                            </ListBoxItem>
+                            <ListBoxItem>
                             <Image Source="/Images/Arrows/belonging.jpg" RenderOptions.BitmapScalingMode="Fant" Width="57" Height="22" Margin="0,3"/>
+                            </ListBoxItem>
+                            <ListBoxItem>
                             <Image Source="/Images/Arrows/contained.jpg" RenderOptions.BitmapScalingMode="Fant" Width="57" Height="22" Margin="0,3"/>
+                            </ListBoxItem>
+                            <ListBoxItem>
                             <Image Source="/Images/Arrows/synchronous.jpg" RenderOptions.BitmapScalingMode="Fant" Width="57" Height="22" Margin="0,3"/>
+                            </ListBoxItem>
+                            <ListBoxItem>
                             <Image Source="/Images/Arrows/asynchronous.jpg" RenderOptions.BitmapScalingMode="Fant" Width="57" Height="22" Margin="0,3"/>
-                        </StackPanel>
+                            </ListBoxItem>
+                        </ListBox>
                     </Expander>
                     <Button Content="Add Connection" Command="{Binding SetLineConnectionCommand}" Margin="5,5,5,10"></Button>
                 </StackPanel>
