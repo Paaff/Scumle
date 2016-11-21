@@ -53,13 +53,13 @@
             </Grid>
         </Border>
             <Border BorderThickness="0 0 1 0" BorderBrush="Gray">
-            <ScrollViewer Margin="0,0,3,0">
-                <StackPanel DockPanel.Dock="Left" Width="175" Margin="1">
+            <ScrollViewer Margin="0,0,1,0">
+                <StackPanel DockPanel.Dock="Left" Width="175" Margin="3,1">
 
                     <TextBlock Text="Shapes" IsEnabled="False" HorizontalAlignment="Center" FontSize="15"/>
                     <Separator/>
                     <Expander Header="UML">
-                        <ListBox BorderThickness="0" Template="{StaticResource NoScroll}">
+                        <ListBox BorderThickness="0" Template="{StaticResource NoScroll}" Margin="0,3">
                             <ListBoxItem>
                             <Image Source="/Images/Shapes/uml.jpg" RenderOptions.BitmapScalingMode="Fant" Width="57" Height="57" Margin="0,2"/>
                             </ListBoxItem>
@@ -69,8 +69,8 @@
 
                     <TextBlock Text="Connectors" IsEnabled="False" HorizontalAlignment="Center" FontSize="15" Margin="0,20,0,0"/>
                     <Separator/>
-                    <Expander Header="Arrow Types">
-                        <ListBox BorderThickness="0" Template="{StaticResource NoScroll}">
+                    <Expander Header="UML">
+                        <ListBox BorderThickness="0" Template="{StaticResource NoScroll}" Margin="0,3">
                             <ListBoxItem>
                             <Image Source="/Images/Arrows/associated.jpg" RenderOptions.BitmapScalingMode="Fant" Width="57" Height="22" Margin="0,2"/>
                             </ListBoxItem>
@@ -78,7 +78,7 @@
                             <Image Source="/Images/Arrows/dependent.jpg" RenderOptions.BitmapScalingMode="Fant" Width="57" Height="22" Margin="0,3"/>
                             </ListBoxItem>
                             <ListBoxItem>
-                            <Image Source="/Images/Arrows/inherits.jpg" RenderOptions.BitmapScalingMode="Fant" Width="57" Height="22" Margin="0,3,0,0"/>
+                            <Image Source="/Images/Arrows/inherits.jpg" RenderOptions.BitmapScalingMode="Fant" Width="57" Height="22" Margin="0,3"/>
                             </ListBoxItem>
                             <ListBoxItem>
                             <Image Source="/Images/Arrows/has.jpg" RenderOptions.BitmapScalingMode="Fant" Width="57" Height="22" Margin="0,3"/>
@@ -113,7 +113,7 @@
 
             <!-- ScrollViewer wraps any element, so that if the content is bigger than the window, it 
             makes it scrollable -->
-        <ScrollViewer HorizontalScrollBarVisibility="Visible" Margin="3,0,0,0">
+        <ScrollViewer HorizontalScrollBarVisibility="Visible" Margin="1,0,0,0">
             <Grid x:Name="Diagram">
                 <Grid.LayoutTransform>
                     <ScaleTransform ScaleX="{Binding Zoom}" ScaleY="{Binding Zoom}"></ScaleTransform>

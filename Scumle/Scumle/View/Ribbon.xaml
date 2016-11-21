@@ -122,8 +122,14 @@
             </RibbonGroup>
         </RibbonTab>
 
-        <RibbonTab Header="Help">
-                
+        <RibbonTab Header="About">
+            <RibbonGroup>
+            <TextBlock Margin="5,5">
+                Scumle, A Super Cheeky UML Editor, was developped by: <LineBreak/>
+                Mathias, Peter and Sebastian Ake Aaen s144463 <LineBreak/>
+                As a part of the course Windows Programming, 02350, DTU 2016
+            </TextBlock>
+            </RibbonGroup>
         </RibbonTab>
 
 
