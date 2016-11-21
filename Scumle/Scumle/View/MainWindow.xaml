@@ -21,6 +21,7 @@
         </Style.Triggers>
     </Style>
     </Window.Style>-->
+    
               
     <Window.InputBindings >
         <KeyBinding Key="Delete" Command="{Binding DeleteSelectedShapesCommand}"></KeyBinding>
@@ -58,7 +59,7 @@
                     <TextBlock Text="Shapes" IsEnabled="False" HorizontalAlignment="Center" FontSize="15"/>
                     <Separator/>
                     <Expander Header="UML">
-                        <ListBox BorderThickness="0">
+                        <ListBox BorderThickness="0" Template="{StaticResource NoScroll}">
                             <ListBoxItem>
                             <Image Source="/Images/Shapes/uml.jpg" RenderOptions.BitmapScalingMode="Fant" Width="57" Height="57" Margin="0,2"/>
                             </ListBoxItem>
@@ -69,7 +70,7 @@
                     <TextBlock Text="Connectors" IsEnabled="False" HorizontalAlignment="Center" FontSize="15" Margin="0,20,0,0"/>
                     <Separator/>
                     <Expander Header="Arrow Types">
-                        <ListBox BorderThickness="0">
+                        <ListBox BorderThickness="0" Template="{StaticResource NoScroll}">
                             <ListBoxItem>
                             <Image Source="/Images/Arrows/associated.jpg" RenderOptions.BitmapScalingMode="Fant" Width="57" Height="22" Margin="0,2"/>
                             </ListBoxItem>

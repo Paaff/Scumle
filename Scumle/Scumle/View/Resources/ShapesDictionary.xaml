@@ -27,5 +27,9 @@
             <TextBox AcceptsReturn="True" TextWrapping="Wrap" />
         </StackPanel>
     </DataTemplate>
+    <ControlTemplate x:Key="NoScroll">
+        <ItemsPresenter></ItemsPresenter>
+    </ControlTemplate>
+
 </ResourceDictionary>
     
