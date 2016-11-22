@@ -107,6 +107,9 @@
                 </i:EventTrigger>
             </i:Interaction.Triggers>
             <Grid x:Name="Diagram" Background="White" Width="1250" Height="950">
+                <Grid.LayoutTransform>
+                    <ScaleTransform ScaleX="{Binding Zoom}" ScaleY="{Binding Zoom}"></ScaleTransform>
+                </Grid.LayoutTransform>
                 <Grid.Style>
                     <Style TargetType="{x:Type Grid}">
                         <Setter Property="Cursor" Value="Arrow"></Setter>
@@ -120,9 +123,6 @@
                         </Style.Triggers>
                     </Style>
                 </Grid.Style>
-                <Grid.LayoutTransform>
-                    <ScaleTransform ScaleX="{Binding Zoom}" ScaleY="{Binding Zoom}"></ScaleTransform>
-                </Grid.LayoutTransform>
 
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="MouseWheel">
@@ -175,12 +175,13 @@
                     </ItemsControl.ItemContainerStyle>
                 </ItemsControl>
 
+                <!-- Selection -->
                 <Canvas>
                     <Border Canvas.Left="{Binding SelectionX}" 
                             Canvas.Top="{Binding SelectionY}" 
                             Width="{Binding SelectionWidth}"
                             Height="{Binding SelectionHeight}"
-                        BorderBrush="Black" BorderThickness="0.8">
+                            BorderBrush="Black" BorderThickness="0.8">
                         <Rectangle Fill="SteelBlue" Opacity=".15"/>
                     </Border>
                 </Canvas>

@@ -8,6 +8,6 @@ namespace Scumle.Model
 {
     enum ETool
     {
-        Default, ShapeTool, LineTool
+        Default, ShapeTool, LineTool, MoveTool
     }
 }

@@ -90,10 +90,11 @@
                  Zoom should also work on mouse scrolling-->
             <RibbonGroup Header="View">
                 <RibbonMenuButton Label="Zoom" LargeImageSource="/Images/Search.png">
-                    <RibbonMenuItem Header="50%" Command="{Binding ChangeZoomCommand}"
-                               CommandParameter="0,5"/>
-                    <RibbonMenuItem Header="100%" Command="{Binding ChangeZoomCommand}"
-                                    CommandParameter="1"/>
+                    <RibbonMenuItem Header="25%" Command="{Binding ChangeZoomCommand}" CommandParameter="0,25"/>
+                    <RibbonMenuItem Header="50%" Command="{Binding ChangeZoomCommand}" CommandParameter="0,5"/>
+                    <RibbonMenuItem Header="100%" Command="{Binding ChangeZoomCommand}" CommandParameter="1,0"/>
+                    <RibbonMenuItem Header="200%" Command="{Binding ChangeZoomCommand}" CommandParameter="2,0"/>
+                    <RibbonMenuItem Header="500%" Command="{Binding ChangeZoomCommand}" CommandParameter="5,0"/>
                 </RibbonMenuButton>
             </RibbonGroup>
 
