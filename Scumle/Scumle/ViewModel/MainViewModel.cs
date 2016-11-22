@@ -28,8 +28,8 @@ namespace Scumle.ViewModel
         private bool _isAddingLine;
         private bool _isAddingShape;
         private Cursor _cursor = System.Windows.Input.Cursors.Arrow;
-        private ConnectionPointViewModel _connectionFrom;
-        private ConnectionPointViewModel _connectionTo;
+        private ConnectionPointViewModel _connectionFrom = null;
+        private ConnectionPointViewModel _connectionTo = null;
         private bool _isMouseDownOnGrid;
         private double _selectionX;
         private double _selectionY;
@@ -127,19 +127,27 @@ namespace Scumle.ViewModel
             FrameworkElement source = e.Source as FrameworkElement;
             ConnectionPointViewModel point = source.DataContext as ConnectionPointViewModel;
             
-            if (_connectionFrom != null)
+            if (_connectionFrom == null)
             {
                 _connectionFrom = point;
             }
-            else if (_connectionTo != null)
+            else if (_connectionTo == null)
             {
                 _connectionTo = point;
             }
-            else
+            
+            if (_connectionFrom != null && _connectionTo != null)
             {
                 Lines.Add(new LineViewModel(_connectionFrom, _connectionTo));
                 _connectionFrom = null;
                 _connectionTo = null;
+                _cursor = System.Windows.Input.Cursors.Arrow;
+                OnPropertyChanged("Cursor");
+                foreach (ShapeViewModel i in Shapes)
+                {
+                    i.ConnectionVisibility = false;
+                }
+                _isAddingLine = false;
             }
         }
         #endregion
