@@ -166,6 +166,8 @@ namespace Scumle.ViewModel
         {
             Tool = ETool.Default;
             DeselectAllShapes();
+            _connectionFrom = null;
+            _connectionTo = null;
         }
         internal void SelectShape(ShapeViewModel shape, bool clearSelection)
         {
