@@ -13,98 +13,41 @@ namespace Scumle.ViewModel
 {
     public class ConnectionPointViewModel : ViewModelBase<ConnectionPoint>
     {
-        private ShapeViewModel _shape;
-        private HorizontalAlignment _horizontal = HorizontalAlignment.Center;
-        private VerticalAlignment _vertical = VerticalAlignment.Center;
-
-        public ICommand TestCommand => new RelayCommand(Test);
-
-        public ConnectionPointViewModel(ShapeViewModel shape) : base(new ConnectionPoint())
+        public ConnectionPointViewModel(ConnectionPoint model, ShapeViewModel shape) : base(model)
         {
+            if (shape.Model != model.Shape)
+            {
+                throw new ArgumentException("The shapeviewmodel does not wrap the shape for the connection point");
+            }
             Shape = shape;
         }
 
-        private void Test()
+        public ShapeViewModel Shape { get; set; }
+
+        public double CenterX
         {
-            MessageBox.Show("Test connection point");
+            get { return Model.CenterX; }
+        }
+
+        public double CenterY
+        {
+            get { return Model.CenterY; }
+        }
+
+        public HorizontalAlignment Horizontal
+        {
+            get { return Model.Horizontal; }
+        }
+
+        public VerticalAlignment Vertical
+        {
+            get { return Model.Vertical; }
         }
 
         public void PropertyChange()
         {
             OnPropertyChanged(nameof(CenterX));
             OnPropertyChanged(nameof(CenterY));
-        }
-
-        public double CenterX
-        {
-           get { return getCenterX(); }
-        }
-
-        public double CenterY
-        {
-            get { return getCenterY(); }
-        }
-
-        private double getCenterX()
-        {
-            if (Horizontal == HorizontalAlignment.Right)
-            {
-                return Shape.X + Shape.Width;
-            }
-            else if (Horizontal == HorizontalAlignment.Center)
-            {
-                return Shape.X + Shape.Width / 2;
-            }
-            else
-            {
-                return Shape.X;
-            }
-        }
-
-        private double getCenterY()
-        {
-            if (Vertical == VerticalAlignment.Bottom)
-            {
-                return Shape.Y + Shape.Height;
-            }
-            else if (Vertical == VerticalAlignment.Center)
-            {
-                return Shape.Y + Shape.Height / 2;
-            }
-            else
-            {
-                return Shape.Y;
-            }
-        }
-
-        public ShapeViewModel Shape
-        {
-            get { return _shape; }
-            set
-            {
-                _shape = value;
-                OnPropertyChanged();
-            }
-        }
-
-        public HorizontalAlignment Horizontal
-        {
-            get { return _horizontal; }
-            set
-            {
-                _horizontal = value;
-                OnPropertyChanged();
-            }
-        }
-
-        public VerticalAlignment Vertical
-        {
-            get { return _vertical; }
-            set
-            {
-                _vertical = value;
-                OnPropertyChanged();
-            }
         }
 
     }

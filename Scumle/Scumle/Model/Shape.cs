@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls.Primitives;
 using System.Windows.Media;
 using System.Xml.Serialization;
@@ -26,7 +27,19 @@ namespace Scumle.Model
             this.X = X;
             this.Y = Y;
             this.Name = Name;
+            InitializeConnectionPoints();
          
+        }
+
+        private void InitializeConnectionPoints()
+        {
+            ConnectionPoints = new List<ConnectionPoint>()
+            {
+                new ConnectionPoint(this, HorizontalAlignment.Center, VerticalAlignment.Top),
+                new ConnectionPoint(this, HorizontalAlignment.Left, VerticalAlignment.Center),
+                new ConnectionPoint(this, HorizontalAlignment.Right, VerticalAlignment.Center),
+                new ConnectionPoint(this, HorizontalAlignment.Center, VerticalAlignment.Bottom)
+            };
         }
 
         // For XML Serialization
@@ -35,38 +48,23 @@ namespace Scumle.Model
 
         public double X { get; set; }
         public double Y { get; set; }
-
+        public IList<ConnectionPoint> ConnectionPoints { get; private set; }
         public double Width
         {
             get { return _width; }
-            set
-            {
-                if (value < 0) return;
-                _width = value;
-            }
+            set { if (value > 0) _width = value; }
         }
         public double Height
         {
             get { return _height; }
-            set
-            {
-                if (value < 0) return;
-                _height = value;
-            }
+            set { if (value > 0) _height = value; }
         }
         public String Name { get; set; }
 
         public Brush ShapeColor
         {
-            get
-            {
-                return _shapeColor;
-            }
-
-            set
-            {
-                _shapeColor = value;
-            }
+            get { return _shapeColor; }
+            set { _shapeColor = value; }
         }
 
         public void MoveDelta(double X, double Y)

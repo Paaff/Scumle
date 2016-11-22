@@ -80,32 +80,13 @@ namespace Scumle.ViewModel
 
         private void AddInitalConnectionPoints()
         {
-            ConnectionPoints.Add(new ConnectionPointViewModel(this)
-            {
-                Vertical = VerticalAlignment.Top,
-                Horizontal = HorizontalAlignment.Center
-            });
-            ConnectionPoints.Add(new ConnectionPointViewModel(this)
-            {
-                Vertical = VerticalAlignment.Bottom,
-                Horizontal = HorizontalAlignment.Center
-            });
-            ConnectionPoints.Add(new ConnectionPointViewModel(this)
-            {
-                Vertical = VerticalAlignment.Center,
-                Horizontal = HorizontalAlignment.Left
-            });
-            ConnectionPoints.Add(new ConnectionPointViewModel(this)
-            {
-                Vertical = VerticalAlignment.Center,
-                Horizontal = HorizontalAlignment.Right
-            });
+            ConnectionPoints = new ObservableCollection<ConnectionPointViewModel>(
+                Model.ConnectionPoints.Select(c => new ConnectionPointViewModel(c, this)));
         }
         #endregion
 
         #region Properties
-        public ObservableCollection<ConnectionPointViewModel> ConnectionPoints { get; }
-            = new ObservableCollection<ConnectionPointViewModel>();
+        public ObservableCollection<ConnectionPointViewModel> ConnectionPoints { get; private set; }
 
         public double X
         {
