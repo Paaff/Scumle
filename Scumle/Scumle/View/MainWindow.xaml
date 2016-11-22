@@ -11,17 +11,7 @@
          Width="1200"
          Cursor="{Binding Cursor}"
          Icon="/Images/scumle.ico">
-    
-    <!--<Window.Style>
-    <Style TargetType="Window">
-        <Style.Triggers>
-            <DataTrigger Binding="{Binding IsAddingShape}" Value="True">
-                <Setter Property="Cursor" Value="Hand"></Setter>
-            </DataTrigger>
-        </Style.Triggers>
-    </Style>
-    </Window.Style>-->
-    
+           
               
     <Window.InputBindings >
         <KeyBinding Key="Delete" Command="{Binding DeleteSelectedShapesCommand}"></KeyBinding>
