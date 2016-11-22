@@ -12,9 +12,10 @@ namespace Scumle.ViewModel
     {
         public UMLClassViewModel(Shape shape) : base(shape)
         {
-            Width = 150;
-            Height = 75;
-            ShapeColor = new SolidColorBrush(Color.FromRgb(0, 153, 255));
+            Width = 300;
+            Height = 150;
+            ShapeColor = new SolidColorBrush(Color.FromRgb(232, 232, 232));
+            
         }
                
     }

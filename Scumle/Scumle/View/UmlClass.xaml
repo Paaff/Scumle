@@ -5,17 +5,17 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Scumle.View"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="200" d:DesignWidth="200">
     
     
     <StackPanel Background="{Binding ShapeColor}">
         
          <!-- Name of the Shape (Class Name) -->
-        <Label Content="{Binding Name}" FontSize="12" HorizontalAlignment="Center"/>
+        <TextBlock Text="{Binding Name}" FontSize="14" FontWeight="Bold" 
+                   HorizontalAlignment="Stretch"  VerticalAlignment="Stretch"  Background="IndianRed" />
         
-        <!-- Contents of the Class Diagram --> 
+        <!-- Contents of the Class Diagram -->
         <Expander Header="Fields" >
-            <ScrollViewer>
             <ListBox>
                 <ListBoxItem>
                     <StackPanel>
@@ -23,7 +23,6 @@
                     </StackPanel>
                 </ListBoxItem>
             </ListBox>
-            </ScrollViewer>
         </Expander>
         <Expander Header="Methods">
             <ListBox>

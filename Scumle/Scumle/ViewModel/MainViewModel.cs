@@ -108,7 +108,7 @@ namespace Scumle.ViewModel
         #region Constructor
         public MainViewModel(Model.Scumle scumle) : base(scumle)
         {
-            ShapeViewModel uml1 = new UMLClassViewModel(new UMLClass(200, 200, "My frist shape"));
+            ShapeViewModel uml1 = new UMLClassViewModel(new UMLClass(400, 400, "My frist shape"));
             ShapeViewModel uml2 = new UMLClassViewModel(new UMLClass(50, 50, "My second shape"));
             Shapes = new ObservableCollection<ShapeViewModel>() { uml1, uml2 };
 
