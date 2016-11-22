@@ -12,9 +12,8 @@ using System.Xml.Serialization;
 
 namespace Scumle.Model
 {
-   [XmlInclude(typeof(UMLClass))]
-   [XmlInclude(typeof(Eclipse))]
-    public class Shape
+ 
+    public class Shape : ModelBase
     {
         private double _width;
         private double _height;

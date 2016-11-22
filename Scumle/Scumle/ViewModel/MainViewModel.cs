@@ -303,12 +303,25 @@ namespace Scumle.ViewModel
             save.Filter = "(.scumle)|*.scumle";
             if (save.ShowDialog() == true)
             {
-                List<Shape> modelsToSave = new List<Shape>();
+                // List containing all models to be saved.
+                List<List<ModelBase>> modelsToSave = new List<List<ModelBase>>();
+
+                // Lists for each different type of 
+                List<ModelBase> shapesToSave = new List<ModelBase>();
+                List<ModelBase> linesToSave = new List<ModelBase>();
 
                 foreach (var ViewModel in Shapes)
                 {
-                    modelsToSave.Add(ViewModel.Model);
+                    shapesToSave.Add(ViewModel.Model);
                 }
+
+                foreach (var ViewModel in Lines)
+                {
+                    linesToSave.Add(ViewModel.Model);
+                }
+
+                modelsToSave.Add(shapesToSave);
+                modelsToSave.Add(linesToSave);
 
                 Helpers.GenericSerializer.convertToXML(modelsToSave, Path.GetFullPath(save.FileName));
             }
