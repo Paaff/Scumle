@@ -101,6 +101,11 @@
         <!-- ScrollViewer wraps any element, so that if the content is bigger than the window, it 
         makes it scrollable -->
         <ScrollViewer HorizontalScrollBarVisibility="Visible" Margin="1,0,0,0" Background="LightGray">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="PreviewMouseWheel">
+                    <gala:EventToCommand Command="{Binding ZoomCommand}" PassEventArgsToCommand="True"></gala:EventToCommand>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
             <Grid x:Name="Diagram" Background="White" Width="1250" Height="950">
                 <Grid.Style>
                     <Style TargetType="{x:Type Grid}">
@@ -120,6 +125,9 @@
                 </Grid.LayoutTransform>
 
                 <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="MouseWheel">
+                        <!--<gala:EventToCommand Command="{Binding ZoomCommand}" PassEventArgsToCommand="True"></gala:EventToCommand>-->
+                    </i:EventTrigger>
                     <i:EventTrigger EventName="MouseLeftButtonDown">
                         <gala:EventToCommand Command="{Binding MouseDownGridCommand}" PassEventArgsToCommand="True"/>
                     </i:EventTrigger>

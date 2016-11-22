@@ -26,6 +26,7 @@ namespace Scumle.ViewModel
         private ETool _tool = ETool.Default;
         private int _num = 0;
         private double _zoom = 1.0;
+        private readonly double _ZOOMFACTOR = 750;
         private ConnectionPointViewModel _connectionFrom = null;
         private ConnectionPointViewModel _connectionTo = null;
         private bool _isMouseDownOnGrid;
@@ -79,6 +80,7 @@ namespace Scumle.ViewModel
         #endregion
 
         #region Commands
+        public ICommand ZoomCommand => new RelayCommand<MouseWheelEventArgs>(ZoomEvent);
         public ICommand SetLineConnectionCommand => new RelayCommand(SetLineConnection);
         public ICommand ExportImageCommand => new RelayCommand<Canvas>(ExportImage);
         public ICommand ChangeZoomCommand => new RelayCommand<string>(ChangeZoom);
@@ -141,6 +143,13 @@ namespace Scumle.ViewModel
                 _connectionTo = null;
                 EndLineConnection();
             }
+        }
+
+        private void ZoomEvent(MouseWheelEventArgs e)
+        {
+            double change = ((double) e.Delta) / _ZOOMFACTOR;
+            Zoom *= (1.0 + change);
+            e.Handled = true;
         }
         #endregion
 
