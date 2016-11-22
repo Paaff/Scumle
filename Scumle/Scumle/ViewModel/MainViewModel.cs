@@ -26,9 +26,6 @@ namespace Scumle.ViewModel
         private ETool _tool = ETool.Default;
         private int _num = 0;
         private double _zoom = 1.0;
-        private bool _isAddingLine;
-        private bool _isAddingShape;
-        private Cursor _cursor = System.Windows.Input.Cursors.Arrow;
         private ConnectionPointViewModel _connectionFrom = null;
         private ConnectionPointViewModel _connectionTo = null;
         private bool _isMouseDownOnGrid;
@@ -66,11 +63,6 @@ namespace Scumle.ViewModel
             set { _selectionHeight = value; OnPropertyChanged(); }
         }
         private Point StartingPoint { get; set; }
-        public Cursor Cursor
-        {
-            get { return _cursor; }
-            set { _cursor = value; }
-        }
         public double Zoom
         {
             get { return _zoom; }
@@ -160,6 +152,7 @@ namespace Scumle.ViewModel
         }
         private void Escape()
         {
+            Tool = ETool.Default;
             DeselectAllShapes();
         }
         internal void SelectShape(ShapeViewModel shape, bool clearSelection)
@@ -195,21 +188,15 @@ namespace Scumle.ViewModel
         #region GridMouseEventHandling
         public void GridMouseDown(MouseButtonEventArgs e)
         {
-            if (_isAddingLine)
-            {
-                //TODO implement connection logic
-                EndLineConnection();
-            }
-            
-
-            if (!_isAddingShape && !_isAddingLine)
+            if (Tool == ETool.Default)
             {
                 DeselectAllShapes();
                 _isMouseDownOnGrid = true;
                 e.MouseDevice.Target.CaptureMouse();
                 StartingPoint = e.MouseDevice.GetPosition(e.Source as IInputElement);
             }
-            if (_isAddingShape)
+
+            if (Tool == ETool.ShapeTool)
             {
                 AddShape(e);
             }
@@ -257,19 +244,15 @@ namespace Scumle.ViewModel
 
         public void SetShapeInsertion()
         {
-            _isAddingShape = true;
-            _cursor = System.Windows.Input.Cursors.Cross;
-            OnPropertyChanged("Cursor");
+            Tool = ETool.ShapeTool;
         }
 
         public void AddShape(MouseButtonEventArgs e)
         {
             Point p = e.MouseDevice.GetPosition(e.Source as IInputElement);
             ShapeViewModel shape = new UMLClassViewModel(new Eclipse(p.X, p.Y, "My shape " + _num++));
-                new ShapeAddCommand(Shapes, shape).Execute();
-                _isAddingShape = false;
-                _cursor = System.Windows.Input.Cursors.Arrow;
-                OnPropertyChanged("Cursor");
+            new ShapeAddCommand(Shapes, shape).Execute();
+            Tool = ETool.Default;
         }
         #endregion
 
@@ -379,16 +362,10 @@ namespace Scumle.ViewModel
         private void SetLineConnection()
         {
             Tool = ETool.LineTool;
-            _cursor = System.Windows.Input.Cursors.Cross;
-            OnPropertyChanged("Cursor");
-            _isAddingLine = true;
         }
         private void EndLineConnection()
         {
             Tool = ETool.Default;
-            _cursor = System.Windows.Input.Cursors.Arrow;
-            OnPropertyChanged("Cursor");
-            _isAddingLine = false;
         }
         public void ColorSelected()
         {
