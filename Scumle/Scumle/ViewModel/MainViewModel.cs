@@ -132,7 +132,10 @@ namespace Scumle.ViewModel
             
             if (_connectionFrom != null && _connectionTo != null)
             {
-                new LineAddCommand(Lines, new LineViewModel(_connectionFrom, _connectionTo)).Execute();
+                if (_connectionFrom != _connectionTo)
+                {
+                    new LineAddCommand(Lines, new LineViewModel(_connectionFrom, _connectionTo)).Execute();
+                }
 
                 _connectionFrom = null;
                 _connectionTo = null;
@@ -401,8 +404,6 @@ namespace Scumle.ViewModel
         {
             Zoom = Double.Parse(value);
         }
-
-
         #endregion
 
     }

@@ -98,19 +98,16 @@
             </ScrollViewer>
         </Border>
             
-
-
-
-            <!-- ScrollViewer wraps any element, so that if the content is bigger than the window, it 
-            makes it scrollable -->
-        <ScrollViewer HorizontalScrollBarVisibility="Visible" Margin="1,0,0,0">
-            <Grid x:Name="Diagram">
+        <!-- ScrollViewer wraps any element, so that if the content is bigger than the window, it 
+        makes it scrollable -->
+        <ScrollViewer HorizontalScrollBarVisibility="Visible" Margin="1,0,0,0" Background="LightGray">
+            <Grid x:Name="Diagram" Background="White" Width="1250" Height="950">
                 <Grid.Style>
                     <Style TargetType="{x:Type Grid}">
                         <Setter Property="Cursor" Value="Arrow"></Setter>
                         <Style.Triggers>
                             <DataTrigger Binding="{Binding Tool}" Value="{x:Static Model:ETool.ShapeTool}">
-                                <Setter Property="Cursor" Value="Hand"></Setter>
+                                <Setter Property="Cursor" Value="Cross"></Setter>
                             </DataTrigger>
                             <DataTrigger Binding="{Binding Tool}" Value="{x:Static Model:ETool.LineTool}">
                                 <Setter Property="Cursor" Value="Pen"></Setter>
@@ -134,7 +131,7 @@
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
 
-                <ItemsControl ItemsSource="{Binding Shapes}" Background="White" Height="750" Width="1250">
+                <ItemsControl ItemsSource="{Binding Shapes}" Background="White">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
                             <Canvas/>
@@ -163,8 +160,9 @@
                     </ItemsControl.ItemsPanel>
                     <ItemsControl.ItemContainerStyle>
                         <Style TargetType="ContentPresenter">
-                            <Setter Property="Canvas.Left" Value="{Binding X}"/>
-                            <Setter Property="Canvas.Top" Value="{Binding Y}"/>
+                            <EventSetter Event="PreviewMouseLeftButtonUp" Handler="SelectShape"></EventSetter>
+                            <Setter Property="Canvas.Left" Value="{Binding CenterX}"/>
+                            <Setter Property="Canvas.Top" Value="{Binding CenterY}"/>
                         </Style>
                     </ItemsControl.ItemContainerStyle>
                 </ItemsControl>
