@@ -127,6 +127,9 @@
     <Compile Include="View\Ribbon.xaml.cs">
       <DependentUpon>Ribbon.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\UmlClass.xaml.cs">
+      <DependentUpon>UmlClass.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\UserControls\ConnectionPoint.xaml.cs">
       <DependentUpon>ConnectionPoint.xaml</DependentUpon>
     </Compile>
@@ -156,6 +159,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Ribbon.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\UmlClass.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

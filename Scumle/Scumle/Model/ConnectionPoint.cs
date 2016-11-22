@@ -8,5 +8,6 @@ namespace Scumle.Model
 {
     public class ConnectionPoint
     {
+
     }
 }
