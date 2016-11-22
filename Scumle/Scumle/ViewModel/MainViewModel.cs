@@ -23,6 +23,7 @@ namespace Scumle.ViewModel
     class MainViewModel : ViewModelBase<Model.Scumle>, INotifyPropertyChanged
     {
         #region Fields
+        private ETool _tool = ETool.Default;
         private int _num = 0;
         private double _zoom = 1.0;
         private bool _isAddingLine;
@@ -39,6 +40,11 @@ namespace Scumle.ViewModel
         #endregion
 
         #region Properties
+        public ETool Tool
+        {
+            get { return _tool; }
+            set { _tool = value; OnPropertyChanged(); }
+        }
         public double SelectionX
         {
             get { return _selectionX; }
@@ -138,13 +144,7 @@ namespace Scumle.ViewModel
 
                 _connectionFrom = null;
                 _connectionTo = null;
-                _cursor = System.Windows.Input.Cursors.Arrow;
-                OnPropertyChanged("Cursor");
-                foreach (ShapeViewModel i in Shapes)
-                {
-                    i.ConnectionVisibility = false;
-                }
-                _isAddingLine = false;
+                EndLineConnection();
             }
         }
         #endregion
@@ -378,22 +378,16 @@ namespace Scumle.ViewModel
         #region methods
         private void SetLineConnection()
         {
+            Tool = ETool.LineTool;
             _cursor = System.Windows.Input.Cursors.Cross;
             OnPropertyChanged("Cursor");
-            foreach (ShapeViewModel i in Shapes)
-            {
-                i.ConnectionVisibility = true;
-            }
             _isAddingLine = true;
         }
         private void EndLineConnection()
         {
+            Tool = ETool.Default;
             _cursor = System.Windows.Input.Cursors.Arrow;
             OnPropertyChanged("Cursor");
-            foreach (ShapeViewModel i in Shapes)
-            {
-                i.ConnectionVisibility = false;
-            }
             _isAddingLine = false;
         }
         public void ColorSelected()

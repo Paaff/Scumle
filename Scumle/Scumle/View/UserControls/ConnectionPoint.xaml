@@ -6,11 +6,22 @@
       xmlns:local="clr-namespace:Scumle.View.UserControls"
       xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
       xmlns:gala="http://www.galasoft.ch/mvvmlight"
-      xmlns:View="clr-namespace:Scumle.View" x:Class="Scumle.View.UserControls.ConnectionPoint"
+      xmlns:View="clr-namespace:Scumle.View"
+      x:Class="Scumle.View.UserControls.ConnectionPoint"
+      xmlns:Model="clr-namespace:Scumle.Model"
       mc:Ignorable="d" 
       d:DesignHeight="8" d:DesignWidth="8">
-
-    <Ellipse Width="8" Height="8" Fill="Yellow" Stroke="LightGray" StrokeThickness="1">
+    <UserControl.Style>
+        <Style TargetType="{x:Type UserControl}">
+            <Setter Property="Visibility" Value="Hidden"></Setter>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding DataContext.Tool, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type View:MainWindow}}}" Value="{x:Static Model:ETool.LineTool}">
+                    <Setter Property="Visibility" Value="Visible"></Setter>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Style>
+    <Ellipse Width="8" Height="8" Stroke="LightGray" Fill="Yellow" StrokeThickness="1">
         <i:Interaction.Triggers>
             <i:EventTrigger EventName="MouseLeftButtonDown">
                 <gala:EventToCommand Command="{Binding DataContext.LineToConnectionCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type View:MainWindow}}}" PassEventArgsToCommand="True"/>
