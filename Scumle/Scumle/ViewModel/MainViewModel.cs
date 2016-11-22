@@ -72,15 +72,11 @@ namespace Scumle.ViewModel
         }
 
         public static Color SelectedColor { get; set; }
-
         public ObservableCollection<ShapeViewModel> Shapes { get; }
         public ObservableCollection<LineViewModel> Lines { get; } = new ObservableCollection<LineViewModel>();
-
         public List<ShapeViewModel> Selected { get; } = new List<ShapeViewModel>();
-
         public ObservableCollection<LineViewModel> CopiedLines { get; } = new ObservableCollection<LineViewModel>();
         public List<ShapeViewModel> CopiedShapes { get; } = new List<ShapeViewModel>();
-
         public String Version { get; } = "Version 1.0.0";
         #endregion
 
@@ -138,7 +134,8 @@ namespace Scumle.ViewModel
             
             if (_connectionFrom != null && _connectionTo != null)
             {
-                Lines.Add(new LineViewModel(_connectionFrom, _connectionTo));
+                new LineAddCommand(Lines, new LineViewModel(_connectionFrom, _connectionTo)).Execute();
+
                 _connectionFrom = null;
                 _connectionTo = null;
                 _cursor = System.Windows.Input.Cursors.Arrow;
