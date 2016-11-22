@@ -369,10 +369,7 @@ namespace Scumle.ViewModel
         }
         public void ColorSelected()
         {
-            foreach (ShapeViewModel i in Selected)
-            {
-                i.ShapeColor = new SolidColorBrush(SelectedColor);
-            }
+            new ShapeColorCommand(Selected, new SolidColorBrush(SelectedColor)).Execute();
         }
 
         //The majority of this image conversion code is from http://stackoverflow.com/questions/4560173/save-wpf-view-as-image-preferably-png

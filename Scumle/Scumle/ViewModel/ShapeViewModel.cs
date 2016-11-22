@@ -20,10 +20,10 @@ namespace Scumle.ViewModel
         #region fields
         private bool _isSelected = false;
         private bool isResizing = false;
-        private Point oldPos;
-        private Point newPos;
-        private Size oldSize;
-        private Size newSize;
+        private System.Windows.Point oldPos;
+        private System.Windows.Point newPos;
+        private System.Windows.Size oldSize;
+        private System.Windows.Size newSize;
         private Brush _shapeColor;
 
         public ICommand ShapeMoveCommand => new RelayCommand<DragDeltaEventArgs>(ShapeMoveEvent);
@@ -47,12 +47,12 @@ namespace Scumle.ViewModel
 
         private void MoveStartedEvent()
         {
-            oldPos = new Point(X, Y);
+            oldPos = new System.Windows.Point(X, Y);
         }
 
         private void MoveCompletedEvent()
         {
-            newPos = new Point(X, Y);
+            newPos = new System.Windows.Point(X, Y);
             if (!oldPos.Equals(newPos))
             {
                 new ShapeMoveCommand(this, oldPos, newPos).Execute();
@@ -62,16 +62,16 @@ namespace Scumle.ViewModel
         private void ResizeStartedEvent()
         {
             isResizing = true;
-            oldPos = new Point(X, Y);
-            oldSize = new Size(Width, Height);
+            oldPos = new System.Windows.Point(X, Y);
+            oldSize = new System.Windows.Size(Width, Height);
         }
 
         private void ResizeCompletedEvent(DragCompletedEventArgs e)
         {
             e.Handled = true;
             isResizing = false;
-            newPos = new Point(X, Y);
-            newSize = new Size(Width, Height);
+            newPos = new System.Windows.Point(X, Y);
+            newSize = new System.Windows.Size(Width, Height);
             if (!oldSize.Equals(newSize))
             {
                 new ShapeResizeCommand(this, oldPos, newPos, oldSize, newSize).Execute();

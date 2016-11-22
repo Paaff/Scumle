@@ -114,6 +114,7 @@
     <Compile Include="Model\Shapes\UMLClass.cs" />
     <Compile Include="UndeRedo\Commands\LineAddCommand.cs" />
     <Compile Include="UndeRedo\Commands\ShapeAddCommand.cs" />
+    <Compile Include="UndeRedo\Commands\ShapeColorCommand.cs" />
     <Compile Include="UndeRedo\Commands\ShapeMoveCommand.cs" />
     <Compile Include="UndeRedo\Commands\ShapeRemoveCommand.cs" />
     <Compile Include="UndeRedo\Commands\ShapeResizeCommand.cs" />
