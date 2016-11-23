@@ -13,7 +13,7 @@ namespace Scumle.ViewModel
         private ConnectionPointViewModel _from;
         private ConnectionPointViewModel _to;
 
-        public LineViewModel(ConnectionPointViewModel from, ConnectionPointViewModel to) : base(new Line(from.Model, to.Model))
+        public LineViewModel(Line line, ConnectionPointViewModel from, ConnectionPointViewModel to) : base(line)
         {
             _from = from;
             _to = to;

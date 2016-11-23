@@ -2,7 +2,8 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:Scumle.View.Resources"
                     xmlns:ViewModel="clr-namespace:Scumle.ViewModel"
-                    xmlns:Arrows="clr-namespace:Scumle.View.Arrows">
+                    xmlns:Arrows="clr-namespace:Scumle.View.Arrows"
+                    xmlns:Lines="clr-namespace:Scumle.ViewModel.Lines">
 
     <Style x:Key="LineStyle" TargetType="Line">
         <Setter Property="X1" Value="{Binding From.CenterX}"/>
@@ -22,11 +23,17 @@
         </Setter>
     </Style>
 
-    <DataTemplate DataType="{x:Type ViewModel:LineViewModel}">
+    <DataTemplate DataType="{x:Type Lines:InheritanceViewModel}">
         <Canvas>
             <Line Style="{StaticResource LineStyle}" StrokeThickness="1" Stroke="Black"/>
             <Arrows:BasicArrow Style="{StaticResource ArrowStyle}"></Arrows:BasicArrow>
         </Canvas>
     </DataTemplate>
-    
+
+    <DataTemplate DataType="{x:Type Lines:AssociationViewModel}">
+        <Canvas>
+            <Line Style="{StaticResource LineStyle}" StrokeThickness="1" Stroke="Black"/>
+        </Canvas>
+    </DataTemplate>
+
 </ResourceDictionary>
