@@ -53,7 +53,7 @@ namespace Scumle.ViewModel
 
         public void UpdateProperties(object sender, EventArgs e)
         {
-            OnPropertyChanged("Angle");
+            OnPropertyChanged(nameof(Angle));
         }
         #endregion
     }
