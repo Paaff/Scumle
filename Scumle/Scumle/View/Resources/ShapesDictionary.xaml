@@ -7,29 +7,6 @@
                     xmlns:shapes="clr-namespace:Scumle.ViewModel.Shapes"
                     xmlns:Arrows="clr-namespace:Scumle.View.Arrows">
 
-    <Style x:Key="ShapeConnection" TargetType="Line">
-        <Setter Property="X1" Value="{Binding From.CenterX}"/>
-        <Setter Property="Y1" Value="{Binding From.CenterY}"/>
-        <Setter Property="X2" Value="{Binding To.CenterX}"/>
-        <Setter Property="Y2" Value="{Binding To.CenterY}"/>
-        <Setter Property="StrokeThickness" Value="1"/>
-        <Setter Property="Stroke" Value="Black"/>
-    </Style>
-
-    <DataTemplate DataType="{x:Type vm:LineViewModel}">
-        <Canvas>
-            <Line Style="{StaticResource ShapeConnection}"/>
-            <Arrows:BasicArrow>
-                <Arrows:BasicArrow.RenderTransform>
-                    <TransformGroup>
-                        <RotateTransform Angle="{Binding Angle}"/>
-                        <TranslateTransform X="{Binding To.CenterX}" Y="{Binding To.CenterY}"/>
-                    </TransformGroup>
-                </Arrows:BasicArrow.RenderTransform>
-            </Arrows:BasicArrow>
-        </Canvas>
-    </DataTemplate>
-
     <DataTemplate DataType="{x:Type shapes:EllipseViewModel}">
         <Ellipse Fill="{Binding ShapeColor}"/>
     </DataTemplate>
