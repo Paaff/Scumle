@@ -177,6 +177,7 @@ namespace Scumle.ViewModel
         }
         internal void SelectShape(ShapeViewModel shape, bool clearSelection)
         {
+            if (shape == null) return;
             if (clearSelection)
             {
                 DeselectAllShapes();

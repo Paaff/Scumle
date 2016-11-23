@@ -2,6 +2,7 @@
 using Scumle.Model;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,6 +22,8 @@ namespace Scumle.ViewModel
             }
             Shape = shape;
         }
+
+        public event PropertyChangedEventHandler Handler;
 
         public ShapeViewModel Shape { get; set; }
 

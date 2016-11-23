@@ -4,7 +4,8 @@
                     xmlns:vm="clr-namespace:Scumle.ViewModel"
                     xmlns:v="clr-namespace:Scumle.View"
                     xmlns:uc="clr-namespace:Scumle.View.UserControls"
-                    xmlns:shapes="clr-namespace:Scumle.ViewModel.Shapes">
+                    xmlns:shapes="clr-namespace:Scumle.ViewModel.Shapes"
+                    xmlns:Arrows="clr-namespace:Scumle.View.Arrows">
 
     <Style x:Key="ShapeConnection" TargetType="Line">
         <Setter Property="X1" Value="{Binding From.CenterX}"/>
@@ -16,7 +17,17 @@
     </Style>
 
     <DataTemplate DataType="{x:Type vm:LineViewModel}">
-        <Line Style="{StaticResource ShapeConnection}"/>
+        <Canvas>
+            <Line Style="{StaticResource ShapeConnection}"/>
+            <Arrows:BasicArrow>
+                <Arrows:BasicArrow.RenderTransform>
+                    <TransformGroup>
+                        <RotateTransform Angle="{Binding Angle}"/>
+                        <TranslateTransform X="{Binding To.CenterX}" Y="{Binding To.CenterY}"/>
+                    </TransformGroup>
+                </Arrows:BasicArrow.RenderTransform>
+            </Arrows:BasicArrow>
+        </Canvas>
     </DataTemplate>
 
     <DataTemplate DataType="{x:Type shapes:EllipseViewModel}">

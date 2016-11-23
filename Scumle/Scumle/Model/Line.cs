@@ -17,5 +17,17 @@ namespace Scumle.Model
 
         public ConnectionPoint From { get; set; }
         public ConnectionPoint To { get; set; }
+        public double Angle
+        {
+            get { return calculateAngle(); }
+        }
+
+        private double calculateAngle()
+        {
+            double dX = To.CenterX - From.CenterX;
+            double dY = To.CenterY - From.CenterY;
+
+            return Math.Atan2(dY, dX) * 180.0 / Math.PI + 90;
+        }
     }
 }
