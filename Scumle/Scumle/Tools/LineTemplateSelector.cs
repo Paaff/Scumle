@@ -14,7 +14,8 @@ namespace Scumle.Tools
     {
         /// <summary>
         /// The dictionary strictly below may be populated with line types and
-        /// data template names. These will then be looked up dynamically at runtime
+        /// data template names. These will then be looked up dynamically at runtime.
+        /// Make sure that each template names exists in LinesDictionary.xaml
         /// </summary>
         Dictionary<ELine, String> templates = new Dictionary<ELine, string>()
         {
