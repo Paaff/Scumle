@@ -104,17 +104,16 @@
     </ApplicationDefinition>
     <Compile Include="Helpers\GenericSerializer.cs" />
     <Compile Include="Model\ConnectionPoint.cs" />
+    <Compile Include="Model\ELine.cs" />
     <Compile Include="Model\ETool.cs" />
     <Compile Include="Model\Line.cs" />
-    <Compile Include="Model\Lines\Association.cs" />
-    <Compile Include="Model\Lines\Inheritance.cs" />
-    <Compile Include="Model\Lines\Realisation.cs" />
     <Compile Include="Model\ModelBase.cs" />
     <Compile Include="Model\Scumle.cs" />
     <Compile Include="Model\Shape.cs" />
     <Compile Include="Model\Shapes\Ellipse.cs" />
     <Compile Include="Model\Shapes\Rectangle.cs" />
     <Compile Include="Model\Shapes\UMLClass.cs" />
+    <Compile Include="Tools\LineTemplateSelector.cs" />
     <Compile Include="UndeRedo\Commands\LineAddCommand.cs" />
     <Compile Include="UndeRedo\Commands\ShapeAddCommand.cs" />
     <Compile Include="UndeRedo\Commands\ShapeColorCommand.cs" />
@@ -124,9 +123,6 @@
     <Compile Include="UndeRedo\UndoRedoCommand.cs" />
     <Compile Include="UndeRedo\UndoRedoController.cs" />
     <Compile Include="ViewModel\ConnectionPointViewModel.cs" />
-    <Compile Include="ViewModel\Lines\AssociationViewModel.cs" />
-    <Compile Include="ViewModel\Lines\InheritanceViewModel.cs" />
-    <Compile Include="ViewModel\Lines\RealisationViewModel.cs" />
     <Compile Include="ViewModel\LineViewModel.cs" />
     <Compile Include="ViewModel\Shapes\EllipseViewModel.cs" />
     <Compile Include="ViewModel\Shapes\RectangleViewModel.cs" />
@@ -137,7 +133,6 @@
     <Compile Include="View\Arrows\BasicArrow.xaml.cs">
       <DependentUpon>BasicArrow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Behaviour\MouseScroll.cs" />
     <Compile Include="View\Ribbon.xaml.cs">
       <DependentUpon>Ribbon.xaml</DependentUpon>
     </Compile>
@@ -288,7 +283,9 @@
   <ItemGroup>
     <Resource Include="Images\Shapes\uml.jpg" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="View\Behaviour\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.

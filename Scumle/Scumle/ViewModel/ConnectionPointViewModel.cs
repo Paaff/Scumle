@@ -23,8 +23,6 @@ namespace Scumle.ViewModel
             Shape = shape;
         }
 
-        public event PropertyChangedEventHandler Handler;
-
         public ShapeViewModel Shape { get; set; }
 
         public double CenterX

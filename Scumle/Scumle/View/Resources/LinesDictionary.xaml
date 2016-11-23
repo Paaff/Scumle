@@ -22,15 +22,21 @@
             </Setter.Value>
         </Setter>
     </Style>
+    
+    <!-- 
+        Below this point you'll find DataTemplates for every type of line in the application.
+        These templates are chosen by the LineTemplateSelector class in the Tools folder. The
+        key for every data template should math with those in the template selector.
+    -->
 
-    <DataTemplate DataType="{x:Type Lines:InheritanceViewModel}">
+    <DataTemplate x:Key="LineAssociation">
         <Canvas>
             <Line Style="{StaticResource LineStyle}" StrokeThickness="1" Stroke="Black"/>
             <Arrows:BasicArrow Style="{StaticResource ArrowStyle}"></Arrows:BasicArrow>
         </Canvas>
     </DataTemplate>
 
-    <DataTemplate DataType="{x:Type Lines:AssociationViewModel}">
+    <DataTemplate x:Key="LineInheritance">
         <Canvas>
             <Line Style="{StaticResource LineStyle}" StrokeThickness="1" Stroke="Black"/>
         </Canvas>

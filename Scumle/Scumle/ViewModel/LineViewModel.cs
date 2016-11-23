@@ -13,7 +13,7 @@ namespace Scumle.ViewModel
         private ConnectionPointViewModel _from;
         private ConnectionPointViewModel _to;
 
-        public LineViewModel(Line line, ConnectionPointViewModel from, ConnectionPointViewModel to) : base(line)
+        public LineViewModel(ELine type, ConnectionPointViewModel from, ConnectionPointViewModel to) : base(new Line(type, from.Model, to.Model))
         {
             _from = from;
             _to = to;
@@ -44,6 +44,12 @@ namespace Scumle.ViewModel
                 Model.To = value.Model;
                 OnPropertyChanged();
             }
+        }
+
+        public ELine Type
+        {
+            get { return Model.Type; }
+            set { SetValue(value); }
         }
 
         public double Angle

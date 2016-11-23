@@ -4,12 +4,13 @@ using System.Xml.Serialization;
 namespace Scumle.Model
 {
     [XmlInclude(typeof(ConnectionPoint))]
-    public abstract class Line : ModelBase
+    public class Line : ModelBase
     {
-        public Line(ConnectionPoint from, ConnectionPoint to)
+        public Line(ELine type, ConnectionPoint from, ConnectionPoint to)
         {
             From = from;
             To = to;
+            Type = type;
         }
 
         // For Serialization
@@ -17,6 +18,7 @@ namespace Scumle.Model
 
         public ConnectionPoint From { get; set; }
         public ConnectionPoint To { get; set; }
+        public ELine Type { get; set; }
         public double Angle
         {
             get { return calculateAngle(); }
