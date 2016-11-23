@@ -18,7 +18,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
-namespace Scumle.ViewModel
+namespace Scumle.ViewModel  
 {
     class MainViewModel : ViewModelBase<Model.Scumle>, INotifyPropertyChanged
     {
@@ -87,7 +87,7 @@ namespace Scumle.ViewModel
         public ICommand SetShapeSelectionCommand => new RelayCommand(SetShapeInsertion);
         public ICommand SaveWorkspaceCommand => new RelayCommand(SaveWorkspace);
         public ICommand OpenWorkspaceCommand => new RelayCommand(OpenWorkspace);
-        public RelayCommand DeleteSelectedShapesCommand => new RelayCommand(DeleteSelectedShapes, HasSelectedShapes);
+        public RelayCommand DeleteSelectedShapesCommand { get; set; }
         public ICommand NewWorkspaceCommand => new RelayCommand(NewWorkspace);
         public ICommand UndoCommand => UndoRedoController.Instance.UndoCommand;
         public ICommand RedoCommand => UndoRedoController.Instance.RedoCommand;
@@ -114,6 +114,8 @@ namespace Scumle.ViewModel
             Lines.Add(new LineViewModel(cp1, cp2));
 
             SelectedColor = Color.FromRgb(0, 153, 255);
+
+            DeleteSelectedShapesCommand = new RelayCommand(DeleteSelectedShapes, HasSelectedShapes);
         }
         #endregion
 
