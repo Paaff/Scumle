@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Xml.Serialization;
 
 namespace Scumle.Model
 {
@@ -17,8 +18,14 @@ namespace Scumle.Model
             Vertical = vertical;
         }
 
-        public HorizontalAlignment Horizontal { get; private set; }
-        public VerticalAlignment Vertical { get; private set; }
+        // For XML Serialization
+        public ConnectionPoint() { }
+
+        // Changed set to public - Maybe yes/no?
+        public HorizontalAlignment Horizontal { get; set; }
+        public VerticalAlignment Vertical { get; set; }
+
+        [XmlIgnore]
         public Shape Shape { get; private set; }
 
         public double CenterX

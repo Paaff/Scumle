@@ -129,7 +129,7 @@
     <Compile Include="View\Ribbon.xaml.cs">
       <DependentUpon>Ribbon.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\UmlClass.xaml.cs">
+    <Compile Include="View\Shapes\UmlClass.xaml.cs">
       <DependentUpon>UmlClass.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\UserControls\ConnectionPoint.xaml.cs">
@@ -164,7 +164,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\UmlClass.xaml">
+    <Page Include="View\Shapes\UmlClass.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
