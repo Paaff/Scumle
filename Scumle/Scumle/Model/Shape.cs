@@ -28,7 +28,7 @@ namespace Scumle.Model
             this.Y = Y;
             this.Name = Name;
             InitializeConnectionPoints();
-         
+            this.ShapeColor = new SolidColorBrush(Color.FromRgb(255,255,0));
         }
 
         private void InitializeConnectionPoints()

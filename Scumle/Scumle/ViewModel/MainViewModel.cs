@@ -17,6 +17,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using Scumle.ViewModel.Shapes;
 
 namespace Scumle.ViewModel  
 {
@@ -106,7 +107,10 @@ namespace Scumle.ViewModel
         {
             ShapeViewModel uml1 = new UMLClassViewModel(new UMLClass(400, 400, "My frist shape"));
             ShapeViewModel uml2 = new UMLClassViewModel(new UMLClass(50, 50, "My second shape"));
-            Shapes = new ObservableCollection<ShapeViewModel>() { uml1, uml2 };
+
+            ShapeViewModel rect1 = new RectangleViewModel(new Rectangle(200, 200, "This is a rect."));
+
+            Shapes = new ObservableCollection<ShapeViewModel>() { uml1, uml2, rect1 };
 
             ConnectionPointViewModel cp1 = uml1.ConnectionPoints.ElementAt(0);
             ConnectionPointViewModel cp2 = uml2.ConnectionPoints.ElementAt(3);
@@ -266,7 +270,9 @@ namespace Scumle.ViewModel
         public void AddShape(MouseButtonEventArgs e)
         {
             Point p = e.MouseDevice.GetPosition(e.Source as IInputElement);
-            ShapeViewModel shape = new UMLClassViewModel(new Eclipse(p.X, p.Y, "My shape " + _num++));
+
+            // THIS SHOULD NOT HAPPEN - An UMLClassViewModel should not accept an ellipse.
+            ShapeViewModel shape = new UMLClassViewModel(new Ellipse(p.X, p.Y, "My shape " + _num++));
             new ShapeAddCommand(Shapes, shape).Execute();
             Tool = ETool.Default;
         }

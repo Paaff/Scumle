@@ -6,16 +6,13 @@ using System.Threading.Tasks;
 
 namespace Scumle.Model.Shapes
 {
-    [Serializable]
-    public class Eclipse : Shape
-    {  
-
-        public Eclipse(double X, double Y, string Name) : base(X, Y, Name)
+    class Rectangle : Shape
+    {
+        public Rectangle(double X, double Y, string Name) : base(X, Y, Name)
         {
         }
 
         // For XML Serialization
-        public Eclipse() { }
-
+        public Rectangle() { }
     }
 }

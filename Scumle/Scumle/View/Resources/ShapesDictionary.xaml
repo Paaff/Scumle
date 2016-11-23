@@ -3,7 +3,8 @@
                     xmlns:local="clr-namespace:Scumle.View.Resources"
                     xmlns:vm="clr-namespace:Scumle.ViewModel"
                     xmlns:v="clr-namespace:Scumle.View"
-                    xmlns:uc="clr-namespace:Scumle.View.UserControls">
+                    xmlns:uc="clr-namespace:Scumle.View.UserControls"
+                    xmlns:shapes="clr-namespace:Scumle.ViewModel.Shapes">
 
     <Style x:Key="ShapeConnection" TargetType="Line">
         <Setter Property="X1" Value="{Binding From.CenterX}"/>
@@ -18,22 +19,18 @@
         <Line Style="{StaticResource ShapeConnection}"/>
     </DataTemplate>
 
-    <DataTemplate DataType="{x:Type vm:ShapeViewModel}">
-        <Ellipse Fill="Blue"></Ellipse>
+    <DataTemplate DataType="{x:Type shapes:EllipseViewModel}">
+        <Ellipse Fill="{Binding ShapeColor}"/>
     </DataTemplate>
 
-    <DataTemplate DataType="{x:Type vm:UMLClassViewModel}">
-      <!--  <StackPanel Background="{Binding ShapeColor}">
-            <Label Content="{Binding Name}" FontSize="12"></Label>
-            <TextBox AcceptsReturn="True" TextWrapping="Wrap" />
-        </StackPanel>-->
-        
-        
-        <v:UmlClass/>
-        
-        
-        
+    <DataTemplate DataType="{x:Type shapes:RectangleViewModel}">
+        <Rectangle Fill="{Binding ShapeColor}"/>
     </DataTemplate>
+    
+    <DataTemplate DataType="{x:Type vm:UMLClassViewModel}">
+        <v:UmlClass/>
+    </DataTemplate>
+    
     <ControlTemplate x:Key="NoScroll">
         <ItemsPresenter></ItemsPresenter>
     </ControlTemplate>
