@@ -21,11 +21,10 @@ namespace Scumle.ViewModel
         #region fields
         private bool _isSelected = false;
         private bool isResizing = false;
-        private System.Windows.Point oldPos;
-        private System.Windows.Point newPos;
-        private System.Windows.Size oldSize;
-        private System.Windows.Size newSize;
-        private Brush _shapeColor;
+        private Point oldPos;
+        private Point newPos;
+        private Size oldSize;
+        private Size newSize;
 
         public ICommand ShapeMoveCommand => new RelayCommand<DragDeltaEventArgs>(ShapeMoveEvent);
         public ICommand MoveStartedCommand => new RelayCommand(MoveStartedEvent);
@@ -63,16 +62,16 @@ namespace Scumle.ViewModel
         private void ResizeStartedEvent()
         {
             isResizing = true;
-            oldPos = new System.Windows.Point(X, Y);
-            oldSize = new System.Windows.Size(Width, Height);
+            oldPos = new Point(X, Y);
+            oldSize = new Size(Width, Height);
         }
 
         private void ResizeCompletedEvent(DragCompletedEventArgs e)
         {
             e.Handled = true;
             isResizing = false;
-            newPos = new System.Windows.Point(X, Y);
-            newSize = new System.Windows.Size(Width, Height);
+            newPos = new Point(X, Y);
+            newSize = new Size(Width, Height);
             if (!oldSize.Equals(newSize))
             {
                 new ShapeResizeCommand(this, oldPos, newPos, oldSize, newSize).Execute();
@@ -121,8 +120,8 @@ namespace Scumle.ViewModel
 
         public Brush ShapeColor
         {
-            get { return _shapeColor; }
-            set { _shapeColor = value; OnPropertyChanged(); }
+            get { return Model.ShapeColor; }
+            set { SetValue(value); }
         }
 
         public Shape Shape

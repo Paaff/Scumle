@@ -10,36 +10,25 @@ using System.Windows.Controls;
 
 namespace Scumle.Tools
 {
-    public class LineTemplateSelector : DataTemplateSelector
+    public class LineTemplateSelector : DictionaryTemplateSelector<LineViewModel, ELine>
     {
         /// <summary>
         /// The dictionary strictly below may be populated with line types and
         /// data template names. These will then be looked up dynamically at runtime.
         /// Make sure that each template names exists in LinesDictionary.xaml
         /// </summary>
-        Dictionary<ELine, String> templates = new Dictionary<ELine, string>()
+        public LineTemplateSelector() : base()
         {
-            {ELine.Association, "LineAssociation"},
-            {ELine.Inheritance, "LineInheritance"}
-        };
-
-        public override DataTemplate SelectTemplate(object item, DependencyObject container)
-        {
-            FrameworkElement element = container as FrameworkElement;
-
-            if (item is LineViewModel)
+            Templates = new Dictionary<ELine, string>()
             {
-                LineViewModel line = item as LineViewModel;
-                string templateName;
+                { ELine.Association, "LineAssociation" },
+                { ELine.Inheritance, "LineInheritance" }
+            };
+        }
 
-                if (!templates.TryGetValue(line.Type, out templateName)) {
-                    return base.SelectTemplate(item, container);
-                }
-
-                return element.FindResource(templateName) as DataTemplate;
-            }
-
-            return base.SelectTemplate(item, container);
+        public override ELine templateProperty(LineViewModel Line)
+        {
+            return Line.Type;
         }
     }
 }

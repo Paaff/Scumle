@@ -9,11 +9,13 @@
              xmlns:Model="clr-namespace:Scumle.Model"
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:gala="http://www.galasoft.ch/mvvmlight"
+             xmlns:Tools="clr-namespace:Scumle.Tools"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300"
              d:DataContext="{d:DesignInstance Type=vm:ShapeViewModel}">
     <Thumb.Resources>
         <ResourceDictionary>
+            <Tools:ShapeTemplateSelector x:Key="ShapeTemplateSelector"/>
             <BooleanToVisibilityConverter x:Key="BoolToVis" />
         </ResourceDictionary>
     </Thumb.Resources>
@@ -42,7 +44,6 @@
                 <local:ResizeThumb DragDelta="ShapeResizeW" Cursor="SizeWE" HorizontalAlignment="Left" VerticalAlignment="Center"></local:ResizeThumb>
                 <local:ResizeThumb DragDelta="ShapeResizeN" Cursor="SizeNS" HorizontalAlignment="Center" VerticalAlignment="Top"></local:ResizeThumb>
                 <local:ResizeThumb DragDelta="ShapeResizeS" Cursor="SizeNS" HorizontalAlignment="Center" VerticalAlignment="Bottom"></local:ResizeThumb>
-                <ContentPresenter Margin="0" Content="{Binding}" Width="{Binding Width}" Height="{Binding Height}"></ContentPresenter>
 
                 <ItemsControl ItemsSource="{Binding ConnectionPoints}" Panel.ZIndex="1">
                     <ItemsControl.ItemsPanel>
@@ -70,6 +71,9 @@
                 
                 
                 <!-- Dynamic content for shape-->
+                <ContentPresenter Margin="0" Content="{Binding}" Width="{Binding Width}" Height="{Binding Height}" 
+                                  ContentTemplateSelector="{StaticResource ShapeTemplateSelector}"/>
+
             </Grid>
         </ControlTemplate>
     </Thumb.Template>
