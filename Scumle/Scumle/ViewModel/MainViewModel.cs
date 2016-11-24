@@ -298,14 +298,14 @@ namespace Scumle.ViewModel
 
         public void SetShapeInsertion()
         {
-            Tool = ETool.ShapeTool;
+            Tool = ETool.ShapeTool;           
+
         }
 
         public void AddShape(MouseButtonEventArgs e)
         {
             Point p = e.MouseDevice.GetPosition(e.Source as IInputElement);
-
-            // THIS SHOULD NOT HAPPEN - An UMLClassViewModel should not accept an ellipse.
+            
             ShapeViewModel shape = new UMLClassViewModel(new UMLClass(p.X, p.Y, "My UMLClass " + _num++));
             new ShapeAddCommand(Shapes, shape).Execute();
             Tool = ETool.Default;
