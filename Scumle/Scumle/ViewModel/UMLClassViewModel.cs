@@ -19,8 +19,10 @@ namespace Scumle.ViewModel
         public ObservableCollection<string> fields;
         public ObservableCollection<string> methods;
 
-        public ICommand addFieldCommand => new RelayCommand<string>((s) => addField(s));
-        public ICommand addMethodCommand => new RelayCommand<string>((s) => addMethod(s));
+        public ICommand removeFieldCommand => new RelayCommand<string>(removeField);
+        public ICommand removeMethodCommand => new RelayCommand<string>(removeMethod);
+        public ICommand addFieldCommand => new RelayCommand(addField);
+        public ICommand addMethodCommand => new RelayCommand(addMethod);
 
         #region Constructor
         // This Constructor should be taking an UMLClass and not a Shape yes?
@@ -39,6 +41,7 @@ namespace Scumle.ViewModel
 
         #region Properties
 
+      
         public ObservableCollection<string> UMLFields
         {
             get { return fields; }
@@ -52,16 +55,26 @@ namespace Scumle.ViewModel
         }
         #endregion
 
-        private void addField(string field)
+        private void removeField(string field)
         {
-            //UMLFields.Add(field);
-            MessageBox.Show(field);
+            UMLFields.Remove(field);
+           
         }
         
-        private void addMethod(string method)
+        private void removeMethod(string method)
         {
-            //  UMLMethods.Add(method);
-            MessageBox.Show(method);
+            UMLMethods.Remove(method);
+            
+        }
+
+        private void addField()
+        {
+            UMLFields.Add("New Field .. ");
+        }
+
+        private void addMethod()
+        {
+            UMLMethods.Add("New Method .. ");
         }
       
 
