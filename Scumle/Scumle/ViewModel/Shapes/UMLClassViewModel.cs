@@ -19,7 +19,7 @@ namespace Scumle.ViewModel
 
         public ObservableCollection<ListItem> fields;
         public ObservableCollection<ListItem> methods;
-
+    
 
         public ICommand removeFieldCommand => new RelayCommand<ListItem>(removeField);
         public ICommand removeMethodCommand => new RelayCommand<ListItem>(removeMethod);
@@ -35,6 +35,7 @@ namespace Scumle.ViewModel
 
             fields = new ObservableCollection<ListItem>(Model.umlFields.Select(e => new ListItem(e)));
             methods = new ObservableCollection<ListItem>(Model.umlMethods.Select(e => new ListItem(e)));
+   
 
 
         }
@@ -42,7 +43,11 @@ namespace Scumle.ViewModel
 
         #region Properties
 
-
+        public string Name
+        {
+            get { return Model.Name; }
+            set { SetValue(value); }
+        }
         
       
         public ObservableCollection<ListItem> UMLFields
@@ -56,6 +61,8 @@ namespace Scumle.ViewModel
             get { return methods; }
             set { }
         }
+
+
         #endregion
 
         private void removeField(ListItem field)

@@ -12,11 +12,12 @@ namespace Scumle.Model.Shapes
 
         // An UML Class should carry a list of methods modelled and a list of fields modelled.
         public List<string> umlFields { get; set; }
-        public List<string> umlMethods { get; set; }
+        public List<string> umlMethods { get; set; }    
+        public string Name { get; set; }
 
 
         #region Constructor
-        public UMLClass(double X, double Y) : base(X, Y)
+        public UMLClass(double X, double Y, string Name) : base(X, Y)
         {
             umlFields = new List<string>()
             {
@@ -31,6 +32,8 @@ namespace Scumle.Model.Shapes
                 "Method2",
                 "Method3"
             };
+            this.Name = Name;
+
 
         }
         // For XML Serialization
