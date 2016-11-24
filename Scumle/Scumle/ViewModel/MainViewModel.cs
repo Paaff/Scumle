@@ -131,8 +131,8 @@ namespace Scumle.ViewModel
         #region Constructor
         public MainViewModel(Model.Scumle scumle) : base(scumle)
         {
-            IShapeViewModel uml1 = new UMLClassViewModel(new UMLClass(400, 400));
-            IShapeViewModel uml2 = new UMLClassViewModel(new UMLClass(50, 50));
+            IShapeViewModel uml1 = new UMLClassViewModel(new UMLClass(400, 400, "My Class 1"));
+            IShapeViewModel uml2 = new UMLClassViewModel(new UMLClass(50, 50, "My Class 2"));
 
             Shapes = new ObservableCollection<IShapeViewModel>() { uml1, uml2 };
 
@@ -306,8 +306,7 @@ namespace Scumle.ViewModel
         {
             Point p = e.MouseDevice.GetPosition(e.Source as IInputElement);
 
-            // THIS SHOULD NOT HAPPEN - An UMLClassViewModel should not accept an ellipse.
-            IShapeViewModel shape = new UMLClassViewModel(new UMLClass(p.X, p.Y));
+            IShapeViewModel shape = new UMLClassViewModel(new UMLClass(p.X, p.Y, "New Shape"));
             new ShapeAddCommand(Shapes, shape).Execute();
             Tool = ETool.Default;
         }
