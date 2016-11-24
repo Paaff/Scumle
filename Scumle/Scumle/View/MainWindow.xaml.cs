@@ -24,22 +24,6 @@ namespace Scumle.View
             InitializeComponent();
         }
 
-        private MainViewModel Main
-        {
-            get { return DataContext as MainViewModel; }
-        }
-
-        private void SelectShape(object sender, MouseButtonEventArgs e)
-        {
-            FrameworkElement elem = sender as FrameworkElement;
-            IShapeViewModel shape = elem.DataContext as IShapeViewModel;
-            bool clearSelection = true;
-            if (Keyboard.IsKeyDown(Key.LeftShift))
-            {
-                clearSelection = false;
-            }
-            Main.SelectShape(shape, clearSelection);
-        }
     }
 
 }

@@ -146,6 +146,9 @@
     <Compile Include="View\UserControls\ConnectionPoint.xaml.cs">
       <DependentUpon>ConnectionPoint.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\UserControls\DiagramUserControl.xaml.cs">
+      <DependentUpon>DiagramUserControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\UserControls\LineUserControl.xaml.cs">
       <DependentUpon>LineUserControl.xaml</DependentUpon>
     </Compile>
@@ -154,6 +157,9 @@
     </Compile>
     <Compile Include="View\UserControls\ShapeUserControl.xaml.cs">
       <DependentUpon>ShapeUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\UserControls\SideMenuUserControl.xaml.cs">
+      <DependentUpon>SideMenuUserControl.xaml</DependentUpon>
     </Compile>
     <Page Include="View\Arrows\BasicArrow.xaml">
       <SubType>Designer</SubType>
@@ -191,6 +197,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\UserControls\DiagramUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\UserControls\LineUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -200,6 +210,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\UserControls\ShapeUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\UserControls\SideMenuUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

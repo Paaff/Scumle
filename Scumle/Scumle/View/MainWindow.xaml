@@ -2,17 +2,16 @@
               xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
               xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
               xmlns:local="clr-namespace:Scumle.View"
-              xmlns:uc="clr-namespace:Scumle.View.UserControls"
+              xmlns:Control="clr-namespace:Scumle.View.UserControls"
               xmlns:gala="http://www.galasoft.ch/mvvmlight"
               xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
               xmlns:Model="clr-namespace:Scumle.Model"
               xmlns:Tools="clr-namespace:Scumle.Tools"
-              xmlns:v="clr-namespace:Scumle.View"
+              xmlns:View="clr-namespace:Scumle.View"
               xmlns:Preview="clr-namespace:Scumle.View.Preview"
               Title="Scumle UML Editor"
               Height="800"
               Width="1200"
-              Cursor="{Binding Cursor}"
               Icon="/Images/scumle.ico">
 
     <Window.InputBindings >
@@ -40,163 +39,16 @@
     <DockPanel LastChildFill="True">
 
         <local:Ribbon DockPanel.Dock="Top"/>
-        
+
         <Border  DockPanel.Dock="Bottom" BorderThickness="0,1,0,0" BorderBrush="Black">
             <Grid>
                 <TextBlock VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2"> Status / Error Message</TextBlock>
                 <Label Content="{Binding Version}" Height="25" HorizontalAlignment="Right"></Label>
             </Grid>
         </Border>
-            <Border BorderThickness="0 0 1 0" BorderBrush="Gray">
-            <ScrollViewer Margin="0,0,1,0">
-                <StackPanel DockPanel.Dock="Left" Width="175" Margin="3,1">
+        <Control:SideMenuUserControl DockPanel.Dock="Left" Width="225"></Control:SideMenuUserControl>
 
-                    <TextBlock Text="Shapes" IsEnabled="False" HorizontalAlignment="Center" FontSize="15"/>
-                    <Separator/>
-                    <Expander Header="UML Figures">
-                        <ListBox BorderThickness="0" ItemsSource="{Binding Source={x:Static Preview:ShapesPreview.List}}">
-                            <ListBox.ItemTemplate>
-                                <DataTemplate>
-                                    <Viewbox StretchDirection="Both" Stretch="Uniform" Width="50" Height="50">
-                                        <ContentPresenter Width="100" Height="100" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="{Binding}" ContentTemplateSelector="{StaticResource ShapeTemplateSelector}"></ContentPresenter>
-                                    </Viewbox>
-                                </DataTemplate>
-                            </ListBox.ItemTemplate>
-                        </ListBox>
-                    </Expander>
-                    <Button Content="Add Shape" Command="{Binding SetShapeSelectionCommand}" Margin="5,5,5,0"></Button>
-
-                    <TextBlock Text="Connectors" IsEnabled="False" HorizontalAlignment="Center" FontSize="15" Margin="0,20,0,0"/>
-                    <Separator/>
-                    <Expander Header="UML Connectors">
-                        <ListBox BorderThickness="0" Template="{StaticResource NoScroll}" Margin="0,3">
-                            <ListBoxItem>
-                            <Image Source="/Images/Arrows/associated.jpg" RenderOptions.BitmapScalingMode="Fant" Width="57" Height="22" Margin="0,2"/>
-                            </ListBoxItem>
-                            <ListBoxItem>
-                            <Image Source="/Images/Arrows/dependent.jpg" RenderOptions.BitmapScalingMode="Fant" Width="57" Height="22" Margin="0,3"/>
-                            </ListBoxItem>
-                            <ListBoxItem>
-                            <Image Source="/Images/Arrows/inherits.jpg" RenderOptions.BitmapScalingMode="Fant" Width="57" Height="22" Margin="0,3"/>
-                            </ListBoxItem>
-                            <ListBoxItem>
-                            <Image Source="/Images/Arrows/has.jpg" RenderOptions.BitmapScalingMode="Fant" Width="57" Height="22" Margin="0,3"/>
-                            </ListBoxItem>
-                            <ListBoxItem>
-                            <Image Source="/Images/Arrows/realisation.jpg" RenderOptions.BitmapScalingMode="Fant" Width="57" Height="22" Margin="0,3"/>
-                            </ListBoxItem>
-                            <ListBoxItem>
-                            <Image Source="/Images/Arrows/navigate.jpg" RenderOptions.BitmapScalingMode="Fant" Width="57" Height="22" Margin="0,3,0,0"/>
-                            </ListBoxItem>
-                            <ListBoxItem>
-                            <Image Source="/Images/Arrows/belonging.jpg" RenderOptions.BitmapScalingMode="Fant" Width="57" Height="22" Margin="0,3"/>
-                            </ListBoxItem>
-                            <ListBoxItem>
-                            <Image Source="/Images/Arrows/contained.jpg" RenderOptions.BitmapScalingMode="Fant" Width="57" Height="22" Margin="0,3"/>
-                            </ListBoxItem>
-                            <ListBoxItem>
-                            <Image Source="/Images/Arrows/synchronous.jpg" RenderOptions.BitmapScalingMode="Fant" Width="57" Height="22" Margin="0,3"/>
-                            </ListBoxItem>
-                            <ListBoxItem>
-                            <Image Source="/Images/Arrows/asynchronous.jpg" RenderOptions.BitmapScalingMode="Fant" Width="57" Height="22" Margin="0,3"/>
-                            </ListBoxItem>
-                        </ListBox>
-                    </Expander>
-                    <Button Content="Add Connection" Command="{Binding SetLineConnectionCommand}" Margin="5,5,5,10"></Button>
-                </StackPanel>
-            </ScrollViewer>
-        </Border>
-            
-        <!-- ScrollViewer wraps any element, so that if the content is bigger than the window, it 
-        makes it scrollable -->
-        <ScrollViewer HorizontalScrollBarVisibility="Visible" Margin="1,0,0,0" Background="LightGray">
-            <i:Interaction.Triggers>
-                <i:EventTrigger EventName="PreviewMouseWheel">
-                    <gala:EventToCommand Command="{Binding ZoomCommand}" PassEventArgsToCommand="True"></gala:EventToCommand>
-                </i:EventTrigger>
-            </i:Interaction.Triggers>
-            <Grid x:Name="Diagram" Background="White" Width="1250" Height="950">
-                <Grid.LayoutTransform>
-                    <ScaleTransform ScaleX="{Binding Zoom}" ScaleY="{Binding Zoom}"></ScaleTransform>
-                </Grid.LayoutTransform>
-                <Grid.Style>
-                    <Style TargetType="{x:Type Grid}">
-                        <Setter Property="Cursor" Value="Arrow"></Setter>
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding Tool}" Value="{x:Static Model:ETool.ShapeTool}">
-                                <Setter Property="Cursor" Value="Cross"></Setter>
-                            </DataTrigger>
-                            <DataTrigger Binding="{Binding Tool}" Value="{x:Static Model:ETool.LineTool}">
-                                <Setter Property="Cursor" Value="Pen"></Setter>
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </Grid.Style>
-
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="PreviewMouseWheel">
-                        <!--<gala:EventToCommand Command="{Binding ZoomCommand}" PassEventArgsToCommand="True"></gala:EventToCommand>-->
-                    </i:EventTrigger>
-                    <i:EventTrigger EventName="MouseLeftButtonDown">
-                        <gala:EventToCommand Command="{Binding MouseDownGridCommand}" PassEventArgsToCommand="True"/>
-                    </i:EventTrigger>
-                    <i:EventTrigger EventName="PreviewMouseMove">
-                        <gala:EventToCommand Command="{Binding MouseMoveGridCommand}" PassEventArgsToCommand="True"/>
-                    </i:EventTrigger>
-                    <i:EventTrigger EventName="MouseLeftButtonUp">
-                        <gala:EventToCommand Command="{Binding MouseUpGridCommand}" PassEventArgsToCommand="True"/>
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
-
-                <ItemsControl ItemsSource="{Binding Shapes}" Background="White">
-                    <ItemsControl.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <Canvas/>
-                        </ItemsPanelTemplate>
-                    </ItemsControl.ItemsPanel>
-                    <ItemsControl.ItemContainerStyle>
-                        <Style TargetType="ContentPresenter">
-                            <EventSetter Event="PreviewMouseLeftButtonUp" Handler="SelectShape"></EventSetter>
-                            <Setter Property="Canvas.Left" Value="{Binding X}"/>
-                            <Setter Property="Canvas.Top" Value="{Binding Y}"/>
-                        </Style>
-                    </ItemsControl.ItemContainerStyle>
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <uc:ShapeUserControl></uc:ShapeUserControl>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
-
-                <!-- Lines -->
-                <ItemsControl ItemsSource="{Binding Lines}" ItemTemplateSelector="{StaticResource LineTemplateSelector}">
-                    <ItemsControl.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <Canvas/>
-                        </ItemsPanelTemplate>
-                    </ItemsControl.ItemsPanel>
-                    <ItemsControl.ItemContainerStyle>
-                        <Style TargetType="ContentPresenter">
-                            <EventSetter Event="PreviewMouseLeftButtonUp" Handler="SelectShape"></EventSetter>
-                            <Setter Property="Canvas.Left" Value="{Binding CenterX}"/>
-                            <Setter Property="Canvas.Top" Value="{Binding CenterY}"/>
-                        </Style>
-                    </ItemsControl.ItemContainerStyle>
-                </ItemsControl>
-
-                <!-- Selection and temp line -->
-                <Canvas IsHitTestVisible="False">
-                    <Border Canvas.Left="{Binding SelectionX}" 
-                            Canvas.Top="{Binding SelectionY}" 
-                            Width="{Binding SelectionWidth}"
-                            Height="{Binding SelectionHeight}"
-                            BorderBrush="Black" BorderThickness="0.8">
-                        <Rectangle Fill="SteelBlue" Opacity=".15"/>
-                    </Border>
-                    <Line Stroke="#33FF33" X1="{Binding ConnectionX1}" Y1="{Binding ConnectionY1}" X2="{Binding ConnectionX2}" Y2="{Binding ConnectionY2}" StrokeThickness="2"/>
-                </Canvas>
-            </Grid>
-        </ScrollViewer>
+        <Control:DiagramUserControl></Control:DiagramUserControl>
     </DockPanel>
 
 </RibbonWindow> 

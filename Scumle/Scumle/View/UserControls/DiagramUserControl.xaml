@@ -1,0 +1,108 @@
+﻿<UserControl x:Class="Scumle.View.UserControls.DiagramUserControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Scumle.View.UserControls"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:gala="http://www.galasoft.ch/mvvmlight"
+             xmlns:Model="clr-namespace:Scumle.Model"
+             xmlns:Tools="clr-namespace:Scumle.Tools"
+             mc:Ignorable="d" 
+             d:DesignHeight="250" d:DesignWidth="450">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <Tools:LineTemplateSelector x:Key="LineTemplateSelector"/>
+            <Tools:ShapeTemplateSelector x:Key="ShapeTemplateSelector"/>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    
+    <ScrollViewer HorizontalScrollBarVisibility="Visible" Margin="1,0,0,0" Background="LightGray">
+        <i:Interaction.Triggers>
+            <i:EventTrigger EventName="PreviewMouseWheel">
+                <gala:EventToCommand Command="{Binding ZoomCommand}" PassEventArgsToCommand="True"></gala:EventToCommand>
+            </i:EventTrigger>
+        </i:Interaction.Triggers>
+        <Grid x:Name="Diagram" Background="White" Width="1250" Height="950">
+            <Grid.LayoutTransform>
+                <ScaleTransform ScaleX="{Binding Zoom}" ScaleY="{Binding Zoom}"></ScaleTransform>
+            </Grid.LayoutTransform>
+            <Grid.Style>
+                <Style TargetType="{x:Type Grid}">
+                    <Setter Property="Cursor" Value="Arrow"></Setter>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Tool}" Value="{x:Static Model:ETool.ShapeTool}">
+                            <Setter Property="Cursor" Value="Cross"></Setter>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Tool}" Value="{x:Static Model:ETool.LineTool}">
+                            <Setter Property="Cursor" Value="Pen"></Setter>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Grid.Style>
+
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="PreviewMouseWheel">
+                    <!--<gala:EventToCommand Command="{Binding ZoomCommand}" PassEventArgsToCommand="True"></gala:EventToCommand>-->
+                </i:EventTrigger>
+                <i:EventTrigger EventName="MouseLeftButtonDown">
+                    <gala:EventToCommand Command="{Binding MouseDownGridCommand}" PassEventArgsToCommand="True"/>
+                </i:EventTrigger>
+                <i:EventTrigger EventName="PreviewMouseMove">
+                    <gala:EventToCommand Command="{Binding MouseMoveGridCommand}" PassEventArgsToCommand="True"/>
+                </i:EventTrigger>
+                <i:EventTrigger EventName="MouseLeftButtonUp">
+                    <gala:EventToCommand Command="{Binding MouseUpGridCommand}" PassEventArgsToCommand="True"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+
+            <ItemsControl ItemsSource="{Binding Shapes}" Background="White">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <Canvas/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemContainerStyle>
+                    <Style TargetType="ContentPresenter">
+                        <EventSetter Event="PreviewMouseLeftButtonUp" Handler="SelectShape"></EventSetter>
+                        <Setter Property="Canvas.Left" Value="{Binding X}"/>
+                        <Setter Property="Canvas.Top" Value="{Binding Y}"/>
+                    </Style>
+                </ItemsControl.ItemContainerStyle>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <local:ShapeUserControl></local:ShapeUserControl>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+
+            <!-- Lines -->
+            <ItemsControl ItemsSource="{Binding Lines}" ItemTemplateSelector="{StaticResource LineTemplateSelector}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <Canvas/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemContainerStyle>
+                    <Style TargetType="ContentPresenter">
+                        <EventSetter Event="PreviewMouseLeftButtonUp" Handler="SelectShape"></EventSetter>
+                        <Setter Property="Canvas.Left" Value="{Binding CenterX}"/>
+                        <Setter Property="Canvas.Top" Value="{Binding CenterY}"/>
+                    </Style>
+                </ItemsControl.ItemContainerStyle>
+            </ItemsControl>
+
+            <!-- Selection and temp line -->
+            <Canvas IsHitTestVisible="False">
+                <Border Canvas.Left="{Binding SelectionX}" 
+                            Canvas.Top="{Binding SelectionY}" 
+                            Width="{Binding SelectionWidth}"
+                            Height="{Binding SelectionHeight}"
+                            BorderBrush="Black" BorderThickness="0.8">
+                    <Rectangle Fill="SteelBlue" Opacity=".15"/>
+                </Border>
+                <Line Stroke="#33FF33" X1="{Binding ConnectionX1}" Y1="{Binding ConnectionY1}" X2="{Binding ConnectionX2}" Y2="{Binding ConnectionY2}" StrokeThickness="2"/>
+            </Canvas>
+        </Grid>
+    </ScrollViewer>
+</UserControl>

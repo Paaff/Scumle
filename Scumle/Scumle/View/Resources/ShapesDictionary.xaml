@@ -14,14 +14,10 @@
     <DataTemplate x:Key="RectangleTemplate">
         <Rectangle Fill="{Binding ShapeColor}"/>
     </DataTemplate>
-    
+
     <DataTemplate DataType="{x:Type vm:UMLClassViewModel}">
         <v:UmlClass/>
     </DataTemplate>
-    
-    <ControlTemplate x:Key="NoScroll">
-        <ItemsPresenter></ItemsPresenter>
-    </ControlTemplate>
 
 </ResourceDictionary>
     
