@@ -139,7 +139,7 @@ namespace Scumle.ViewModel
             ConnectionPointViewModel cp1 = uml1.ConnectionPoints.ElementAt(0);
             ConnectionPointViewModel cp2 = uml2.ConnectionPoints.ElementAt(3);
 
-            Lines.Add(new LineViewModel(cp1, cp2));
+            Lines.Add(new LineViewModel(ELine.Inheritance, cp1, cp2));
 
             SelectedColor = Color.FromRgb(0, 153, 255);
 
@@ -171,8 +171,8 @@ namespace Scumle.ViewModel
             {
                 if (_connectionFrom != _connectionTo)
                 {
-                    new LineAddCommand(Lines, new LineViewModel(_connectionFrom, _connectionTo)).Execute();
 
+                    new LineAddCommand(Lines, new LineViewModel(ELine.Association, _connectionFrom, _connectionTo)).Execute();
                 }
 
                 EndLineConnection();

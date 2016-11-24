@@ -26,7 +26,6 @@ namespace Scumle.ViewModel
 
         private Brush _shapeColor;
         public event PropertyChangedEventHandler Handler;
-
         public ShapeViewModel Shape { get; set; }
 
         public Brush ShapeColor

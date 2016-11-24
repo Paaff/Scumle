@@ -6,7 +6,15 @@
              xmlns:local="clr-namespace:Scumle.View.UserControls"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
-    <Grid>
-            
-    </Grid>
+    <UserControl.Resources>
+        <Style x:Key="ShapeConnection" TargetType="Line">
+            <Setter Property="X1" Value="{Binding From.CenterX}"/>
+            <Setter Property="Y1" Value="{Binding From.CenterY}"/>
+            <Setter Property="X2" Value="{Binding To.CenterX}"/>
+            <Setter Property="Y2" Value="{Binding To.CenterY}"/>
+        </Style>
+    </UserControl.Resources>
+    <Canvas>
+        <ContentPresenter Content="{Binding}"></ContentPresenter>
+    </Canvas>
 </UserControl>
