@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Scumle.Model.Shapes
 {
-    class BasicShape : Shape
+    public class BasicShape : Shape
     {
         public BasicShape(EBasicShape type, double X, double Y) : base(X,Y)
         {
@@ -14,5 +14,8 @@ namespace Scumle.Model.Shapes
         }
 
         public EBasicShape Type { get; set; }
+
+        // For Serialization
+        public BasicShape() { }
     }
 }

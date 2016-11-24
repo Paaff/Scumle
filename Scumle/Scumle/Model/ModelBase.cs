@@ -9,6 +9,7 @@ using Scumle.Model.Shapes;
 namespace Scumle.Model
 {
     [Serializable]
+    [XmlInclude(typeof(BasicShape))]
     [XmlInclude(typeof(UMLClass))]
     [XmlInclude(typeof(Line))]
     public class ModelBase
