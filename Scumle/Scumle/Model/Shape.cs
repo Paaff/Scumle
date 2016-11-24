@@ -18,7 +18,6 @@ namespace Scumle.Model
     {
         private double _width;
         private double _height;
-        private Brush _shapeColor;
                 
         public Shape(double X, double Y)
         {
@@ -27,7 +26,7 @@ namespace Scumle.Model
             this.X = X;
             this.Y = Y;
             InitializeConnectionPoints();
-            this.ShapeColor = new SolidColorBrush(Color.FromRgb(255,255,0));
+            this.ShapeColor = new SolidColorBrush(Color.FromRgb(0,0,0));
         }
 
         private void InitializeConnectionPoints()
@@ -44,7 +43,6 @@ namespace Scumle.Model
         // For XML Serialization
         public Shape() { }
 
-
         public double X { get; set; }
         public double Y { get; set; }
 
@@ -60,11 +58,7 @@ namespace Scumle.Model
             set { if (value > 0) _height = value; }
         }
 
-        public Brush ShapeColor
-        {
-            get { return _shapeColor; }
-            set { _shapeColor = value; }
-        }
+        public Brush ShapeColor { get; set; }
 
         public void MoveDelta(double X, double Y)
         {

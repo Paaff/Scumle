@@ -16,12 +16,10 @@ namespace Scumle.ViewModel
     {
         public ConnectionPointViewModel(ConnectionPoint model, IShapeViewModel shape) : base(model)
         {
-            /*
-            if (shape.Model != model.Shape)
+            if (shape.Shape != model.Shape)
             {
                 throw new ArgumentException("The shapeviewmodel does not wrap the shape for the connection point");
             }
-            */
             Shape = shape;
             ShapeColor = new SolidColorBrush(Color.FromRgb(47, 79, 79));
         }

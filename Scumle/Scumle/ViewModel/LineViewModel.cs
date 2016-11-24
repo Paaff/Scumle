@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Scumle.ViewModel
 {
-    class LineViewModel : ViewModelBase<Line>
+    public class LineViewModel : ViewModelBase<Line>
     {
         private ConnectionPointViewModel _from;
         private ConnectionPointViewModel _to;

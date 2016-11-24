@@ -25,7 +25,6 @@ namespace Scumle.ViewModel
         private System.Windows.Point newPos;
         private System.Windows.Size oldSize;
         private System.Windows.Size newSize;
-        private Brush _shapeColor;
 
         public ICommand ShapeMoveCommand => new RelayCommand<DragDeltaEventArgs>(ShapeMoveEvent);
         public ICommand MoveStartedCommand => new RelayCommand(MoveStartedEvent);
@@ -121,8 +120,8 @@ namespace Scumle.ViewModel
 
         public Brush ShapeColor
         {
-            get { return _shapeColor; }
-            set { _shapeColor = value; OnPropertyChanged(); }
+            get { return Model.ShapeColor; }
+            set { SetValue(value); }
         }
 
         public Shape Shape

@@ -133,8 +133,10 @@ namespace Scumle.ViewModel
         {
             IShapeViewModel uml1 = new UMLClassViewModel(new UMLClass(400, 400));
             IShapeViewModel uml2 = new UMLClassViewModel(new UMLClass(50, 50));
+            IShapeViewModel shape1 = new BasicShapeViewModel(new BasicShape(EBasicShape.Ellipse, 400, 50));
+            IShapeViewModel shape2 = new BasicShapeViewModel(new BasicShape(EBasicShape.Rectangle, 50, 400));
 
-            Shapes = new ObservableCollection<IShapeViewModel>() { uml1, uml2 };
+            Shapes = new ObservableCollection<IShapeViewModel>() { uml1, uml2, shape1, shape2 };
 
             Shapes.Add(uml1);
 
