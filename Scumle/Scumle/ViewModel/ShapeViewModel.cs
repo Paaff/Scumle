@@ -41,7 +41,7 @@ namespace Scumle.ViewModel
         #region Private methods
         private void ShapeMoveEvent(DragDeltaEventArgs e)
         {
-            if (isResizing) return;
+            if (isResizing || MainViewModel._tool == ETool.LineTool) return;
             ShapeMove(e.HorizontalChange, e.VerticalChange);
         } 
 

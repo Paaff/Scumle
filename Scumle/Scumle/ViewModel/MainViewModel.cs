@@ -24,7 +24,7 @@ namespace Scumle.ViewModel
     class MainViewModel : ViewModelBase<Model.Scumle>, INotifyPropertyChanged
     {
         #region Fields
-        private ETool _tool = ETool.Default;
+        public static ETool _tool = ETool.Default;
         private int _num = 0;
         private double _zoom = 1.0;
         private readonly double _ZOOMFACTOR = 750;
@@ -444,7 +444,7 @@ namespace Scumle.ViewModel
         }
 
         //The majority of this image conversion code is from http://stackoverflow.com/questions/4560173/save-wpf-view-as-image-preferably-png
-        public static void ExportImage(Canvas grid)
+        public void ExportImage(Canvas grid)
         {
             Size size = new Size(grid.ActualWidth, grid.ActualHeight);
             RenderTargetBitmap img = new RenderTargetBitmap((int)size.Width, (int)size.Height, 96, 96, PixelFormats.Pbgra32);
