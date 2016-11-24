@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Media;
 using System.Xml.Serialization;
 
 namespace Scumle.Model
@@ -16,7 +17,9 @@ namespace Scumle.Model
             Shape = _shape;
             Horizontal = horizontal;
             Vertical = vertical;
+            this.ShapeColor = new SolidColorBrush(Color.FromRgb(47, 79, 79));
         }
+        private Brush _shapeColor;
 
         // For XML Serialization
         public ConnectionPoint() { }
@@ -28,6 +31,12 @@ namespace Scumle.Model
         [XmlIgnore]
         public Shape Shape { get; private set; }
 
+        public Brush ShapeColor
+        {
+            get { return _shapeColor; }
+            set { _shapeColor = value; }
+        }
+
         public double CenterX
         {
             get { return getCenterX(); }
@@ -37,6 +46,7 @@ namespace Scumle.Model
         {
             get { return getCenterY(); }
         }
+
 
         private double getCenterX()
         {

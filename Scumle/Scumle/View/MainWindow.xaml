@@ -125,13 +125,13 @@
                 </Grid.Style>
 
                 <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="MouseWheel">
+                    <i:EventTrigger EventName="PreviewMouseWheel">
                         <!--<gala:EventToCommand Command="{Binding ZoomCommand}" PassEventArgsToCommand="True"></gala:EventToCommand>-->
                     </i:EventTrigger>
                     <i:EventTrigger EventName="MouseLeftButtonDown">
                         <gala:EventToCommand Command="{Binding MouseDownGridCommand}" PassEventArgsToCommand="True"/>
                     </i:EventTrigger>
-                    <i:EventTrigger EventName="MouseMove">
+                    <i:EventTrigger EventName="PreviewMouseMove">
                         <gala:EventToCommand Command="{Binding MouseMoveGridCommand}" PassEventArgsToCommand="True"/>
                     </i:EventTrigger>
                     <i:EventTrigger EventName="MouseLeftButtonUp">
@@ -175,8 +175,8 @@
                     </ItemsControl.ItemContainerStyle>
                 </ItemsControl>
 
-                <!-- Selection -->
-                <Canvas>
+                <!-- Selection and temp line -->
+                <Canvas IsHitTestVisible="False">
                     <Border Canvas.Left="{Binding SelectionX}" 
                             Canvas.Top="{Binding SelectionY}" 
                             Width="{Binding SelectionWidth}"
@@ -184,6 +184,7 @@
                             BorderBrush="Black" BorderThickness="0.8">
                         <Rectangle Fill="SteelBlue" Opacity=".15"/>
                     </Border>
+                    <Line Stroke="#33FF33" X1="{Binding ConnectionX1}" Y1="{Binding ConnectionY1}" X2="{Binding ConnectionX2}" Y2="{Binding ConnectionY2}" StrokeThickness="2"/>
                 </Canvas>
             </Grid>
         </ScrollViewer>

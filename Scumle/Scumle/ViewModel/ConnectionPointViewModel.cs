@@ -21,11 +21,27 @@ namespace Scumle.ViewModel
                 throw new ArgumentException("The shapeviewmodel does not wrap the shape for the connection point");
             }
             Shape = shape;
+            ShapeColor = new SolidColorBrush(Color.FromRgb(47, 79, 79));
         }
 
+        private Brush _shapeColor;
         public event PropertyChangedEventHandler Handler;
 
         public ShapeViewModel Shape { get; set; }
+
+        public Brush ShapeColor
+        {
+            get
+            {
+                return _shapeColor;
+            }
+
+            set
+            {
+                _shapeColor = value;
+                OnPropertyChanged();
+            }
+        }
 
         public double CenterX
         {

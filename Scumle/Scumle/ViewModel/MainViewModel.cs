@@ -35,6 +35,12 @@ namespace Scumle.ViewModel
         private double _selectionY;
         private double _selectionWidth;
         private double _selectionHeight;
+        private double _connectionX1=0;
+        private double _connectionY1=0;
+        private double _connectionX2=0;
+        private double _connectionY2=0;
+        private bool _isOneConnectedPoint = false;
+
         public UndoRedoController UndoRedo = UndoRedoController.Instance;
         #endregion
 
@@ -43,6 +49,26 @@ namespace Scumle.ViewModel
         {
             get { return _tool; }
             set { _tool = value; OnPropertyChanged(); }
+        }
+        public double ConnectionX1
+        {
+            get { return _connectionX1; }
+            set { _connectionX1 = value; OnPropertyChanged(); }
+        }
+        public double ConnectionY1
+        {
+            get { return _connectionY1; }
+            set { _connectionY1 = value; OnPropertyChanged(); }
+        }
+        public double ConnectionX2
+        {
+            get { return _connectionX2; }
+            set { _connectionX2 = value; OnPropertyChanged(); }
+        }
+        public double ConnectionY2
+        {
+            get { return _connectionY2; }
+            set { _connectionY2 = value; OnPropertyChanged(); }
         }
         public double SelectionX
         {
@@ -108,9 +134,7 @@ namespace Scumle.ViewModel
             ShapeViewModel uml1 = new UMLClassViewModel(new UMLClass(400, 400, "My frist shape"));
             ShapeViewModel uml2 = new UMLClassViewModel(new UMLClass(50, 50, "My second shape"));
 
-            ShapeViewModel rect1 = new RectangleViewModel(new Rectangle(200, 200, "This is a rect."));
-
-            Shapes = new ObservableCollection<ShapeViewModel>() { uml1, uml2, rect1 };
+            Shapes = new ObservableCollection<ShapeViewModel>() { uml1, uml2 };
 
             ConnectionPointViewModel cp1 = uml1.ConnectionPoints.ElementAt(0);
             ConnectionPointViewModel cp2 = uml2.ConnectionPoints.ElementAt(3);
@@ -132,6 +156,11 @@ namespace Scumle.ViewModel
             if (_connectionFrom == null)
             {
                 _connectionFrom = point;
+                _connectionFrom.ShapeColor = new SolidColorBrush(Color.FromRgb(51, 255, 51));
+                _isOneConnectedPoint = true;
+                ConnectionX1 = _connectionFrom.CenterX;
+                ConnectionY1 = _connectionFrom.CenterY;
+                
             }
             else if (_connectionTo == null)
             {
@@ -143,10 +172,9 @@ namespace Scumle.ViewModel
                 if (_connectionFrom != _connectionTo)
                 {
                     new LineAddCommand(Lines, new LineViewModel(_connectionFrom, _connectionTo)).Execute();
+
                 }
 
-                _connectionFrom = null;
-                _connectionTo = null;
                 EndLineConnection();
             }
         }
@@ -172,8 +200,7 @@ namespace Scumle.ViewModel
         {
             Tool = ETool.Default;
             DeselectAllShapes();
-            _connectionFrom = null;
-            _connectionTo = null;
+            EndLineConnection();
         }
         internal void SelectShape(ShapeViewModel shape, bool clearSelection)
         {
@@ -232,10 +259,16 @@ namespace Scumle.ViewModel
                 SelectionHeight = Math.Abs(curPos.Y - StartingPoint.Y);
                 SelectionWidth = Math.Abs(curPos.X - StartingPoint.X);
             }
+            else if(_isOneConnectedPoint)
+            {
+                ConnectionX2 = curPos.X;
+                ConnectionY2 = curPos.Y;
+            }
 
         }
         public void GridMouseUp(MouseButtonEventArgs e)
         {
+
             if (_isMouseDownOnGrid)
             {
                 Point endingPoint = e.MouseDevice.GetPosition(e.Source as IInputElement);
@@ -388,6 +421,21 @@ namespace Scumle.ViewModel
         }
         private void EndLineConnection()
         {
+            if (_connectionFrom != null)
+            {
+                _connectionFrom.ShapeColor = new SolidColorBrush(Color.FromRgb(47, 79, 79));
+            }
+            if(_connectionTo != null)
+            {
+                _connectionTo.ShapeColor = new SolidColorBrush(Color.FromRgb(47, 79, 79));
+            }
+            _connectionFrom = null;
+            _connectionTo = null;
+            _isOneConnectedPoint = false;
+            ConnectionX1 = 0;
+            ConnectionX2 = 0;
+            ConnectionY1 = 0;
+            ConnectionY2 = 0;
             Tool = ETool.Default;
         }
         public void ColorSelected()

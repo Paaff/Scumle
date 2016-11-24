@@ -18,5 +18,7 @@ namespace Scumle.Model.Shapes
         // For XML Serialization
         public UMLClass() { }
 
+        
+
     }
 }

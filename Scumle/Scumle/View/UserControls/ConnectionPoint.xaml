@@ -22,11 +22,22 @@
             </Style.Triggers>
         </Style>
     </UserControl.Style>
-    <Ellipse Width="8" Height="8" Stroke="LightGray" Fill="Yellow" StrokeThickness="1">
+    <Ellipse Width="12" Height="12" Fill="{Binding ShapeColor}" StrokeThickness="2">
         <i:Interaction.Triggers>
             <i:EventTrigger EventName="MouseLeftButtonDown">
                 <gala:EventToCommand Command="{Binding DataContext.LineToConnectionCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type View:MainWindow}}}" PassEventArgsToCommand="True"/>
             </i:EventTrigger>
         </i:Interaction.Triggers>
+        <Ellipse.Style>
+            <Style>
+                <Setter Property="Ellipse.Stroke" Value="Black" />
+                <Style.Triggers>
+                    <Trigger Property="Ellipse.IsMouseOver" Value="True">
+                        <Setter Property="Ellipse.Stroke" Value="#33FF33">
+                        </Setter>
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+        </Ellipse.Style>
     </Ellipse>
 </UserControl>
