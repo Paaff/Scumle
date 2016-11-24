@@ -8,6 +8,7 @@
               xmlns:Model="clr-namespace:Scumle.Model"
               xmlns:Tools="clr-namespace:Scumle.Tools"
               xmlns:v="clr-namespace:Scumle.View"
+              xmlns:Preview="clr-namespace:Scumle.View.Preview"
               Title="Scumle UML Editor"
               Height="800"
               Width="1200"
@@ -28,6 +29,7 @@
     <Window.Resources>
         <ResourceDictionary>
             <Tools:LineTemplateSelector x:Key="LineTemplateSelector"/>
+            <Tools:ShapeTemplateSelector x:Key="ShapeTemplateSelector"/>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Resources/ShapesDictionary.xaml"/>
                 <ResourceDictionary Source="Resources/LinesDictionary.xaml"/>
@@ -52,10 +54,14 @@
                     <TextBlock Text="Shapes" IsEnabled="False" HorizontalAlignment="Center" FontSize="15"/>
                     <Separator/>
                     <Expander Header="UML Figures">
-                        <ListBox BorderThickness="0" Template="{StaticResource NoScroll}" Margin="0,3">
-                            <ListBoxItem>
-                                <Image Source="/Images/Shapes/UMLClass.PNG" RenderOptions.BitmapScalingMode="Fant" />
-                            </ListBoxItem>                           
+                        <ListBox BorderThickness="0" ItemsSource="{Binding Source={x:Static Preview:ShapesPreview.List}}">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <Viewbox StretchDirection="Both" Stretch="Uniform" Width="50" Height="50">
+                                        <ContentPresenter Width="100" Height="100" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="{Binding}" ContentTemplateSelector="{StaticResource ShapeTemplateSelector}"></ContentPresenter>
+                                    </Viewbox>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
                         </ListBox>
                     </Expander>
                     <Button Content="Add Shape" Command="{Binding SetShapeSelectionCommand}" Margin="5,5,5,0"></Button>
