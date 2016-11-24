@@ -16,11 +16,11 @@ namespace Scumle.ViewModel
     public class UMLClassViewModel : ShapeViewModel
     {
 
-        public ObservableCollection<string> fields;
-        public ObservableCollection<string> methods;
+        public ObservableCollection<ListItem> fields;
+        public ObservableCollection<ListItem> methods;
 
-        public ICommand removeFieldCommand => new RelayCommand<string>(removeField);
-        public ICommand removeMethodCommand => new RelayCommand<string>(removeMethod);
+        public ICommand removeFieldCommand => new RelayCommand<ListItem>(removeField);
+        public ICommand removeMethodCommand => new RelayCommand<ListItem>(removeMethod);
         public ICommand addFieldCommand => new RelayCommand(addField);
         public ICommand addMethodCommand => new RelayCommand(addMethod);
 
@@ -32,8 +32,8 @@ namespace Scumle.ViewModel
             Height = 150;
             ShapeColor = new SolidColorBrush(Color.FromRgb(232, 232, 232));
 
-            fields = new ObservableCollection<string>(uml.umlFields);
-            methods = new ObservableCollection<string>(uml.umlMethods);
+          //  fields = new ObservableCollection<ListItem>(e => );
+          //  methods = new ObservableCollection<ListItem>(uml.umlMethods);
 
 
         }
@@ -41,27 +41,28 @@ namespace Scumle.ViewModel
 
         #region Properties
 
+        
       
-        public ObservableCollection<string> UMLFields
+        public ObservableCollection<ListItem> UMLFields
         {
             get { return fields; }
             set { }
         }
 
-        public ObservableCollection<string> UMLMethods
+        public ObservableCollection<ListItem> UMLMethods
         {
             get { return methods; }
             set { }
         }
         #endregion
 
-        private void removeField(string field)
+        private void removeField(ListItem field)
         {
             UMLFields.Remove(field);
            
         }
         
-        private void removeMethod(string method)
+        private void removeMethod(ListItem method)
         {
             UMLMethods.Remove(method);
             
@@ -69,15 +70,23 @@ namespace Scumle.ViewModel
 
         private void addField()
         {
-            UMLFields.Add("New Field .. ");
+            UMLFields.Add(new ListItem { ListValue = "New Field .. " });
         }
 
         private void addMethod()
         {
-            UMLMethods.Add("New Method .. ");
+            UMLMethods.Add(new ListItem { ListValue = "New Method .. " });
         }
-      
 
+
+
+
+        #region ListItemClass
+        public class ListItem
+        {
+            public string ListValue { get; set; }
+        }
+        #endregion
 
     }
 }
