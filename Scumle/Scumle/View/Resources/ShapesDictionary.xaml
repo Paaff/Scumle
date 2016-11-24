@@ -6,7 +6,7 @@
                     xmlns:uc="clr-namespace:Scumle.View.UserControls"
                     xmlns:shapes="clr-namespace:Scumle.ViewModel.Shapes"
                     xmlns:Arrows="clr-namespace:Scumle.View.Arrows">
-
+    <!--
     <DataTemplate DataType="{x:Type shapes:EllipseViewModel}">
         <Ellipse Fill="{Binding ShapeColor}"/>
     </DataTemplate>
@@ -14,6 +14,7 @@
     <DataTemplate DataType="{x:Type shapes:RectangleViewModel}">
         <Rectangle Fill="{Binding ShapeColor}"/>
     </DataTemplate>
+    -->
     
     <DataTemplate DataType="{x:Type vm:UMLClassViewModel}">
         <v:UmlClass/>

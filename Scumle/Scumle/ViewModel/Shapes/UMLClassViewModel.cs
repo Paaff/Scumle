@@ -13,33 +13,35 @@ using System.Windows;
 
 namespace Scumle.ViewModel
 {
-    public class UMLClassViewModel : ShapeViewModel
+    public class UMLClassViewModel : ShapeViewModel<UMLClass>
     {
+
 
         public ObservableCollection<ListItem> fields;
         public ObservableCollection<ListItem> methods;
+
 
         public ICommand removeFieldCommand => new RelayCommand<ListItem>(removeField);
         public ICommand removeMethodCommand => new RelayCommand<ListItem>(removeMethod);
         public ICommand addFieldCommand => new RelayCommand(addField);
         public ICommand addMethodCommand => new RelayCommand(addMethod);
 
-        #region Constructor
-        // This Constructor should be taking an UMLClass and not a Shape yes?
+        #region Constructor  
         public UMLClassViewModel(UMLClass uml) : base(uml)
         {
             Width = 300;
             Height = 150;
             ShapeColor = new SolidColorBrush(Color.FromRgb(232, 232, 232));
 
-          //  fields = new ObservableCollection<ListItem>(e => );
-          //  methods = new ObservableCollection<ListItem>(uml.umlMethods);
+            fields = new ObservableCollection<ListItem>(Model.umlFields.Select(e => new ListItem(e)));
+            methods = new ObservableCollection<ListItem>(Model.umlMethods.Select(e => new ListItem(e)));
 
 
         }
         #endregion
 
         #region Properties
+
 
         
       
@@ -59,7 +61,6 @@ namespace Scumle.ViewModel
         private void removeField(ListItem field)
         {
             UMLFields.Remove(field);
-           
         }
         
         private void removeMethod(ListItem method)
@@ -70,21 +71,25 @@ namespace Scumle.ViewModel
 
         private void addField()
         {
-            UMLFields.Add(new ListItem { ListValue = "New Field .. " });
+            UMLFields.Add(new ListItem("New Field .."));
         }
 
         private void addMethod()
         {
-            UMLMethods.Add(new ListItem { ListValue = "New Method .. " });
+            UMLMethods.Add(new ListItem("New Method .."));
         }
-
-
 
 
         #region ListItemClass
         public class ListItem
         {
             public string ListValue { get; set; }
+
+           
+            public ListItem(string s)
+            {
+                ListValue = s;
+            }
         }
         #endregion
 

@@ -1,4 +1,5 @@
-﻿using Scumle.ViewModel;
+﻿using Scumle.Model;
+using Scumle.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -11,23 +12,23 @@ namespace Scumle.UndeRedo.Commands
 {
     class ShapeColorCommand : UndoRedoCommand
     {
-        List<ShapeViewModel> shapes;
-        Dictionary<ShapeViewModel, Brush> old_colors;
+        List<IShapeViewModel> shapes;
+        Dictionary<IShapeViewModel, Brush> old_colors;
         Brush newcolor;
-        public ShapeColorCommand(List<ShapeViewModel> _shapes, Brush _color)
+        public ShapeColorCommand(List<IShapeViewModel> _shapes, Brush _color)
         {
             shapes = _shapes.ToList();
             newcolor = _color;
-            old_colors = new Dictionary<ShapeViewModel, Brush>();
+            old_colors = new Dictionary<IShapeViewModel, Brush>();
 
-            foreach (ShapeViewModel shape in shapes)
+            foreach (IShapeViewModel shape in shapes)
             {
                 old_colors.Add(shape, shape.ShapeColor);
             }
         }
         public override void Redo()
         {
-            foreach (ShapeViewModel shape in shapes)
+            foreach (IShapeViewModel shape in shapes)
             {
                 shape.ShapeColor = newcolor;
             }
@@ -35,7 +36,7 @@ namespace Scumle.UndeRedo.Commands
 
         public override void Undo()
         {
-            foreach (ShapeViewModel shape in shapes)
+            foreach (IShapeViewModel shape in shapes)
             {
                 Brush old_color;
                 if (old_colors.TryGetValue(shape, out old_color))

@@ -9,7 +9,7 @@
       xmlns:View="clr-namespace:Scumle.View"
       x:Class="Scumle.View.UserControls.ConnectionPoint"
       xmlns:Model="clr-namespace:Scumle.Model"
-      mc:Ignorable="d" 
+      mc:Ignorable="d"
       d:DesignHeight="8" d:DesignWidth="8">
     <UserControl.Style>
         <Style TargetType="{x:Type UserControl}">

@@ -10,7 +10,6 @@ namespace Scumle.Model
 {
     [Serializable]
     [XmlInclude(typeof(UMLClass))]
-    [XmlInclude(typeof(Ellipse))]
     [XmlInclude(typeof(Line))]
     public class ModelBase
     {

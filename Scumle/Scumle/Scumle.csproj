@@ -104,14 +104,14 @@
     </ApplicationDefinition>
     <Compile Include="Helpers\GenericSerializer.cs" />
     <Compile Include="Model\ConnectionPoint.cs" />
+    <Compile Include="Model\EBasicShape.cs" />
     <Compile Include="Model\ELine.cs" />
     <Compile Include="Model\ETool.cs" />
     <Compile Include="Model\Line.cs" />
     <Compile Include="Model\ModelBase.cs" />
     <Compile Include="Model\Scumle.cs" />
     <Compile Include="Model\Shape.cs" />
-    <Compile Include="Model\Shapes\Ellipse.cs" />
-    <Compile Include="Model\Shapes\Rectangle.cs" />
+    <Compile Include="Model\Shapes\BasicShape.cs" />
     <Compile Include="Model\Shapes\UMLClass.cs" />
     <Compile Include="Tools\LineTemplateSelector.cs" />
     <Compile Include="UndeRedo\Commands\LineAddCommand.cs" />
@@ -123,10 +123,10 @@
     <Compile Include="UndeRedo\UndoRedoCommand.cs" />
     <Compile Include="UndeRedo\UndoRedoController.cs" />
     <Compile Include="ViewModel\ConnectionPointViewModel.cs" />
+    <Compile Include="ViewModel\IShapeViewModel.cs" />
     <Compile Include="ViewModel\LineViewModel.cs" />
-    <Compile Include="ViewModel\Shapes\EllipseViewModel.cs" />
-    <Compile Include="ViewModel\Shapes\RectangleViewModel.cs" />
-    <Compile Include="ViewModel\UMLClassViewModel.cs" />
+    <Compile Include="ViewModel\Shapes\BasicShapeViewModel.cs" />
+    <Compile Include="ViewModel\Shapes\UMLClassViewModel.cs" />
     <Compile Include="ViewModel\ShapeViewModel.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />

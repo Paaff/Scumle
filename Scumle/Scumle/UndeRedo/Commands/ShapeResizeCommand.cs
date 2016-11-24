@@ -1,4 +1,5 @@
-﻿using Scumle.ViewModel;
+﻿using Scumle.Model;
+using Scumle.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,14 +9,15 @@ using System.Windows;
 
 namespace Scumle.UndeRedo.Commands
 {
-    class ShapeResizeCommand : UndoRedoCommand
+    public class ShapeResizeCommand : UndoRedoCommand
     {
-        ShapeViewModel shape;
+        IShapeViewModel shape;
         Point oldpos;
         Point newpos;
         Size oldsize;
         Size newsize;
-        public ShapeResizeCommand(ShapeViewModel _shape, Point _oldpos, Point _newpos, Size _oldsize, Size _newsize)
+
+        public ShapeResizeCommand(IShapeViewModel _shape, Point _oldpos, Point _newpos, Size _oldsize, Size _newsize)
         {
             shape = _shape;
             oldpos = _oldpos;

@@ -1,4 +1,5 @@
-﻿using Scumle.ViewModel;
+﻿using Scumle.Model;
+using Scumle.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,11 +11,11 @@ namespace Scumle.UndeRedo.Commands
 {
     class ShapeMoveCommand : UndoRedoCommand
     {
-        ShapeViewModel shape;
+        IShapeViewModel shape;
         Point oldPos;
         Point newPos;
 
-        public ShapeMoveCommand(ShapeViewModel _shape, Point _oldPos, Point _newPos)
+        public ShapeMoveCommand(IShapeViewModel _shape, Point _oldPos, Point _newPos)
         {
             shape = _shape;
             oldPos = _oldPos;

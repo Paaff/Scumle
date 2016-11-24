@@ -1,4 +1,5 @@
-﻿using Scumle.ViewModel;
+﻿using Scumle.Model;
+using Scumle.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +14,6 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Scumle.View.UserControls
 {
@@ -28,9 +28,9 @@ namespace Scumle.View.UserControls
             InitializeComponent();
         }
 
-        private ShapeViewModel Shape
+        private IShapeViewModel Shape
         {
-            get { return DataContext as ShapeViewModel; }
+            get { return DataContext as IShapeViewModel; }
         }
 
         private void ShapeMove(object sender, DragDeltaEventArgs e)

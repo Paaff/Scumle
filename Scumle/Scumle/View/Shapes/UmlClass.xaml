@@ -21,7 +21,7 @@
                 <ListBox ItemsSource="{Binding UMLFields, Mode=TwoWay}" x:Name="UMLFields">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
-                            <TextBox Text="{Binding .}"/>
+                            <TextBox Text="{Binding ListValue}"/>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                 </ListBox> 
@@ -33,7 +33,13 @@
         </Expander>
         <Expander Header="Methods">
             <StackPanel Orientation="Vertical">
-                <ListBox ItemsSource="{Binding UMLFields, Mode=TwoWay}" x:Name="UMLMethods"/>
+                <ListBox ItemsSource="{Binding UMLMethods, Mode=TwoWay}" x:Name="UMLMethods">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBox Text="{Binding ListValue}"/>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
                 <Button Content="Added new Method" Command="{Binding addMethodCommand}"/>
                 <Button Content="Delete Method" Command="{Binding removeMethodCommand}"  CommandParameter="{Binding ElementName=UMLMethods, Path=SelectedItem}"/>
             </StackPanel>
