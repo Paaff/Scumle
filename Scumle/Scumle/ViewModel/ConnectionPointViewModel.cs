@@ -14,19 +14,20 @@ namespace Scumle.ViewModel
 {
     public class ConnectionPointViewModel : ViewModelBase<ConnectionPoint>
     {
-        public ConnectionPointViewModel(ConnectionPoint model, ShapeViewModel shape) : base(model)
+        public ConnectionPointViewModel(ConnectionPoint model, IShapeViewModel shape) : base(model)
         {
+            /*
             if (shape.Model != model.Shape)
             {
                 throw new ArgumentException("The shapeviewmodel does not wrap the shape for the connection point");
             }
+            */
             Shape = shape;
             ShapeColor = new SolidColorBrush(Color.FromRgb(47, 79, 79));
         }
 
         private Brush _shapeColor;
-        public event PropertyChangedEventHandler Handler;
-        public ShapeViewModel Shape { get; set; }
+        public IShapeViewModel Shape { get; set; }
 
         public Brush ShapeColor
         {

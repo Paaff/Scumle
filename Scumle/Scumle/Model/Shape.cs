@@ -14,19 +14,18 @@ using System.Xml.Serialization;
 namespace Scumle.Model
 {
  
-    public class Shape : ModelBase
+    public abstract class Shape : ModelBase
     {
         private double _width;
         private double _height;
         private Brush _shapeColor;
                 
-        public Shape(double X, double Y, String Name)
+        public Shape(double X, double Y)
         {
             this.Width = 50;
             this.Height = 50;
             this.X = X;
             this.Y = Y;
-            this.Name = Name;
             InitializeConnectionPoints();
             this.ShapeColor = new SolidColorBrush(Color.FromRgb(255,255,0));
         }
@@ -60,7 +59,6 @@ namespace Scumle.Model
             get { return _height; }
             set { if (value > 0) _height = value; }
         }
-        public String Name { get; set; }
 
         public Brush ShapeColor
         {

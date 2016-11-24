@@ -1,4 +1,5 @@
-﻿using Scumle.ViewModel;
+﻿using Scumle.Model;
+using Scumle.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -10,10 +11,10 @@ namespace Scumle.UndeRedo
 {
     public class ShapeAddCommand : UndoRedoCommand
     {
-        private ObservableCollection<ShapeViewModel> shapes;
-        private ShapeViewModel shape;
+        private ObservableCollection<IShapeViewModel> shapes;
+        private IShapeViewModel shape;
 
-        public ShapeAddCommand(ObservableCollection<ShapeViewModel> _shapes, ShapeViewModel _shape)
+        public ShapeAddCommand(ObservableCollection<IShapeViewModel> _shapes, IShapeViewModel _shape)
         {
             shapes = _shapes;
             shape = _shape;

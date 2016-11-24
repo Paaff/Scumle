@@ -1,4 +1,5 @@
-﻿using Scumle.ViewModel;
+﻿using Scumle.Model;
+using Scumle.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,13 +32,13 @@ namespace Scumle.View
         private void SelectShape(object sender, MouseButtonEventArgs e)
         {
             FrameworkElement elem = sender as FrameworkElement;
-            ShapeViewModel shape = elem.DataContext as ShapeViewModel;
+            IShapeViewModel shape = elem.DataContext as IShapeViewModel;
             bool clearSelection = true;
             if (Keyboard.IsKeyDown(Key.LeftShift))
             {
                 clearSelection = false;
             }
-            Main.SelectShape(shape,clearSelection);
+            Main.SelectShape(shape, clearSelection);
         }
     }
 

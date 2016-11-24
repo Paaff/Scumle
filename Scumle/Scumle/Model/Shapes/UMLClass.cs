@@ -16,7 +16,7 @@ namespace Scumle.Model.Shapes
 
 
         #region Constructor
-        public UMLClass(double X, double Y, string Name) : base(X, Y, Name)
+        public UMLClass(double X, double Y) : base(X, Y)
         {
             umlFields = new List<string>()
             {

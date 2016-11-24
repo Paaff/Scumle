@@ -1,4 +1,5 @@
-﻿using Scumle.ViewModel;
+﻿using Scumle.Model;
+using Scumle.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -10,11 +11,11 @@ namespace Scumle.UndeRedo.Commands
 {
     class ShapeRemoveCommand : UndoRedoCommand
     {
-        Collection<ShapeViewModel> shapes;
+        Collection<IShapeViewModel> shapes;
         Collection<LineViewModel> lines;
-        List<ShapeViewModel> remove_shapes;
+        List<IShapeViewModel> remove_shapes;
         List<LineViewModel> remove_lines;
-        public ShapeRemoveCommand(Collection<ShapeViewModel> _shapes, Collection<LineViewModel> _lines, List<ShapeViewModel> _remove)
+        public ShapeRemoveCommand(Collection<IShapeViewModel> _shapes, Collection<LineViewModel> _lines, List<IShapeViewModel> _remove)
         {
             shapes = _shapes;
             lines = _lines;

@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace Scumle.Model.Shapes
 {
-    class Rectangle : Shape
+    class BasicShape : Shape
     {
-        public Rectangle(double X, double Y, string Name) : base(X, Y, Name)
+        public BasicShape(EBasicShape type, double X, double Y) : base(X,Y)
         {
+            Type = type;
         }
 
-        // For XML Serialization
-        public Rectangle() { }
+        public EBasicShape Type { get; set; }
     }
 }
