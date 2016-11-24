@@ -138,8 +138,6 @@ namespace Scumle.ViewModel
 
             Shapes = new ObservableCollection<IShapeViewModel>() { uml1, uml2, shape1, shape2 };
 
-            Shapes.Add(uml1);
-
             ConnectionPointViewModel cp1 = uml1.ConnectionPoints.ElementAt(0);
             ConnectionPointViewModel cp2 = uml2.ConnectionPoints.ElementAt(3);
 
