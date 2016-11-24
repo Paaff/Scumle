@@ -320,14 +320,14 @@ namespace Scumle.ViewModel
             DeselectAllShapes();
         }
 
-        public void DeleteShape(ShapeViewModel<Shape> shape)
+        public void DeleteShape(IShapeViewModel shape)
         {
             shape.IsSelected = false;
             Shapes.Remove(shape);
             RemoveLines(shape);
         }
 
-        public void RemoveLines(ShapeViewModel<Shape> shape)
+        public void RemoveLines(IShapeViewModel shape)
         {
             foreach (LineViewModel line in Lines.ToList())
             {

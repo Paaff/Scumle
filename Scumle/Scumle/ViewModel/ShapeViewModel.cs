@@ -131,7 +131,7 @@ namespace Scumle.ViewModel
         }
         #endregion
 
-        internal void ShapeMove(double dX, double dY)
+        public void ShapeMove(double dX, double dY)
         {
             Model.MoveDelta(dX, dY);
             OnPropertyChanged(nameof(X));
@@ -139,7 +139,7 @@ namespace Scumle.ViewModel
             UpdateConnectionPoints();
         }
 
-        internal void ShapeResize(double dX, double dY)
+        public void ShapeResize(double dX, double dY)
         {
             Model.Resize(dX, dY);
             OnPropertyChanged(nameof(Width));

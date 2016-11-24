@@ -7,6 +7,7 @@
               xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
               xmlns:Model="clr-namespace:Scumle.Model"
               xmlns:Tools="clr-namespace:Scumle.Tools"
+              xmlns:v="clr-namespace:Scumle.View"
               Title="Scumle UML Editor"
               Height="800"
               Width="1200"
@@ -50,18 +51,18 @@
 
                     <TextBlock Text="Shapes" IsEnabled="False" HorizontalAlignment="Center" FontSize="15"/>
                     <Separator/>
-                    <Expander Header="UML">
+                    <Expander Header="UML Figures">
                         <ListBox BorderThickness="0" Template="{StaticResource NoScroll}" Margin="0,3">
                             <ListBoxItem>
-                            <Image Source="/Images/Shapes/uml.jpg" RenderOptions.BitmapScalingMode="Fant" Width="57" Height="57" Margin="0,2"/>
-                            </ListBoxItem>
+                                <Image Source="/Images/Shapes/UMLClass.PNG" RenderOptions.BitmapScalingMode="Fant" />
+                            </ListBoxItem>                           
                         </ListBox>
                     </Expander>
                     <Button Content="Add Shape" Command="{Binding SetShapeSelectionCommand}" Margin="5,5,5,0"></Button>
 
                     <TextBlock Text="Connectors" IsEnabled="False" HorizontalAlignment="Center" FontSize="15" Margin="0,20,0,0"/>
                     <Separator/>
-                    <Expander Header="UML">
+                    <Expander Header="UML Connectors">
                         <ListBox BorderThickness="0" Template="{StaticResource NoScroll}" Margin="0,3">
                             <ListBoxItem>
                             <Image Source="/Images/Arrows/associated.jpg" RenderOptions.BitmapScalingMode="Fant" Width="57" Height="22" Margin="0,2"/>

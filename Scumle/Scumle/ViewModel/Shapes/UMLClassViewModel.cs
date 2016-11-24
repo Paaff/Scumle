@@ -9,30 +9,68 @@ using System.Collections.ObjectModel;
 using System.Windows.Input;
 using GalaSoft.MvvmLight.Command;
 using Scumle.Model.Shapes;
+using System.Windows;
 
 namespace Scumle.ViewModel
 {
     public class UMLClassViewModel : ShapeViewModel<UMLClass>
     {
+
+        private ObservableCollection<string> fields;
+        private ObservableCollection<string> methods;
+
+        public ICommand removeFieldCommand => new RelayCommand<string>(removeField);
+        public ICommand removeMethodCommand => new RelayCommand<string>(removeMethod);
+        public ICommand addFieldCommand => new RelayCommand(addField);
+        public ICommand addMethodCommand => new RelayCommand(addMethod);
+
         #region Constructor
         // This Constructor should be taking an UMLClass and not a Shape yes?
-        public UMLClassViewModel(UMLClass shape) : base(shape)
+        public UMLClassViewModel(UMLClass uml) : base(uml)
         {
             Width = 300;
             Height = 150;
             ShapeColor = new SolidColorBrush(Color.FromRgb(232, 232, 232));
+
+            fields = new ObservableCollection<string>();
+            methods = new ObservableCollection<string>();
         }
         #endregion
 
-        private ObservableCollection<string> _fields = new ObservableCollection<string>();
-        private ObservableCollection<string> _methods = new ObservableCollection<string>();
+        #region Properties
 
-        private ICommand addFieldCommand;
-        private ICommand addMethodCommand;
-
-        private void addField(string field)
+        public ObservableCollection<string> UMLFields
         {
-            _fields.Add(field);
+            get { return fields; }
+            set { }
+        }
+
+        public ObservableCollection<string> UMLMethods
+        {
+            get { return methods; }
+            set { }
+        }
+        #endregion
+
+        private void removeField(string field)
+        {
+            UMLFields.Remove(field);
+        }
+        
+        private void removeMethod(string method)
+        {
+            UMLMethods.Remove(method);
+            
+        }
+
+        private void addField()
+        {
+            UMLFields.Add("New Field .. ");
+        }
+
+        private void addMethod()
+        {
+            UMLMethods.Add("New Method .. ");
         }
 
     }
