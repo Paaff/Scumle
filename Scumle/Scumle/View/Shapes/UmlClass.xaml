@@ -15,25 +15,21 @@
                    HorizontalAlignment="Stretch"  VerticalAlignment="Stretch"  Background="IndianRed" />
         
         <!-- Contents of the Class Diagram -->
-        <Expander Header="Fields" >
-            <ListBox>
-                <ListBoxItem>
-                    <StackPanel>
-                        <TextBox AcceptsReturn="True" TextWrapping="Wrap" Text="Field Name.."/>
-                        <Button Content="Add new Field (Button)"></Button>
-                    </StackPanel>
-                </ListBoxItem>
-            </ListBox>
+        <Expander Header="Fields" >            
+            <StackPanel Orientation="Vertical">
+                <ListBox ItemsSource="{Binding UMLFields}"/>
+                <Button Content="Added new Field" Command="{Binding addFieldCommand}" CommandParameter="Adding Field"/>
+                <Button Content="Delete Field"/>
+            </StackPanel>
+
         </Expander>
         <Expander Header="Methods">
-            <ListBox>
-                <ListBoxItem>
-                    <StackPanel>
-                        <TextBox AcceptsReturn="True" TextWrapping="Wrap" Text="Method Name.." />
-                        <Button Content="Add new Method (Button)"></Button>
-                    </StackPanel>
-                </ListBoxItem>
-            </ListBox>
+            <StackPanel Orientation="Vertical">
+                <ListBox ItemsSource="{Binding UMLMethods}"/>
+                <Button Content="Added new Method" Command="{Binding addMethodCommand}" CommandParameter="Adding Method"/>
+                <Button Content="Delete Method"/>
+            </StackPanel>
+          
         </Expander>
 
     </StackPanel>
