@@ -10,7 +10,7 @@ using System.Xml.Serialization;
 namespace Scumle.Helpers
 {
 
-    // OBS: Heavenly inspired by http://www.c-sharpcorner.com/UploadFile/manishkdwivedi/save-a-observablecollection-to-application-storage-in-window/ for learning purpose. 
+    // OBS: Heavy inspired by http://www.c-sharpcorner.com/UploadFile/manishkdwivedi/save-a-observablecollection-to-application-storage-in-window/ for learning purpose. 
     public static class GenericSerializer
     {
 

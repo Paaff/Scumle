@@ -49,7 +49,6 @@ namespace Scumle.Model
         public double X { get; set; }
         public double Y { get; set; }
 
-        // Changed ConnectionPoints list from IList to List - is this acceptable?
         public List<ConnectionPoint> ConnectionPoints { get; private set; }
         public double Width
         {

@@ -20,6 +20,7 @@
                 <ListBoxItem>
                     <StackPanel>
                         <TextBox AcceptsReturn="True" TextWrapping="Wrap" Text="Field Name.."/>
+                        <Button Content="Add new Field (Button)"></Button>
                     </StackPanel>
                 </ListBoxItem>
             </ListBox>
@@ -29,6 +30,7 @@
                 <ListBoxItem>
                     <StackPanel>
                         <TextBox AcceptsReturn="True" TextWrapping="Wrap" Text="Method Name.." />
+                        <Button Content="Add new Method (Button)"></Button>
                     </StackPanel>
                 </ListBoxItem>
             </ListBox>

@@ -306,7 +306,7 @@ namespace Scumle.ViewModel
             Point p = e.MouseDevice.GetPosition(e.Source as IInputElement);
 
             // THIS SHOULD NOT HAPPEN - An UMLClassViewModel should not accept an ellipse.
-            ShapeViewModel shape = new UMLClassViewModel(new Ellipse(p.X, p.Y, "My shape " + _num++));
+            ShapeViewModel shape = new UMLClassViewModel(new UMLClass(p.X, p.Y, "My UMLClass " + _num++));
             new ShapeAddCommand(Shapes, shape).Execute();
             Tool = ETool.Default;
         }
@@ -395,7 +395,7 @@ namespace Scumle.ViewModel
                 {
                     if (loadedModel is UMLClass)
                     {
-                        Shapes.Add(new UMLClassViewModel(loadedModel));
+                        Shapes.Add(new UMLClassViewModel(loadedModel as UMLClass));
                     }
                     else
                     {
