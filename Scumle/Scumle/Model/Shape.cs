@@ -13,11 +13,10 @@ using System.Xml.Serialization;
 
 namespace Scumle.Model
 {
- 
     public abstract class Shape : ModelBase
     {
         private double _width;
-        private double _height;
+        private double _height;      
                 
         public Shape(double X, double Y)
         {
@@ -58,6 +57,7 @@ namespace Scumle.Model
             set { if (value > 0) _height = value; }
         }
 
+        [XmlIgnore]
         public Brush ShapeColor { get; set; }
 
         public void MoveDelta(double X, double Y)

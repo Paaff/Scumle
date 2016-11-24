@@ -358,7 +358,7 @@ namespace Scumle.ViewModel
                 foreach (var ViewModel in Shapes)
                 {
                     // PETER TODO: Use ViewModel.Shape here instead!
-                    //shapesToSave.Add(ViewModel.Model);
+                    shapesToSave.Add(ViewModel.Shape);
                 }
 
                 foreach (var ViewModel in Lines)

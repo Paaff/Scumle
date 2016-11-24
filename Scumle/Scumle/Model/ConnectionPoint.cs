@@ -31,6 +31,7 @@ namespace Scumle.Model
         [XmlIgnore]
         public Shape Shape { get; private set; }
 
+        [XmlIgnore]
         public Brush ShapeColor
         {
             get { return _shapeColor; }
