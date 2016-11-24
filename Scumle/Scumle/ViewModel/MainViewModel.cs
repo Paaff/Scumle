@@ -25,7 +25,6 @@ namespace Scumle.ViewModel
     {
         #region Fields
         public static ETool _tool = ETool.Default;
-        private int _num = 0;
         private double _zoom = 1.0;
         private readonly double _ZOOMFACTOR = 750;
         private ConnectionPointViewModel _connectionFrom = null;
@@ -118,7 +117,6 @@ namespace Scumle.ViewModel
         public ICommand NewWorkspaceCommand => new RelayCommand(NewWorkspace);
         public ICommand UndoCommand => UndoRedoController.Instance.UndoCommand;
         public ICommand RedoCommand => UndoRedoController.Instance.RedoCommand;
-        public ICommand AddShapeCommand { get; } // TODO: This is not implemented?
         public ICommand LineToConnectionCommand => new RelayCommand<MouseEventArgs>(LineToConnection);
         public ICommand MouseDownGridCommand => new RelayCommand<MouseButtonEventArgs>(GridMouseDown);
         public ICommand MouseMoveGridCommand => new RelayCommand<MouseEventArgs>(GridMouseMove);
