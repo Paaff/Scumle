@@ -400,9 +400,8 @@ namespace Scumle.ViewModel
                         Shapes.Add(new UMLClassViewModel(loadedModel as UMLClass));
                     }
                     else
-                    {
-                        // PETER TODO: Instantiate shape correctly
-                        //Shapes.Add(new ShapeViewModel(loadedModel));
+                    {                        
+                        Shapes.Add(new BasicShapeViewModel(loadedModel as BasicShape));                      
                     }
                 }
 
