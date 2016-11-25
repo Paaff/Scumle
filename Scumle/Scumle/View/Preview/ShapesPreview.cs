@@ -11,6 +11,10 @@ using System.Threading.Tasks;
 
 namespace Scumle.View.Preview
 {
+    /// <summary>
+    /// Provides a dummy collection of shapes to be able to present to the user
+    /// in the view for selection.
+    /// </summary>
     public static class ShapesPreview
     {
 
