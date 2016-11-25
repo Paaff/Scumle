@@ -80,7 +80,7 @@ namespace Scumle.ViewModel
 
         private void AddInitalConnectionPoints()
         {
-            ConnectionPoints = new ObservableCollection<ConnectionPointViewModel>(
+            ConnectionPoints = new ObservableCollection<IPoint>(
                 Model.ConnectionPoints.Select(c => new ConnectionPointViewModel(c, this)));
         }
         #endregion

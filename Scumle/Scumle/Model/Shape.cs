@@ -23,8 +23,8 @@ namespace Scumle.Model
             IsSelected = false;
             Width = 50;
             Height = 50;
-            X = X;
-            Y = Y;
+            X = _X;
+            Y = _Y;
             InitializeConnectionPoints();
             ShapeColor = new SolidColorBrush(Color.FromRgb(0,0,0));
         }

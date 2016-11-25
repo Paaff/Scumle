@@ -12,9 +12,9 @@ using System.Windows.Media;
 
 namespace Scumle.ViewModel
 {
-    public class ConnectionPointViewModel : ViewModelBase<IPoint>
+    public class ConnectionPointViewModel : ViewModelBase<IPoint>, IPoint
     {
-        public ConnectionPointViewModel(ConnectionPoint model, IShape shape) : base(model)
+        public ConnectionPointViewModel(IPoint model, IShape shape) : base(model)
         {
             /*
             if (shape.Shape != model.Shape)

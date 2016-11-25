@@ -8,42 +8,35 @@ using System.Threading.Tasks;
 
 namespace Scumle.ViewModel
 {
-    public class LineViewModel : ViewModelBase<Line>
+    public class LineViewModel : ViewModelBase<ILine>, ILine
     {
-        private ConnectionPointViewModel _from;
-        private ConnectionPointViewModel _to;
-
-        public LineViewModel(ELine type, IPoint from, IPoint to) : base(new Line(type, from.Model, to.Model))
+        public LineViewModel(ILine line) : base(line)
         {
-            _from = from;
-            _to = to;
 
             // Subscribe to property chnaged event from connection points
-            From.PropertyChanged += new PropertyChangedEventHandler(UpdateProperties);
-            To.PropertyChanged += new PropertyChangedEventHandler(UpdateProperties);
+            SubscribeToChange(From as INotifyPropertyChanged);
+            SubscribeToChange(To as INotifyPropertyChanged);
+        }
+
+        private void SubscribeToChange(INotifyPropertyChanged i)
+        {
+            if (i != null)
+            {
+                i.PropertyChanged += new PropertyChangedEventHandler(UpdateProperties);
+            }
         }
 
         #region Properties
-        public ConnectionPointViewModel From
+        public IPoint From
         {
-            get { return _from; }
-            set
-            {
-                _from = value;
-                Model.From = value.Model;
-                OnPropertyChanged();
-            }
+            get { return Model.From; }
+            set { SetValue(value); }
         }
 
-        public ConnectionPointViewModel To
+        public IPoint To
         {
-            get { return _to; }
-            set
-            {
-                _to = value;
-                Model.To = value.Model;
-                OnPropertyChanged();
-            }
+            get { return Model.To; }
+            set { SetValue(value); }
         }
 
         public ELine Type

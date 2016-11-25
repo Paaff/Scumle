@@ -142,7 +142,7 @@ namespace Scumle.ViewModel
             IPoint cp1 = uml1.ConnectionPoints.ElementAt(0);
             IPoint cp2 = uml2.ConnectionPoints.ElementAt(3);
 
-            Lines.Add(new LineViewModel(ELine.Inheritance, cp1, cp2));
+            Lines.Add(new LineViewModel(new Line(ELine.Inheritance, cp1, cp2)));
 
             SelectedColor = Color.FromRgb(0, 153, 255);
 
@@ -174,8 +174,7 @@ namespace Scumle.ViewModel
             {
                 if (_connectionFrom != _connectionTo)
                 {
-
-                    new LineAddCommand(Lines, new LineViewModel(ELine.Association, _connectionFrom, _connectionTo)).Execute();
+                    new LineAddCommand(Lines, new LineViewModel(new Line(ELine.Association, _connectionFrom, _connectionTo))).Execute();
                 }
 
                 EndLineConnection();
@@ -358,12 +357,12 @@ namespace Scumle.ViewModel
                 foreach (var ViewModel in Shapes)
                 {
                     // PETER TODO: Use ViewModel.Shape here instead!
-                    shapesToSave.Add(ViewModel.Shape);
+                    //shapesToSave.Add(ViewModel.Shape);
                 }
 
                 foreach (var ViewModel in Lines)
                 {
-                    linesToSave.Add(ViewModel.Model);
+                    //linesToSave.Add(ViewModel.Model);
                 }
 
                 modelsToSave.Add(shapesToSave);

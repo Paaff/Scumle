@@ -14,6 +14,7 @@ namespace Scumle.View.Preview
 
     public static class LinesPreview
     {
+        /*
         private static IShape DummyShape = new BasicShapeViewModel(new BasicShape(EBasicShape.Ellipse, 0, 0));
         private static PreviewConnectionPointViewModel DummyFrom = new PreviewConnectionPointViewModel(DummyShape, 0, 0);
         private static PreviewConnectionPointViewModel DummyTo = new PreviewConnectionPointViewModel(DummyShape, 50, 50);
@@ -25,5 +26,6 @@ namespace Scumle.View.Preview
             new LineViewModel(ELine.Association, DummyFrom2, DummyTo2),
             new LineViewModel(ELine.Inheritance, DummyFrom2, DummyTo2)
         };
+        */
     }
 }

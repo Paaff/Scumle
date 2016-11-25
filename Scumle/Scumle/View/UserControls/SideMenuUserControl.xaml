@@ -74,10 +74,10 @@
             <Separator/>
             
             <Expander Header="UML Connectors">
-                <ListBox Style="{StaticResource PreviewListBox}"
+                <!--<ListBox Style="{StaticResource PreviewListBox}"
                          ItemTemplate="{StaticResource LinesPreview}"
                          ItemsSource="{Binding Source={x:Static Preview:LinesPreview.List}}">
-                </ListBox>
+                </ListBox>-->
             </Expander>
             <Button Content="Add Connection" Command="{Binding SetLineConnectionCommand}" Margin="5,5,5,10"></Button>
         </StackPanel>

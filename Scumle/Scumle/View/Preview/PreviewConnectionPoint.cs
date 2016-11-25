@@ -21,17 +21,4 @@ namespace Scumle.View.Preview
         public new double CenterY { get; set; }
     }
 
-    public class PreviewConnectionPointViewModel : ConnectionPointViewModel
-    {
-        double _X;
-        double _Y;
-        public PreviewConnectionPointViewModel(IShape shape, double X, double Y) : base(new PreviewConnectionPoint(shape.Shape, X, Y), shape)
-        {
-            _X = X;
-            _Y = Y;
-        }
-        public new double CenterX { get { return _X; } }
-
-        public new double CenterY { get { return _Y; } }
-    }
 }

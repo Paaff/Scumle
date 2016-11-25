@@ -4,7 +4,7 @@ using System.Xml.Serialization;
 namespace Scumle.Model
 {
     [XmlInclude(typeof(ConnectionPoint))]
-    public class Line : ModelBase
+    public class Line : ModelBase, ILine
     {
         public Line(ELine type, IPoint from, IPoint to)
         {

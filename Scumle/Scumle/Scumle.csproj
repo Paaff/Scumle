@@ -107,6 +107,7 @@
     <Compile Include="Model\EBasicShape.cs" />
     <Compile Include="Model\ELine.cs" />
     <Compile Include="Model\ETool.cs" />
+    <Compile Include="Model\ILine.cs" />
     <Compile Include="Model\IPoint.cs" />
     <Compile Include="Model\Line.cs" />
     <Compile Include="Model\ModelBase.cs" />
