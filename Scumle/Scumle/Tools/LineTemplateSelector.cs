@@ -22,7 +22,8 @@ namespace Scumle.Tools
             Templates = new Dictionary<ELine, string>()
             {
                 { ELine.Association, "LineAssociation" },
-                { ELine.Inheritance, "LineInheritance" }
+                { ELine.Inheritance, "LineInheritance" },
+                { ELine.Relational, "LineRelational" }
             };
         }
 

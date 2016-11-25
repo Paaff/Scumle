@@ -8,6 +8,6 @@ namespace Scumle.Model
 {
     public enum ELine
     {
-        Association, Inheritance
+        Association, Inheritance, Relational
     }
 }

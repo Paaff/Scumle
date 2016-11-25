@@ -39,6 +39,14 @@
     <DataTemplate x:Key="LineInheritance">
         <Canvas>
             <Line Style="{StaticResource LineStyle}" StrokeThickness="1" Stroke="Black"/>
+            <Arrows:InheritanceArrow Style="{StaticResource ArrowStyle}"/>
+        </Canvas>
+    </DataTemplate>
+
+    <DataTemplate x:Key="LineRelational">
+        <Canvas>
+            <Line Style="{StaticResource LineStyle}" StrokeDashArray="3,5" StrokeDashCap="Round" StrokeThickness="1" Stroke="Black"/>
+            <Arrows:StrokeArrow Style="{StaticResource ArrowStyle}"/>
         </Canvas>
     </DataTemplate>
 

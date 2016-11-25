@@ -20,7 +20,8 @@ namespace Scumle.View.Preview
         public static ObservableCollection<LineViewModel> List = new ObservableCollection<LineViewModel>()
         {
             new LineViewModel(ELine.Association, From, To),
-            new LineViewModel(ELine.Inheritance, From, To)
+            new LineViewModel(ELine.Inheritance, From, To),
+            new LineViewModel(ELine.Relational, From, To)
         };
 
     }
