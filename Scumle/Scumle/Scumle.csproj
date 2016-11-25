@@ -145,7 +145,6 @@
       <DependentUpon>StrokeArrow.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Preview\LinesPreview.cs" />
-    <Compile Include="View\Preview\PreviewPoint.cs" />
     <Compile Include="View\Preview\ShapesPreview.cs" />
     <Compile Include="View\Ribbon.xaml.cs">
       <DependentUpon>Ribbon.xaml</DependentUpon>
