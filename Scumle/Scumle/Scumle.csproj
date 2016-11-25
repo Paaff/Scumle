@@ -138,8 +138,14 @@
     <Compile Include="View\Arrows\BasicArrow.xaml.cs">
       <DependentUpon>BasicArrow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Arrows\InheritanceArrow.xaml.cs">
+      <DependentUpon>InheritanceArrow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Arrows\StrokeArrow.xaml.cs">
+      <DependentUpon>StrokeArrow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Preview\LinesPreview.cs" />
-    <Compile Include="View\Preview\PreviewConnectionPoint.cs" />
+    <Compile Include="View\Preview\PreviewPoint.cs" />
     <Compile Include="View\Preview\ShapesPreview.cs" />
     <Compile Include="View\Ribbon.xaml.cs">
       <DependentUpon>Ribbon.xaml</DependentUpon>
@@ -166,6 +172,14 @@
       <DependentUpon>SideMenuUserControl.xaml</DependentUpon>
     </Compile>
     <Page Include="View\Arrows\BasicArrow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Arrows\InheritanceArrow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Arrows\StrokeArrow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

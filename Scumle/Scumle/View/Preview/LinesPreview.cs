@@ -11,21 +11,18 @@ using System.Threading.Tasks;
 
 namespace Scumle.View.Preview
 {
-
     public static class LinesPreview
     {
-        /*
-        private static IShape DummyShape = new BasicShapeViewModel(new BasicShape(EBasicShape.Ellipse, 0, 0));
-        private static PreviewConnectionPointViewModel DummyFrom = new PreviewConnectionPointViewModel(DummyShape, 0, 0);
-        private static PreviewConnectionPointViewModel DummyTo = new PreviewConnectionPointViewModel(DummyShape, 50, 50);
+        private static BasicShapeViewModel Shape = new BasicShapeViewModel(new BasicShape(Model.EBasicShape.Ellipse, 0, 0));
+        private static ConnectionPointViewModel From = new ConnectionPointViewModel(new ConnectionPoint(Shape.Shape, System.Windows.HorizontalAlignment.Left, System.Windows.VerticalAlignment.Top), Shape);
+        private static ConnectionPointViewModel To = new ConnectionPointViewModel(new ConnectionPoint(Shape.Shape, System.Windows.HorizontalAlignment.Right, System.Windows.VerticalAlignment.Bottom), Shape);
 
-        private static ConnectionPointViewModel DummyFrom2 = new ConnectionPointViewModel(new PreviewConnectionPoint(DummyShape.Shape, 0, 0), DummyShape);
-        private static ConnectionPointViewModel DummyTo2 = new ConnectionPointViewModel(new PreviewConnectionPoint(DummyShape.Shape, 50, 50), DummyShape);
         public static ObservableCollection<LineViewModel> List = new ObservableCollection<LineViewModel>()
         {
-            new LineViewModel(ELine.Association, DummyFrom2, DummyTo2),
-            new LineViewModel(ELine.Inheritance, DummyFrom2, DummyTo2)
+            new LineViewModel(new Line(ELine.Association, From, To)),
+            new LineViewModel(new Line(ELine.Inheritance, From, To)),
+            new LineViewModel(new Line(ELine.Relational, From, To))
         };
-        */
+
     }
 }

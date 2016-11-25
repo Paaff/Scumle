@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="Scumle.View.UserControls.SideMenuUserControl"
+﻿<UserControl
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -6,52 +6,52 @@
              xmlns:local="clr-namespace:Scumle.View.UserControls"
              xmlns:Preview="clr-namespace:Scumle.View.Preview"
              xmlns:Tools="clr-namespace:Scumle.Tools"
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit" x:Class="Scumle.View.UserControls.SideMenuUserControl"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <UserControl.Resources>
         <ResourceDictionary>
             <Tools:LineTemplateSelector x:Key="LineTemplateSelector"/>
             <Tools:ShapeTemplateSelector x:Key="ShapeTemplateSelector"/>
-            
+
             <ControlTemplate x:Key="NoScroll">
-                <ItemsPresenter></ItemsPresenter>
+                <ItemsPresenter/>
             </ControlTemplate>
 
-            <Style x:Key="PreviewListBox" TargetType="ListBox">
-                <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled"></Setter>
-                <Setter Property="BorderThickness" Value="0"></Setter>
-                <Setter Property="ListBox.ItemsPanel">
+            <Style x:Key="PreviewListBox" TargetType="{x:Type ListBox}">
+                <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled"/>
+                <Setter Property="BorderThickness" Value="0"/>
+                <Setter Property="ItemsPanel">
                     <Setter.Value>
                         <ItemsPanelTemplate>
                             <WrapPanel IsItemsHost="True" />
                         </ItemsPanelTemplate>
                     </Setter.Value>
                 </Setter>
-                <Setter Property="ListBox.ItemContainerStyle">
+
+                <Setter Property="ItemTemplate">
                     <Setter.Value>
-                        <Style TargetType="ListBoxItem">
-                            <Setter Property="Padding" Value="4,4,4,4"></Setter>
+                        <DataTemplate>
+                            <Viewbox StretchDirection="Both" Stretch="Uniform" Width="50" Height="50">
+                                <ContentPresenter Width="100" Height="100" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="{Binding}" 
+                                                  ContentTemplateSelector="{Binding ItemTemplateSelector, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBox}}}"/>
+                            </Viewbox>
+                        </DataTemplate>
+                    </Setter.Value>
+                </Setter>
+                <Setter Property="ItemContainerStyle">
+                    <Setter.Value>
+                        <Style TargetType="{x:Type ListBoxItem}">
+                            <Setter Property="Padding" Value="4,4,4,4"/>
                         </Style>
                     </Setter.Value>
                 </Setter>
             </Style>
 
-            <Style x:Key="PreviewViewbox" TargetType="Viewbox">
-                <Setter Property="StretchDirection" Value="Both"></Setter>
-                <Setter Property="Stretch" Value="Uniform"></Setter>
-                <Setter Property="Width" Value="50"></Setter>
-                <Setter Property="Height" Value="50"></Setter>
-            </Style>
-
-            <DataTemplate x:Key="ShapesPreview">
-                <Viewbox Style="{StaticResource PreviewViewbox}">
-                    <ContentPresenter Width="100" Height="100" ContentTemplateSelector="{StaticResource ShapeTemplateSelector}"></ContentPresenter>
-                </Viewbox>
-            </DataTemplate>
-
             <DataTemplate x:Key="LinesPreview">
-                <Viewbox Style="{StaticResource PreviewViewbox}">
-                    <ContentPresenter Width="50" Height="50" ContentTemplateSelector="{StaticResource LineTemplateSelector}"></ContentPresenter>
+                <Viewbox StretchDirection="Both" Stretch="Uniform" Width="50" Height="50">
+                    <ContentPresenter Width="50" Height="50" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="{Binding}" 
+                                                  ContentTemplateSelector="{Binding ItemTemplateSelector, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBox}}}"/>
                 </Viewbox>
             </DataTemplate>
         </ResourceDictionary>
@@ -61,25 +61,25 @@
         <StackPanel Margin="5,5,5,5">
             <TextBlock Text="Shapes" IsEnabled="False" HorizontalAlignment="Center" FontSize="15"/>
             <Separator/>
-            
+
             <Expander Header="UML Figures">
-                <ListBox Style="{StaticResource PreviewListBox}" 
-                         ItemTemplate="{StaticResource ShapesPreview}" 
-                         ItemsSource="{Binding Source={x:Static Preview:ShapesPreview.List}}">
-                </ListBox>
+                <ListBox Style="{StaticResource PreviewListBox}"
+                         ItemTemplateSelector="{StaticResource ShapeTemplateSelector}"
+                         ItemsSource="{Binding Source={x:Static Preview:ShapesPreview.List}}"/>
+                
             </Expander>
-            <Button Content="Add Shape" Command="{Binding SetShapeSelectionCommand}" Margin="5,5,5,0"></Button>
+            <Button Content="Add Shape" Command="{Binding SetShapeSelectionCommand}" Margin="5,5,5,0"/>
 
             <TextBlock Text="Connectors" IsEnabled="False" HorizontalAlignment="Center" FontSize="15" Margin="0,20,0,0"/>
             <Separator/>
-            
+
             <Expander Header="UML Connectors">
-                <!--<ListBox Style="{StaticResource PreviewListBox}"
+                <ListBox Style="{StaticResource PreviewListBox}"
                          ItemTemplate="{StaticResource LinesPreview}"
-                         ItemsSource="{Binding Source={x:Static Preview:LinesPreview.List}}">
-                </ListBox>-->
+                         ItemTemplateSelector="{StaticResource LineTemplateSelector}"
+                         ItemsSource="{Binding Source={x:Static Preview:LinesPreview.List}}"/>
             </Expander>
-            <Button Content="Add Connection" Command="{Binding SetLineConnectionCommand}" Margin="5,5,5,10"></Button>
+            <Button Content="Add Connection" Command="{Binding SetLineConnectionCommand}" Margin="5,5,5,10"/>
         </StackPanel>
     </ScrollViewer>
 </UserControl>
