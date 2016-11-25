@@ -97,11 +97,11 @@ namespace Scumle.ViewModel
         }
 
         public static Color SelectedColor { get; set; }
-        public ObservableCollection<IShapeViewModel> Shapes { get; }
+        public ObservableCollection<IShape> Shapes { get; }
         public ObservableCollection<LineViewModel> Lines { get; } = new ObservableCollection<LineViewModel>();
-        public List<IShapeViewModel> Selected { get; } = new List<IShapeViewModel>();
+        public List<IShape> Selected { get; } = new List<IShape>();
         public ObservableCollection<LineViewModel> CopiedLines { get; } = new ObservableCollection<LineViewModel>();
-        public List<IShapeViewModel> CopiedShapes { get; } = new List<IShapeViewModel>();
+        public List<IShape> CopiedShapes { get; } = new List<IShape>();
         public String Version { get; } = "Version 1.0.0";
         #endregion
 
@@ -130,17 +130,17 @@ namespace Scumle.ViewModel
         public MainViewModel(Model.Scumle scumle) : base(scumle)
         {
 
-            IShapeViewModel uml1 = new UMLClassViewModel(new UMLClass(400, 400, "My Class 1"));
-            IShapeViewModel uml2 = new UMLClassViewModel(new UMLClass(50, 50, "My Class 2"));
+            IShape uml1 = new UMLClassViewModel(new UMLClass(400, 400, "My Class 1"));
+            IShape uml2 = new UMLClassViewModel(new UMLClass(50, 50, "My Class 2"));
 
-            IShapeViewModel shape1 = new BasicShapeViewModel(new BasicShape(EBasicShape.Ellipse, 400, 50));
-            IShapeViewModel shape2 = new BasicShapeViewModel(new BasicShape(EBasicShape.Rectangle, 50, 400));
+            IShape shape1 = new BasicShapeViewModel(new BasicShape(EBasicShape.Ellipse, 400, 50));
+            IShape shape2 = new BasicShapeViewModel(new BasicShape(EBasicShape.Rectangle, 50, 400));
 
 
-            Shapes = new ObservableCollection<IShapeViewModel>() { uml1, uml2, shape1, shape2 };
+            Shapes = new ObservableCollection<IShape>() { uml1, uml2, shape1, shape2 };
 
-            ConnectionPointViewModel cp1 = uml1.ConnectionPoints.ElementAt(0);
-            ConnectionPointViewModel cp2 = uml2.ConnectionPoints.ElementAt(3);
+            IPoint cp1 = uml1.ConnectionPoints.ElementAt(0);
+            IPoint cp2 = uml2.ConnectionPoints.ElementAt(3);
 
             Lines.Add(new LineViewModel(ELine.Inheritance, cp1, cp2));
 
@@ -193,7 +193,7 @@ namespace Scumle.ViewModel
         #region selection
         private void SelectAll()
         {
-            foreach (IShapeViewModel i in Shapes)
+            foreach (IShape i in Shapes)
             {
                 SelectShape(i, false);
             }
@@ -204,7 +204,7 @@ namespace Scumle.ViewModel
             DeselectAllShapes();
             EndLineConnection();
         }
-        internal void SelectShape(IShapeViewModel shape, bool clearSelection)
+        internal void SelectShape(IShape shape, bool clearSelection)
         {
             if (shape == null) return;
             if (clearSelection)
@@ -222,7 +222,7 @@ namespace Scumle.ViewModel
 
         internal void DeselectAllShapes()
         {
-            foreach (IShapeViewModel shape in Selected)
+            foreach (IShape shape in Selected)
             {
                 shape.IsSelected = false;
             }
@@ -278,7 +278,7 @@ namespace Scumle.ViewModel
                 double minY = Math.Min(StartingPoint.Y, endingPoint.Y);
                 double maxX = Math.Max(StartingPoint.X, endingPoint.X);
                 double maxY = Math.Max(StartingPoint.Y, endingPoint.Y);
-                foreach (IShapeViewModel i in Shapes)
+                foreach (IShape i in Shapes)
                 {
                     if (!(i.X > maxX || i.X + i.Width < minX || i.Y > maxY || i.Y + i.Height < minY))
                     {
@@ -307,7 +307,7 @@ namespace Scumle.ViewModel
         {
             Point p = e.MouseDevice.GetPosition(e.Source as IInputElement);
 
-            IShapeViewModel shape = new UMLClassViewModel(new UMLClass(p.X, p.Y, "New Shape"));
+            IShape shape = new UMLClassViewModel(new UMLClass(p.X, p.Y, "New Shape"));
             new ShapeAddCommand(Shapes, shape).Execute();
             Tool = ETool.Default;
         }
@@ -320,14 +320,14 @@ namespace Scumle.ViewModel
             DeselectAllShapes();
         }
 
-        public void DeleteShape(IShapeViewModel shape)
+        public void DeleteShape(IShape shape)
         {
             shape.IsSelected = false;
             Shapes.Remove(shape);
             RemoveLines(shape);
         }
 
-        public void RemoveLines(IShapeViewModel shape)
+        public void RemoveLines(IShape shape)
         {
             foreach (LineViewModel line in Lines.ToList())
             {

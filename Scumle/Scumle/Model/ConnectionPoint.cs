@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Scumle.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,7 +10,7 @@ using System.Xml.Serialization;
 
 namespace Scumle.Model
 {
-    public class ConnectionPoint : ModelBase
+    public class ConnectionPoint : ModelBase, IPoint
     {
 
         public ConnectionPoint(Shape _shape, HorizontalAlignment horizontal, VerticalAlignment vertical)
@@ -29,7 +30,7 @@ namespace Scumle.Model
         public VerticalAlignment Vertical { get; set; }
 
         [XmlIgnore]
-        public Shape Shape { get; private set; }
+        public IShape Shape { get; private set; }
 
         [XmlIgnore]
         public Brush ShapeColor

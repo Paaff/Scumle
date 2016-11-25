@@ -27,15 +27,6 @@
                         </ItemsPanelTemplate>
                     </Setter.Value>
                 </Setter>
-                <Setter Property="ListBox.ItemTemplate">
-                    <Setter.Value>
-                        <DataTemplate>
-                            <Viewbox StretchDirection="Both" Stretch="Uniform" Width="50" Height="50">
-                                <ContentPresenter Width="100" Height="100" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="{Binding}" ContentTemplateSelector="{StaticResource ShapeTemplateSelector}"></ContentPresenter>
-                            </Viewbox>
-                        </DataTemplate>
-                    </Setter.Value>
-                </Setter>
                 <Setter Property="ListBox.ItemContainerStyle">
                     <Setter.Value>
                         <Style TargetType="ListBoxItem">
@@ -44,6 +35,25 @@
                     </Setter.Value>
                 </Setter>
             </Style>
+
+            <Style x:Key="PreviewViewbox" TargetType="Viewbox">
+                <Setter Property="StretchDirection" Value="Both"></Setter>
+                <Setter Property="Stretch" Value="Uniform"></Setter>
+                <Setter Property="Width" Value="50"></Setter>
+                <Setter Property="Height" Value="50"></Setter>
+            </Style>
+
+            <DataTemplate x:Key="ShapesPreview">
+                <Viewbox Style="{StaticResource PreviewViewbox}">
+                    <ContentPresenter Width="100" Height="100" ContentTemplateSelector="{StaticResource ShapeTemplateSelector}"></ContentPresenter>
+                </Viewbox>
+            </DataTemplate>
+
+            <DataTemplate x:Key="LinesPreview">
+                <Viewbox Style="{StaticResource PreviewViewbox}">
+                    <ContentPresenter Width="50" Height="50" ContentTemplateSelector="{StaticResource LineTemplateSelector}"></ContentPresenter>
+                </Viewbox>
+            </DataTemplate>
         </ResourceDictionary>
     </UserControl.Resources>
 
@@ -53,15 +63,20 @@
             <Separator/>
             
             <Expander Header="UML Figures">
-                <ListBox Style="{StaticResource PreviewListBox}" ItemsSource="{Binding Source={x:Static Preview:ShapesPreview.List}}"/>
+                <ListBox Style="{StaticResource PreviewListBox}" 
+                         ItemTemplate="{StaticResource ShapesPreview}" 
+                         ItemsSource="{Binding Source={x:Static Preview:ShapesPreview.List}}">
+                </ListBox>
             </Expander>
             <Button Content="Add Shape" Command="{Binding SetShapeSelectionCommand}" Margin="5,5,5,0"></Button>
 
             <TextBlock Text="Connectors" IsEnabled="False" HorizontalAlignment="Center" FontSize="15" Margin="0,20,0,0"/>
             <Separator/>
+            
             <Expander Header="UML Connectors">
-                <ListBox BorderThickness="0" Template="{StaticResource NoScroll}" Margin="0,3">
-                    <!-- This should use the same PreviewListBox as well -->
+                <ListBox Style="{StaticResource PreviewListBox}"
+                         ItemTemplate="{StaticResource LinesPreview}"
+                         ItemsSource="{Binding Source={x:Static Preview:LinesPreview.List}}">
                 </ListBox>
             </Expander>
             <Button Content="Add Connection" Command="{Binding SetLineConnectionCommand}" Margin="5,5,5,10"></Button>

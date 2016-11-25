@@ -107,6 +107,7 @@
     <Compile Include="Model\EBasicShape.cs" />
     <Compile Include="Model\ELine.cs" />
     <Compile Include="Model\ETool.cs" />
+    <Compile Include="Model\IPoint.cs" />
     <Compile Include="Model\Line.cs" />
     <Compile Include="Model\ModelBase.cs" />
     <Compile Include="Model\Scumle.cs" />
@@ -126,7 +127,7 @@
     <Compile Include="UndeRedo\UndoRedoCommand.cs" />
     <Compile Include="UndeRedo\UndoRedoController.cs" />
     <Compile Include="ViewModel\ConnectionPointViewModel.cs" />
-    <Compile Include="ViewModel\IShapeViewModel.cs" />
+    <Compile Include="Model\IShape.cs" />
     <Compile Include="ViewModel\LineViewModel.cs" />
     <Compile Include="ViewModel\Shapes\BasicShapeViewModel.cs" />
     <Compile Include="ViewModel\Shapes\UMLClassViewModel.cs" />
@@ -136,6 +137,8 @@
     <Compile Include="View\Arrows\BasicArrow.xaml.cs">
       <DependentUpon>BasicArrow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Preview\LinesPreview.cs" />
+    <Compile Include="View\Preview\PreviewConnectionPoint.cs" />
     <Compile Include="View\Preview\ShapesPreview.cs" />
     <Compile Include="View\Ribbon.xaml.cs">
       <DependentUpon>Ribbon.xaml</DependentUpon>

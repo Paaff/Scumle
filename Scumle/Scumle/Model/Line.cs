@@ -6,7 +6,7 @@ namespace Scumle.Model
     [XmlInclude(typeof(ConnectionPoint))]
     public class Line : ModelBase
     {
-        public Line(ELine type, ConnectionPoint from, ConnectionPoint to)
+        public Line(ELine type, IPoint from, IPoint to)
         {
             From = from;
             To = to;
@@ -16,8 +16,8 @@ namespace Scumle.Model
         // For Serialization
         public Line() { }
 
-        public ConnectionPoint From { get; set; }
-        public ConnectionPoint To { get; set; }
+        public IPoint From { get; set; }
+        public IPoint To { get; set; }
         public ELine Type { get; set; }
         public double Angle
         {

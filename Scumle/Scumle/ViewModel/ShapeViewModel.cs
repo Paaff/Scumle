@@ -16,7 +16,7 @@ using System.Windows.Media;
 namespace Scumle.ViewModel
 {
 
-    public abstract class ShapeViewModel<T> : ViewModelBase<T>, IShapeViewModel where T : Shape
+    public abstract class ShapeViewModel<T> : ViewModelBase<T>, IShape where T : Shape
     {
         #region fields
         private bool _isSelected = false;
@@ -86,7 +86,7 @@ namespace Scumle.ViewModel
         #endregion
 
         #region Properties
-        public ObservableCollection<ConnectionPointViewModel> ConnectionPoints { get; private set; }
+        public IList<IPoint> ConnectionPoints { get; private set; }
 
         public double X
         {
@@ -132,7 +132,7 @@ namespace Scumle.ViewModel
 
         public void ShapeMove(double dX, double dY)
         {
-            Model.MoveDelta(dX, dY);
+            Model.ShapeMove(dX, dY);
             OnPropertyChanged(nameof(X));
             OnPropertyChanged(nameof(Y));
             UpdateConnectionPoints();
@@ -140,7 +140,7 @@ namespace Scumle.ViewModel
 
         public void ShapeResize(double dX, double dY)
         {
-            Model.Resize(dX, dY);
+            Model.ShapeResize(dX, dY);
             OnPropertyChanged(nameof(Width));
             OnPropertyChanged(nameof(Height));
             UpdateConnectionPoints();

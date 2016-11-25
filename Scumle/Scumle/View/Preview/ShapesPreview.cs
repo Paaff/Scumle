@@ -14,16 +14,12 @@ namespace Scumle.View.Preview
     public static class ShapesPreview
     {
 
-        public static ObservableCollection<IShapeViewModel> List = new ObservableCollection<IShapeViewModel>()
+        public static ObservableCollection<IShape> List = new ObservableCollection<IShape>()
         {
             new BasicShapeViewModel(new BasicShape(EBasicShape.Ellipse, 50, 50)),
             new UMLClassViewModel(new UMLClass(0, 0, "UML Class")),
             new BasicShapeViewModel(new BasicShape(EBasicShape.Rectangle, 0, 0))
         };
 
-        public static ObservableCollection<LineViewModel> LinePreview = new ObservableCollection<LineViewModel>()
-        {
-
-        };
     }
 }

@@ -13,24 +13,25 @@ using System.Xml.Serialization;
 
 namespace Scumle.Model
 {
-    public abstract class Shape : ModelBase
+    public abstract class Shape : ModelBase, IShape
     {
         private double _width;
         private double _height;      
                 
-        public Shape(double X, double Y)
+        public Shape(double _X, double _Y)
         {
-            this.Width = 50;
-            this.Height = 50;
-            this.X = X;
-            this.Y = Y;
+            IsSelected = false;
+            Width = 50;
+            Height = 50;
+            X = X;
+            Y = Y;
             InitializeConnectionPoints();
-            this.ShapeColor = new SolidColorBrush(Color.FromRgb(0,0,0));
+            ShapeColor = new SolidColorBrush(Color.FromRgb(0,0,0));
         }
 
         private void InitializeConnectionPoints()
         {
-            ConnectionPoints = new List<ConnectionPoint>()
+            ConnectionPoints = new List<IPoint>()
             {
                 new ConnectionPoint(this, HorizontalAlignment.Center, VerticalAlignment.Top),
                 new ConnectionPoint(this, HorizontalAlignment.Left, VerticalAlignment.Center),
@@ -42,10 +43,11 @@ namespace Scumle.Model
         // For XML Serialization
         public Shape() { }
 
+        public bool IsSelected { get; set; }
         public double X { get; set; }
         public double Y { get; set; }
 
-        public List<ConnectionPoint> ConnectionPoints { get; private set; }
+        public IList<IPoint> ConnectionPoints { get; private set; }
         public double Width
         {
             get { return _width; }
@@ -60,13 +62,13 @@ namespace Scumle.Model
         [XmlIgnore]
         public Brush ShapeColor { get; set; }
 
-        public void MoveDelta(double X, double Y)
+        public void ShapeMove(double X, double Y)
         {
             this.X += X;
             this.Y += Y;
         }
 
-        internal void Resize(double dX, double dY)
+        public void ShapeResize(double dX, double dY)
         {
             Width += dX;
             Height += dY;

@@ -34,7 +34,7 @@ namespace Scumle.View.UserControls
         private void SelectShape(object sender, MouseButtonEventArgs e)
         {
             FrameworkElement elem = sender as FrameworkElement;
-            IShapeViewModel shape = elem.DataContext as IShapeViewModel;
+            IShape shape = elem.DataContext as IShape;
             bool clearSelection = true;
             if (Keyboard.IsKeyDown(Key.LeftShift))
             {
