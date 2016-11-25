@@ -28,9 +28,9 @@ namespace Scumle.View.UserControls
             InitializeComponent();
         }
 
-        private IShapeViewModel Shape
+        private IShape Shape
         {
-            get { return DataContext as IShapeViewModel; }
+            get { return DataContext as IShape; }
         }
 
         private void ShapeMove(object sender, DragDeltaEventArgs e)

@@ -11,10 +11,10 @@ namespace Scumle.UndeRedo
 {
     public class ShapeAddCommand : UndoRedoCommand
     {
-        private ObservableCollection<IShapeViewModel> shapes;
-        private IShapeViewModel shape;
+        private ObservableCollection<IShape> shapes;
+        private IShape shape;
 
-        public ShapeAddCommand(ObservableCollection<IShapeViewModel> _shapes, IShapeViewModel _shape)
+        public ShapeAddCommand(ObservableCollection<IShape> _shapes, IShape _shape)
         {
             shapes = _shapes;
             shape = _shape;

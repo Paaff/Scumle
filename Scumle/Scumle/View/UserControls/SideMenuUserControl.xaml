@@ -28,6 +28,7 @@
                         </ItemsPanelTemplate>
                     </Setter.Value>
                 </Setter>
+
                 <Setter Property="ItemTemplate">
                     <Setter.Value>
                         <DataTemplate>
@@ -65,11 +66,13 @@
                 <ListBox Style="{StaticResource PreviewListBox}"
                          ItemTemplateSelector="{StaticResource ShapeTemplateSelector}"
                          ItemsSource="{Binding Source={x:Static Preview:ShapesPreview.List}}"/>
+                
             </Expander>
             <Button Content="Add Shape" Command="{Binding SetShapeSelectionCommand}" Margin="5,5,5,0"/>
 
             <TextBlock Text="Connectors" IsEnabled="False" HorizontalAlignment="Center" FontSize="15" Margin="0,20,0,0"/>
             <Separator/>
+
             <Expander Header="UML Connectors">
                 <ListBox Style="{StaticResource PreviewListBox}"
                          ItemTemplate="{StaticResource LinesPreview}"
