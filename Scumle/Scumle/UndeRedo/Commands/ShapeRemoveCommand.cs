@@ -11,11 +11,11 @@ namespace Scumle.UndeRedo.Commands
 {
     class ShapeRemoveCommand : UndoRedoCommand
     {
-        Collection<IShapeViewModel> shapes;
+        Collection<IShape> shapes;
         Collection<LineViewModel> lines;
-        List<IShapeViewModel> remove_shapes;
+        List<IShape> remove_shapes;
         List<LineViewModel> remove_lines;
-        public ShapeRemoveCommand(Collection<IShapeViewModel> _shapes, Collection<LineViewModel> _lines, List<IShapeViewModel> _remove)
+        public ShapeRemoveCommand(Collection<IShape> _shapes, Collection<LineViewModel> _lines, List<IShape> _remove)
         {
             shapes = _shapes;
             lines = _lines;

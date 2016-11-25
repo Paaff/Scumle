@@ -12,20 +12,22 @@ using System.Windows.Media;
 
 namespace Scumle.ViewModel
 {
-    public class ConnectionPointViewModel : ViewModelBase<ConnectionPoint>
+    public class ConnectionPointViewModel : ViewModelBase<IPoint>, IPoint
     {
-        public ConnectionPointViewModel(ConnectionPoint model, IShapeViewModel shape) : base(model)
+        public ConnectionPointViewModel(IPoint model, IShape shape) : base(model)
         {
+            /*
             if (shape.Shape != model.Shape)
             {
                 throw new ArgumentException("The shapeviewmodel does not wrap the shape for the connection point");
             }
+            */
             Shape = shape;
             ShapeColor = new SolidColorBrush(Color.FromRgb(47, 79, 79));
         }
 
         private Brush _shapeColor;
-        public IShapeViewModel Shape { get; set; }
+        public IShape Shape { get; set; }
 
         public Brush ShapeColor
         {

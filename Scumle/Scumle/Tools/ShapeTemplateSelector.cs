@@ -19,9 +19,9 @@ namespace Scumle.Tools
         public override DataTemplate SelectTemplate(object item, DependencyObject container)
         {
             FrameworkElement element = container as FrameworkElement;
-            if (item is IShapeViewModel)
+            if (item is IShape)
             {
-                IShapeViewModel shape = item as IShapeViewModel;
+                IShape shape = item as IShape;
                 DataTemplateSelector templateSelector;
 
                 if (!TemplateSelectors.TryGetValue(shape.GetType(), out templateSelector))

@@ -11,11 +11,11 @@ namespace Scumle.UndeRedo.Commands
 {
     class ShapeMoveCommand : UndoRedoCommand
     {
-        IShapeViewModel shape;
+        IShape shape;
         Point oldPos;
         Point newPos;
 
-        public ShapeMoveCommand(IShapeViewModel _shape, Point _oldPos, Point _newPos)
+        public ShapeMoveCommand(IShape _shape, Point _oldPos, Point _newPos)
         {
             shape = _shape;
             oldPos = _oldPos;

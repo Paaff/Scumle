@@ -11,10 +11,14 @@ using System.Threading.Tasks;
 
 namespace Scumle.View.Preview
 {
+    /// <summary>
+    /// Provides a dummy collection of shapes to be able to present to the user
+    /// in the view for selection.
+    /// </summary>
     public static class ShapesPreview
     {
 
-        public static ObservableCollection<IShapeViewModel> List = new ObservableCollection<IShapeViewModel>()
+        public static ObservableCollection<IShape> List = new ObservableCollection<IShape>()
         {
             new BasicShapeViewModel(new BasicShape(EBasicShape.Ellipse, 50, 50)),
             new UMLClassViewModel(new UMLClass(0, 0, "UML Class")),
