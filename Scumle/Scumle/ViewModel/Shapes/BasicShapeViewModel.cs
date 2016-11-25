@@ -8,7 +8,7 @@ using Scumle.Model.Shapes;
 
 namespace Scumle.ViewModel.Shapes
 {
-    class BasicShapeViewModel : ShapeViewModel<BasicShape>
+    public class BasicShapeViewModel : ShapeViewModel<BasicShape>
     {
         public BasicShapeViewModel(BasicShape shape) : base(shape)
         {

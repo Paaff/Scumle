@@ -21,9 +21,5 @@ namespace Scumle.View.Preview
             new BasicShapeViewModel(new BasicShape(EBasicShape.Rectangle, 0, 0))
         };
 
-        public static ObservableCollection<LineViewModel> LinePreview = new ObservableCollection<LineViewModel>()
-        {
-
-        };
     }
 }
