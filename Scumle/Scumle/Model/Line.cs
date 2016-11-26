@@ -16,7 +16,9 @@ namespace Scumle.Model
         // For Serialization
         public Line() { }
 
+        [XmlIgnore]
         public IPoint From { get; set; }
+        [XmlIgnore]
         public IPoint To { get; set; }
         public ELine Type { get; set; }
         public double Angle

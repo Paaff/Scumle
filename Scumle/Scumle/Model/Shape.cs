@@ -47,6 +47,7 @@ namespace Scumle.Model
         public double X { get; set; }
         public double Y { get; set; }
 
+        [XmlIgnore]
         public IList<IPoint> ConnectionPoints { get; private set; }
         public double Width
         {

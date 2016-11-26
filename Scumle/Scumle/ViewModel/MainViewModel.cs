@@ -129,15 +129,19 @@ namespace Scumle.ViewModel
         #region Constructor
         public MainViewModel(Model.Scumle scumle) : base(scumle)
         {
-
+            
             IShape uml1 = new UMLClassViewModel(new UMLClass(400, 400, "My Class 1"));
             IShape uml2 = new UMLClassViewModel(new UMLClass(50, 50, "My Class 2"));
 
             IShape shape1 = new BasicShapeViewModel(new BasicShape(EBasicShape.Ellipse, 400, 50));
             IShape shape2 = new BasicShapeViewModel(new BasicShape(EBasicShape.Rectangle, 50, 400));
-
+            
 
             Shapes = new ObservableCollection<IShape>() { uml1, uml2, shape1, shape2 };
+            
+
+
+
 
             IPoint cp1 = uml1.ConnectionPoints.ElementAt(0);
             IPoint cp2 = uml2.ConnectionPoints.ElementAt(3);
@@ -347,6 +351,8 @@ namespace Scumle.ViewModel
             save.Filter = "(.scumle)|*.scumle";
             if (save.ShowDialog() == true)
             {
+              
+                    
                 // List containing all models to be saved.
                 List<List<ModelBase>> modelsToSave = new List<List<ModelBase>>();
 
@@ -356,13 +362,20 @@ namespace Scumle.ViewModel
 
                 foreach (var ViewModel in Shapes)
                 {
-                    // PETER TODO: Use ViewModel.Shape here instead!
-                    //shapesToSave.Add(ViewModel.Shape);
+                    if (ViewModel is UMLClassViewModel)
+                    {
+                        var actualViewModel = (UMLClassViewModel)ViewModel;
+                        shapesToSave.Add(actualViewModel.Shape);
+                    }
+                    else if (ViewModel is BasicShapeViewModel)
+                    {
+                        var actualViewModel = (BasicShapeViewModel)ViewModel;
+                        shapesToSave.Add(actualViewModel.Shape);
+                    }
                 }
-
                 foreach (var ViewModel in Lines)
                 {
-                    //linesToSave.Add(ViewModel.Model);
+                   // linesToSave.Add(ViewModel.Model);
                 }
 
                 modelsToSave.Add(shapesToSave);
@@ -396,11 +409,11 @@ namespace Scumle.ViewModel
                 {
                     if (loadedModel is UMLClass)
                     {
-                        Shapes.Add(new UMLClassViewModel(loadedModel as UMLClass));
+                     //   Shapes.Add(new UMLClassViewModel());
                     }
                     else
                     {                        
-                        Shapes.Add(new BasicShapeViewModel(loadedModel as BasicShape));                      
+                    //    Shapes.Add(new BasicShapeViewModel());                      
                     }
                 }
 
