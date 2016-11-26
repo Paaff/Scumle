@@ -21,7 +21,7 @@
                 <ListBox ItemsSource="{Binding UMLFields, Mode=TwoWay}" x:Name="UMLFields">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
-                            <TextBox Text="{Binding ListValue}"/>
+                            <TextBox Text="{Binding ListValue, Mode=TwoWay }"/>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                 </ListBox> 
@@ -36,7 +36,7 @@
                 <ListBox ItemsSource="{Binding UMLMethods, Mode=TwoWay}" x:Name="UMLMethods">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
-                            <TextBox Text="{Binding ListValue}"/>
+                            <TextBox Text="{Binding ListValue, Mode=TwoWay}"/>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                 </ListBox>

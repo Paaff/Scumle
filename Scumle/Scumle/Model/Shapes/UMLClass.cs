@@ -11,26 +11,27 @@ namespace Scumle.Model.Shapes
     {
 
         // An UML Class should carry a list of methods modelled and a list of fields modelled.
-        public List<string> umlFields { get; set; }
-        public List<string> umlMethods { get; set; }    
+        public List<UMLItem> umlFields { get; set; }
+        public List<UMLItem> umlMethods { get; set; }
         public string Name { get; set; }
+      
 
 
         #region Constructor
         public UMLClass(double X, double Y, string Name) : base(X, Y)
         {
-            umlFields = new List<string>()
+            umlFields = new List<UMLItem>()
             {
-                "Field1",
-                "Field2",
-                "Field3"
+                new UMLItem("Field1"),
+                new UMLItem("Field2"),
+                new UMLItem("Field3")
             };
 
-            umlMethods = new List<string>()
+            umlMethods = new List<UMLItem>()
             {
-                "Method1",
-                "Method2",
-                "Method3"
+                new UMLItem("Method1"),
+                new UMLItem("Method2"),
+                new UMLItem("Method3")
             };
             this.Name = Name;
 
@@ -40,6 +41,7 @@ namespace Scumle.Model.Shapes
         public UMLClass() { }
         #endregion
 
+       
 
 
 

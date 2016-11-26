@@ -17,12 +17,13 @@ namespace Scumle.ViewModel
     {
 
 
-        public ObservableCollection<ListItem> fields;
-        public ObservableCollection<ListItem> methods;
-    
+        public ObservableCollection<UMLItem> fields;
+        public ObservableCollection<UMLItem> methods;
+       
 
-        public ICommand removeFieldCommand => new RelayCommand<ListItem>(removeField);
-        public ICommand removeMethodCommand => new RelayCommand<ListItem>(removeMethod);
+
+        public ICommand removeFieldCommand => new RelayCommand<UMLItem>(removeField);
+        public ICommand removeMethodCommand => new RelayCommand<UMLItem>(removeMethod);
         public ICommand addFieldCommand => new RelayCommand(addField);
         public ICommand addMethodCommand => new RelayCommand(addMethod);
 
@@ -33,8 +34,8 @@ namespace Scumle.ViewModel
             Height = 150;
             ShapeColor = new SolidColorBrush(Color.FromRgb(232, 232, 232));
 
-            fields = new ObservableCollection<ListItem>(Model.umlFields.Select(e => new ListItem(e)));
-            methods = new ObservableCollection<ListItem>(Model.umlMethods.Select(e => new ListItem(e)));
+            fields = new ObservableCollection<UMLItem>(Model.umlFields);
+            methods = new ObservableCollection<UMLItem>(Model.umlMethods);
    
 
 
@@ -43,6 +44,8 @@ namespace Scumle.ViewModel
 
         #region Properties
 
+     
+
         public string Name
         {
             get { return Model.Name; }
@@ -50,13 +53,13 @@ namespace Scumle.ViewModel
         }
         
       
-        public ObservableCollection<ListItem> UMLFields
+        public ObservableCollection<UMLItem> UMLFields
         {
             get { return fields; }
             set { }
         }
 
-        public ObservableCollection<ListItem> UMLMethods
+        public ObservableCollection<UMLItem> UMLMethods
         {
             get { return methods; }
             set { }
@@ -65,45 +68,33 @@ namespace Scumle.ViewModel
 
         #endregion
 
-        private void removeField(ListItem field)
+        private void removeField(UMLItem field)
         {
             UMLFields.Remove(field);
-            Model.umlFields.Remove(field.ListValue);
+            Model.umlFields.Remove(field);
             
         }
         
-        private void removeMethod(ListItem method)
+        private void removeMethod(UMLItem method)
         {
             UMLMethods.Remove(method);
-            Model.umlMethods.Remove(method.ListValue);
+            Model.umlMethods.Remove(method);
 
         }
 
         private void addField()
         {
-            UMLFields.Add(new ListItem("New Field .."));
-            Model.umlFields.Add("New Field ..");
+            UMLFields.Add(new UMLItem("New Field .."));
+            Model.umlFields.Add(new UMLItem("New Field .."));
         }
 
         private void addMethod()
         {
-            UMLMethods.Add(new ListItem("New Method .."));
-            Model.umlMethods.Add("New Method ..");
+            UMLMethods.Add(new UMLItem("New Method .."));
+            Model.umlMethods.Add(new UMLItem("New Method .."));
         }
 
-
-        #region ListItemClass
-        public class ListItem 
-        {
-            public string ListValue { get; set; }
-
-           
-            public ListItem(string s)
-            {
-                ListValue = s;
-            }
-        }
-        #endregion
+       
 
     }
 }
