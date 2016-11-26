@@ -11,7 +11,7 @@
     <StackPanel Background="{Binding ShapeColor}">
         
          <!-- Name of the Shape (Class Name) -->
-        <TextBlock Text="{Binding Name}" FontSize="14" FontWeight="Bold" TextAlignment="Center"
+        <TextBox Text="{Binding Name, Mode=TwoWay}" FontSize="14" FontWeight="Bold" TextAlignment="Center"
                    HorizontalAlignment="Stretch"  VerticalAlignment="Stretch"  Background="IndianRed" />
         
         <!-- Contents of the Class Diagram -->

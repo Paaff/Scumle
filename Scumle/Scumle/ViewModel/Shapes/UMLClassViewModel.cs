@@ -93,7 +93,7 @@ namespace Scumle.ViewModel
 
 
         #region ListItemClass
-        public class ListItem
+        public class ListItem 
         {
             public string ListValue { get; set; }
 
