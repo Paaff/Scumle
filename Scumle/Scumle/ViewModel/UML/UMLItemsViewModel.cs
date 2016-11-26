@@ -9,10 +9,7 @@ namespace Scumle.ViewModel
 {
     public class UMLItemsViewModel : ViewModelBase<UMLItem>
     {
-        public UMLItemsViewModel(UMLItem umlitem) : base(umlitem)
-        {
-                
-        }
+        public UMLItemsViewModel(UMLItem umlitem) : base(umlitem)   {  }
 
         public string ListValue
         {
