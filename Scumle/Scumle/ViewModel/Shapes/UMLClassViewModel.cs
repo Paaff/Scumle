@@ -68,22 +68,27 @@ namespace Scumle.ViewModel
         private void removeField(ListItem field)
         {
             UMLFields.Remove(field);
+            Model.umlFields.Remove(field.ListValue);
+            
         }
         
         private void removeMethod(ListItem method)
         {
             UMLMethods.Remove(method);
-            
+            Model.umlMethods.Remove(method.ListValue);
+
         }
 
         private void addField()
         {
             UMLFields.Add(new ListItem("New Field .."));
+            Model.umlFields.Add("New Field ..");
         }
 
         private void addMethod()
         {
             UMLMethods.Add(new ListItem("New Method .."));
+            Model.umlMethods.Add("New Method ..");
         }
 
 

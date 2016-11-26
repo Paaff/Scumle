@@ -373,9 +373,12 @@ namespace Scumle.ViewModel
                         shapesToSave.Add(actualViewModel.Shape);
                     }
                 }
+
+
                 foreach (var ViewModel in Lines)
                 {
-                   // linesToSave.Add(ViewModel.Model);
+                    var actualModel = ViewModel.Model as Line;
+                    linesToSave.Add(actualModel);
                 }
 
                 modelsToSave.Add(shapesToSave);
