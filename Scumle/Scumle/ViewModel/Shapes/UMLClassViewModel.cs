@@ -70,16 +70,21 @@ namespace Scumle.ViewModel
 
         private void removeField(UMLItem field)
         {
-            UMLFields.Remove(field);
-            Model.umlFields.Remove(field);
+            if (field != null)
+            {
+                UMLFields.Remove(field);
+                Model.umlFields.Remove(field);
+            }
             
         }
         
         private void removeMethod(UMLItem method)
         {
-            UMLMethods.Remove(method);
-            Model.umlMethods.Remove(method);
-
+            if (method != null)
+            {
+                UMLMethods.Remove(method);
+                Model.umlMethods.Remove(method);
+            }
         }
 
         private void addField()
