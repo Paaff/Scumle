@@ -574,29 +574,35 @@ namespace Scumle.ViewModel
             new ShapeColorCommand(Selected, new SolidColorBrush(SelectedColor)).Execute();
         }
 
-        //The majority of this image conversion code is from http://stackoverflow.com/questions/4560173/save-wpf-view-as-image-preferably-png
+        //The image conversion code is inspired by http://stackoverflow.com/questions/4560173/save-wpf-view-as-image-preferably-png
         public void ExportImage(Canvas grid)
         {
-            Size size = new Size(grid.ActualWidth, grid.ActualHeight);
-            RenderTargetBitmap img = new RenderTargetBitmap((int)size.Width, (int)size.Height, 96, 96, PixelFormats.Pbgra32);
-            DrawingVisual drawingvisual = new DrawingVisual();
-            using (DrawingContext context = drawingvisual.RenderOpen())
-            {
-                context.DrawRectangle(new VisualBrush(grid), null, new Rect(new Point(), size));
-                context.Close();
-            }
-            img.Render(drawingvisual);
-
             SaveFileDialog save = new SaveFileDialog();
             save.DefaultExt = ".png";
-            var fileStream = File.Create(save.FileName);
+            if (save.ShowDialog() == true)
+            {
 
-            PngBitmapEncoder encoder = new PngBitmapEncoder();
-            encoder.Frames.Add(BitmapFrame.Create(img));
-            encoder.Save(fileStream);
 
-            fileStream.Close();
 
+                Size size = new Size(grid.ActualWidth, grid.ActualHeight);
+                RenderTargetBitmap img = new RenderTargetBitmap((int)size.Width, (int)size.Height, 96, 96, PixelFormats.Pbgra32);
+                DrawingVisual drawingvisual = new DrawingVisual();
+                using (DrawingContext context = drawingvisual.RenderOpen())
+                {
+                    context.DrawRectangle(new VisualBrush(grid), null, new Rect(new Point(), size));
+                    context.Close();
+                }
+                img.Render(drawingvisual);
+
+                var fileStream = File.Create(save.FileName);
+
+                PngBitmapEncoder encoder = new PngBitmapEncoder();
+                encoder.Frames.Add(BitmapFrame.Create(img));
+                encoder.Save(fileStream);
+
+                fileStream.Close();
+
+            }
         }
 
         public void ChangeZoom(string value)

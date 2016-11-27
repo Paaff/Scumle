@@ -95,7 +95,7 @@
             -->
 
             <!-- Selection and temp line -->
-            <Canvas IsHitTestVisible="False">
+            <Canvas x:Name='Canvas' IsHitTestVisible="False">
                 <Border Canvas.Left="{Binding SelectionX}" 
                             Canvas.Top="{Binding SelectionY}" 
                             Width="{Binding SelectionWidth}"
