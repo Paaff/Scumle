@@ -13,11 +13,11 @@
             <RibbonQuickAccessToolBar>
                 <DockPanel>
                     <RibbonButton DockPanel.Dock="Right" SmallImageSource="/Images/Redo.png"
-                                       ToolTip="Undo" Command="{Binding UndoRedo.RedoCommand}"/>
+                                       ToolTip="Undo" Command="{Binding UndoCommand}"/>
                     <RibbonButton DockPanel.Dock="Right" SmallImageSource="/Images/Undo.png"
-                                       ToolTip="Undo" Command="{Binding UndoRedo.UndoCommand}"/>
+                                       ToolTip="Undo" Command="{Binding RedoCommand}"/>
                     <RibbonButton DockPanel.Dock="Right" SmallImageSource="/Images/Save.png"
-                                       ToolTip="Save" Command="{Binding SaveWorkspaceCommand}"/>
+                                       ToolTip="Save" Command="{Binding SaveWorkSpaceCommand}"/>
                 </DockPanel>
             </RibbonQuickAccessToolBar>
         </Ribbon.QuickAccessToolBar>
@@ -26,17 +26,17 @@
 
             <RibbonApplicationMenu>
 
-                <RibbonApplicationMenuItem Header="New" ImageSource="/Images/New.png" Command="{Binding NewWorkspaceCommand}"/>
+                <RibbonApplicationMenuItem Header="New" ImageSource="/Images/New.png" Command="{Binding NewWorkSpaceCommand}"/>
 
-                <RibbonApplicationMenuItem Header="Open" ImageSource="/Images/Open.png" Command="{Binding OpenWorkspaceCommand}"/>
+                <RibbonApplicationMenuItem Header="Open" ImageSource="/Images/Open.png" Command="{Binding OpenWorkSpaceCommand}"/>
                 
-                <RibbonApplicationMenuItem Header="Save" ImageSource="/Images/Save.png" Command="{Binding SaveWorkspaceCommand}"/>
+                <RibbonApplicationMenuItem Header="Save" ImageSource="/Images/Save.png" Command="{Binding SaveWorkSpaceCommand}"/>
 
-                <RibbonApplicationMenuItem Header="Save as" ImageSource="/Images/Saveas.png" Command="{Binding SaveWorkspaceCommand}"/>
+                <RibbonApplicationMenuItem Header="Save as" ImageSource="/Images/Saveas.png" Command="{Binding SaveAsWorkSpaceCommand}"/>
 
-                <RibbonApplicationMenuItem Header="Export as .PNG" ImageSource="/Images/Picture.png" Command="{Binding ExportImageCommand}" CommandParameter="{Binding ElementName=Canvas}"/>
+                <RibbonApplicationMenuItem Header="Export as .PNG" ImageSource="/Images/Picture.png" Command="{Binding ExportImageCommand}"/>
 
-                <RibbonApplicationMenuItem Header="Exit" ImageSource="/Images/Exit.png"/>
+                <RibbonApplicationMenuItem Header="Exit" ImageSource="/Images/Exit.png" Command="{Binding ExitCommand}"/>
 
                 <RibbonApplicationMenu.SmallImageSource>
                     <DrawingImage>
@@ -70,14 +70,14 @@
             <!-- Add command for copy, cut and paste that have 3 options -->
             <RibbonGroup Header="Clipboard">
 
-                <RibbonMenuButton x:Name="Paste" Label="Paste" LargeImageSource="/Images/Paste.png"/>
+                <RibbonButton x:Name="Paste" Label="Paste" LargeImageSource="/Images/Paste.png" Command="{Binding PasteCommand}"/>
 
                 <!-- For cut and copy make sure that they can tell the difference of what is in the clipboard -->
                 <RibbonButton x:Name="Cut" Label="Cut" SmallImageSource="/Images/Cut.png"
-                              Command="ApplicationCommands.Cut"/>
+                              Command="{Binding CutCommand}"/>
 
                 <RibbonButton x:Name="Copy" Label="Copy" SmallImageSource="/Images/Copy.png"
-                              Command="ApplicationCommands.Copy"/>
+                              Command="{Binding CopyCommand}"/>
 
 
             </RibbonGroup>
@@ -105,14 +105,16 @@
         </RibbonTab>
 
         <RibbonTab Header="Design">
+            <!-- This need to work on both highlighted text and as a general setting.
             <RibbonGroup Header="Font">
-                <!-- This need to work on both highlighted text and as a general setting. -->
+                
                 <StackPanel Orientation="Horizontal">
                     <RibbonButton Label="B" FontWeight="Bold"/>
                     <RibbonButton Label="U" />
                     <RibbonButton Label="I" FontStyle="Italic"/>
                 </StackPanel>
             </RibbonGroup>
+                 -->
 
             <RibbonGroup Header="Color">
                 <!-- This need to work on both highlighted text and as a general setting. -->
@@ -126,7 +128,7 @@
         <RibbonTab Header="About">
             <RibbonGroup>
             <TextBlock Margin="5,5">
-                Scumle, A Super Cheeky UML Editor, was developped by: <LineBreak/>
+                Scumle, a UML diagram editor, was developped by: <LineBreak/>
                 Mathias, Peter and Sebastian Ake Aaen s144463 <LineBreak/>
                 As a part of the course Windows Programming, 02350, DTU 2016
             </TextBlock>

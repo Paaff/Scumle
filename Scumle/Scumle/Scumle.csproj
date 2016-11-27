@@ -267,10 +267,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="View\Resources\Cursors\arrow_cursor.cur" />
-    <Resource Include="View\Resources\Cursors\shape_cursor.cur" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Images\Add.png" />
     <Resource Include="Images\Cancel.png" />
     <Resource Include="Images\Check.png" />
@@ -304,18 +300,6 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\Saveas.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\Arrows\associated.jpg" />
-    <Resource Include="Images\Arrows\asynchronous.jpg" />
-    <Resource Include="Images\Arrows\belonging.jpg" />
-    <Resource Include="Images\Arrows\contained.jpg" />
-    <Resource Include="Images\Arrows\dependent.jpg" />
-    <Resource Include="Images\Arrows\has.jpg" />
-    <Resource Include="Images\Arrows\inherits.jpg" />
-    <Resource Include="Images\Arrows\navigate.jpg" />
-    <Resource Include="Images\Arrows\realisation.jpg" />
-    <Resource Include="Images\Arrows\synchronous.jpg" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\Shapes\uml.jpg" />

@@ -39,11 +39,14 @@ namespace Scumle.ViewModel
         private double _connectionX2=0;
         private double _connectionY2=0;
         private bool _isOneConnectedPoint = false;
+        private string _currentFileName = null;
 
         public UndoRedoController UndoRedo = UndoRedoController.Instance;
         #endregion
 
         #region Properties
+        public int SelectedConnector { get; set; }
+        public int SelectedFigure { get; set; }
         public ETool Tool
         {
             get { return _tool; }
@@ -111,10 +114,14 @@ namespace Scumle.ViewModel
         public ICommand ExportImageCommand => new RelayCommand<Canvas>(ExportImage);
         public ICommand ChangeZoomCommand => new RelayCommand<string>(ChangeZoom);
         public ICommand SetShapeSelectionCommand => new RelayCommand(SetShapeInsertion);
-        public ICommand SaveWorkspaceCommand => new RelayCommand(SaveWorkspace);
-        public ICommand OpenWorkspaceCommand => new RelayCommand(OpenWorkspace);
+        public ICommand SaveAsWorkSpaceCommand => new RelayCommand(SaveAsWorkSpace);
+        public ICommand SaveWorkSpaceCommand => new RelayCommand(SaveWorkSpace);
+        public ICommand OpenWorkSpaceCommand => new RelayCommand(OpenWorkSpace);
+        public ICommand CopyCommand => new RelayCommand(Copy);
+        public ICommand CutCommand => new RelayCommand(Cut);
+        public ICommand PasteCommand => new RelayCommand(Paste);
         public RelayCommand DeleteSelectedShapesCommand { get; set; }
-        public ICommand NewWorkspaceCommand => new RelayCommand(NewWorkspace);
+        public ICommand NewWorkSpaceCommand => new RelayCommand(NewWorkSpace);
         public ICommand UndoCommand => UndoRedoController.Instance.UndoCommand;
         public ICommand RedoCommand => UndoRedoController.Instance.RedoCommand;
         public ICommand LineToConnectionCommand => new RelayCommand<MouseEventArgs>(LineToConnection);
@@ -124,17 +131,19 @@ namespace Scumle.ViewModel
         public ICommand EscCommand => new RelayCommand(Escape);
         public ICommand SelectAllCommand => new RelayCommand(SelectAll);
         public ICommand ColorSelectedCommand => new RelayCommand(ColorSelected);
+        public ICommand ExitCommand => new RelayCommand(Exit);
         #endregion
 
         #region Constructor
         public MainViewModel(Model.Scumle scumle) : base(scumle)
         {
-            
-            IShape uml1 = new UMLClassViewModel(new UMLClass(400, 400, "My Class 1"));
-            IShape uml2 = new UMLClassViewModel(new UMLClass(50, 50, "My Class 2"));
+            SelectedColor = Color.FromRgb(205, 92, 92);
 
-            IShape shape1 = new BasicShapeViewModel(new BasicShape(EBasicShape.Ellipse, 400, 50));
-            IShape shape2 = new BasicShapeViewModel(new BasicShape(EBasicShape.Rectangle, 50, 400));
+            IShape uml1 = new UMLClassViewModel(new UMLClass(400, 400, "My Class 1", SelectedColor));
+            IShape uml2 = new UMLClassViewModel(new UMLClass(50, 50, "My Class 2", SelectedColor));
+
+            IShape shape1 = new BasicShapeViewModel(new BasicShape(EBasicShape.Ellipse, 400, 50, SelectedColor));
+            IShape shape2 = new BasicShapeViewModel(new BasicShape(EBasicShape.Rectangle, 50, 400, SelectedColor));
             
 
             Shapes = new ObservableCollection<IShape>() { uml1, uml2, shape1, shape2 };
@@ -148,7 +157,7 @@ namespace Scumle.ViewModel
 
             Lines.Add(new LineViewModel(new Line(ELine.Inheritance, cp1, cp2)));
 
-            SelectedColor = Color.FromRgb(0, 153, 255);
+            
 
             DeleteSelectedShapesCommand = new RelayCommand(DeleteSelectedShapes, HasSelectedShapes);
         }
@@ -178,7 +187,7 @@ namespace Scumle.ViewModel
             {
                 if (_connectionFrom != _connectionTo)
                 {
-                    new LineAddCommand(Lines, new LineViewModel(new Line(ELine.Association, _connectionFrom, _connectionTo))).Execute();
+                    new LineAddCommand(Lines, new LineViewModel(new Line((ELine)SelectedConnector, _connectionFrom, _connectionTo))).Execute();
                 }
 
                 EndLineConnection();
@@ -190,6 +199,29 @@ namespace Scumle.ViewModel
             double change = ((double) e.Delta) / _ZOOMFACTOR;
             Zoom *= (1.0 + change);
             e.Handled = true;
+        }
+        #endregion
+
+        #region
+        //Nemt at implementere når tingene bliver serializable https://www.codeproject.com/articles/23832/implementing-deep-cloning-via-serializing-objects
+        private void Copy()
+        {
+            foreach (IShape i in Selected) 
+            {
+                CopiedShapes.Add(i);
+            }
+        }
+        private void Cut()
+        {
+            Copy();
+            DeleteSelectedShapes();
+        }
+        private void Paste()
+        {
+            foreach (IShape i in CopiedShapes)
+            {
+                Shapes.Add(i);
+            }
         }
         #endregion
 
@@ -309,10 +341,25 @@ namespace Scumle.ViewModel
         public void AddShape(MouseButtonEventArgs e)
         {
             Point p = e.MouseDevice.GetPosition(e.Source as IInputElement);
-
-            IShape shape = new UMLClassViewModel(new UMLClass(p.X, p.Y, "New Shape"));
-            new ShapeAddCommand(Shapes, shape).Execute();
-            Tool = ETool.Default;
+            IShape shape = null;
+            switch (SelectedFigure)
+            {
+                case 0:
+                    shape = new BasicShapeViewModel(new BasicShape(EBasicShape.Ellipse, p.X, p.Y, SelectedColor));
+                    break;
+                case 1:
+                     shape = new UMLClassViewModel(new UMLClass(p.X, p.Y, "New Shape", SelectedColor));
+                    break;
+                case 2:
+                    shape = new BasicShapeViewModel(new BasicShape(EBasicShape.Rectangle, p.X, p.Y, SelectedColor));
+                    break;
+                default:
+                    Console.WriteLine("Figure selection error");
+                    break;
+            }
+            if(shape != null)
+                new ShapeAddCommand(Shapes, shape).Execute();
+            Tool = ETool.Default;            
         }
         #endregion
 
@@ -343,12 +390,25 @@ namespace Scumle.ViewModel
         #endregion
 
         #region WorkSpace
+        public void SaveWorkSpace()
+        {
+            if(_currentFileName != null)
+            {
+                throw new NotImplementedException();
+                //Implementer save med _currentFileName
+            }
+            else
+            {
+                SaveAsWorkSpace();
+            }
+        }
 
-        public void SaveWorkspace()
+        public void SaveAsWorkSpace()
         {
             SaveFileDialog save = new SaveFileDialog();
             save.DefaultExt = ".scumle";
             save.Filter = "(.scumle)|*.scumle";
+            _currentFileName = save.FileName;
             if (save.ShowDialog() == true)
             {
               
@@ -394,7 +454,7 @@ namespace Scumle.ViewModel
 
         }
 
-        public void OpenWorkspace()
+        public void OpenWorkSpace()
         {
 
             OpenFileDialog open = new OpenFileDialog();
@@ -437,14 +497,20 @@ namespace Scumle.ViewModel
         }
 
         //TODO: Implement adding a new "window pane" instead of just deleting the one we have.
-        public void NewWorkspace()
+        public void NewWorkSpace()
         {
             Shapes.Clear();
+            Lines.Clear();
         }
 
         #endregion
 
         #region methods
+        private void Exit()
+        {
+            Application.Current.Shutdown();
+        }
+
         private void SetLineConnection()
         {
             Tool = ETool.LineTool;
@@ -468,6 +534,7 @@ namespace Scumle.ViewModel
             ConnectionY2 = 0;
             Tool = ETool.Default;
         }
+
         public void ColorSelected()
         {
             new ShapeColorCommand(Selected, new SolidColorBrush(SelectedColor)).Execute();

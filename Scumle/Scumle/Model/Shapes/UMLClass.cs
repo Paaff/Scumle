@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media;
 
 namespace Scumle.Model.Shapes
 {
@@ -18,7 +19,7 @@ namespace Scumle.Model.Shapes
 
 
         #region Constructor
-        public UMLClass(double X, double Y, string Name) : base(X, Y)
+        public UMLClass(double X, double Y, string Name,Color col) : base(X, Y, col)
         {
             umlFields = new List<UMLItem>()
             {

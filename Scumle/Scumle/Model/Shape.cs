@@ -18,7 +18,7 @@ namespace Scumle.Model
         private double _width;
         private double _height;      
                 
-        public Shape(double _X, double _Y)
+        public Shape(double _X, double _Y,Color col)
         {
             IsSelected = false;
             Width = 50;
@@ -26,7 +26,7 @@ namespace Scumle.Model
             X = _X;
             Y = _Y;
             InitializeConnectionPoints();
-            ShapeColor = new SolidColorBrush(Color.FromRgb(0,0,0));
+            ShapeColor = new SolidColorBrush(col);
         }
 
         private void InitializeConnectionPoints()
