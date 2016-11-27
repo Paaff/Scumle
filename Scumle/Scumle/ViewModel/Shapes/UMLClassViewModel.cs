@@ -32,7 +32,7 @@ namespace Scumle.ViewModel
         {
             Width = 300;
             Height = 150;
-            ShapeColor = new SolidColorBrush(Color.FromRgb(232, 232, 232));
+            ShapeColor = new SolidColorBrush(Color.FromRgb(205, 92, 92));
 
             fields = new ObservableCollection<UMLItem>(Model.umlFields);
             methods = new ObservableCollection<UMLItem>(Model.umlMethods);

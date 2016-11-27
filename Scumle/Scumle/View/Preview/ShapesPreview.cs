@@ -8,6 +8,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media;
 
 namespace Scumle.View.Preview
 {
@@ -20,9 +21,9 @@ namespace Scumle.View.Preview
 
         public static ObservableCollection<IShape> List = new ObservableCollection<IShape>()
         {
-            new BasicShapeViewModel(new BasicShape(EBasicShape.Ellipse, 50, 50)),
-            new UMLClassViewModel(new UMLClass(0, 0, "UML Class")),
-            new BasicShapeViewModel(new BasicShape(EBasicShape.Rectangle, 0, 0))
+            new BasicShapeViewModel(new BasicShape(EBasicShape.Ellipse, 50, 50, Color.FromRgb(205,92,92))),
+            new UMLClassViewModel(new UMLClass(0, 0, "UML Class",Color.FromRgb(205,92,92))),
+            new BasicShapeViewModel(new BasicShape(EBasicShape.Rectangle, 0, 0,Color.FromRgb(205,92,92)))
         };
 
     }

@@ -8,12 +8,13 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media;
 
 namespace Scumle.View.Preview
 {
     public static class LinesPreview
     {
-        private static BasicShapeViewModel Shape = new BasicShapeViewModel(new BasicShape(Model.EBasicShape.Ellipse, 0, 0));
+        private static BasicShapeViewModel Shape = new BasicShapeViewModel(new BasicShape(Model.EBasicShape.Ellipse, 0, 0, Color.FromRgb(205,92,92)));
         private static ConnectionPointViewModel From = new ConnectionPointViewModel(new ConnectionPoint(Shape.Shape, System.Windows.HorizontalAlignment.Left, System.Windows.VerticalAlignment.Top), Shape);
         private static ConnectionPointViewModel To = new ConnectionPointViewModel(new ConnectionPoint(Shape.Shape, System.Windows.HorizontalAlignment.Right, System.Windows.VerticalAlignment.Bottom), Shape);
 

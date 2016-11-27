@@ -22,6 +22,9 @@
         <KeyBinding Modifiers="Ctrl" Key="A"  Command="{Binding SelectAllCommand}"></KeyBinding>
         <KeyBinding Gesture="CTRL+Z" Command="{Binding UndoCommand}"/>
         <KeyBinding Gesture="CTRL+Y" Command="{Binding RedoCommand}"/>
+        <KeyBinding Gesture="CTRL+C" Command="{Binding CopyCommand}"/>
+        <KeyBinding Gesture="CTRL+X" Command="{Binding CutCommand}"/>
+        <KeyBinding Gesture="CTRL+V" Command="{Binding PasteCommand}"/>
         <KeyBinding Gesture="Escape" Command="{Binding EscCommand}"/>
     </Window.InputBindings>
 

@@ -6,13 +6,13 @@
              xmlns:local="clr-namespace:Scumle.View"
              mc:Ignorable="d" 
              d:DesignHeight="200" d:DesignWidth="200">
-    
-    
-    <StackPanel Background="{Binding ShapeColor}">
+
+    <Border BorderThickness="0.5" BorderBrush="Black">
+        <StackPanel Background="#E8E8E8">
         
          <!-- Name of the Shape (Class Name) -->
         <TextBox Text="{Binding Name, Mode=TwoWay}" FontSize="14" FontWeight="Bold" TextAlignment="Center"
-                   HorizontalAlignment="Stretch"  VerticalAlignment="Stretch"  Background="IndianRed" />
+                   HorizontalAlignment="Stretch"  VerticalAlignment="Stretch"  Background="{Binding ShapeColor}" />
         
         <!-- Contents of the Class Diagram -->
         <Expander Header="Fields" >            
@@ -47,9 +47,10 @@
         </Expander>
 
     </StackPanel>
-    
-    
-  <!--  <StackPanel Background="{Binding ShapeColor}">
+    </Border>
+
+
+    <!--  <StackPanel Background="{Binding ShapeColor}">
         <Label Content="{Binding Name}" FontSize="12"></Label>
         <TextBox AcceptsReturn="True" TextWrapping="Wrap" />
     </StackPanel>-->

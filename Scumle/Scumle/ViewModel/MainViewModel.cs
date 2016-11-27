@@ -117,6 +117,9 @@ namespace Scumle.ViewModel
         public ICommand SaveAsWorkSpaceCommand => new RelayCommand(SaveAsWorkSpace);
         public ICommand SaveWorkSpaceCommand => new RelayCommand(SaveWorkSpace);
         public ICommand OpenWorkSpaceCommand => new RelayCommand(OpenWorkSpace);
+        public ICommand CopyCommand => new RelayCommand(Copy);
+        public ICommand CutCommand => new RelayCommand(Cut);
+        public ICommand PasteCommand => new RelayCommand(Paste);
         public RelayCommand DeleteSelectedShapesCommand { get; set; }
         public ICommand NewWorkSpaceCommand => new RelayCommand(NewWorkSpace);
         public ICommand UndoCommand => UndoRedoController.Instance.UndoCommand;
@@ -134,12 +137,13 @@ namespace Scumle.ViewModel
         #region Constructor
         public MainViewModel(Model.Scumle scumle) : base(scumle)
         {
-            
-            IShape uml1 = new UMLClassViewModel(new UMLClass(400, 400, "My Class 1"));
-            IShape uml2 = new UMLClassViewModel(new UMLClass(50, 50, "My Class 2"));
+            SelectedColor = Color.FromRgb(205, 92, 92);
 
-            IShape shape1 = new BasicShapeViewModel(new BasicShape(EBasicShape.Ellipse, 400, 50));
-            IShape shape2 = new BasicShapeViewModel(new BasicShape(EBasicShape.Rectangle, 50, 400));
+            IShape uml1 = new UMLClassViewModel(new UMLClass(400, 400, "My Class 1", SelectedColor));
+            IShape uml2 = new UMLClassViewModel(new UMLClass(50, 50, "My Class 2", SelectedColor));
+
+            IShape shape1 = new BasicShapeViewModel(new BasicShape(EBasicShape.Ellipse, 400, 50, SelectedColor));
+            IShape shape2 = new BasicShapeViewModel(new BasicShape(EBasicShape.Rectangle, 50, 400, SelectedColor));
             
 
             Shapes = new ObservableCollection<IShape>() { uml1, uml2, shape1, shape2 };
@@ -153,7 +157,7 @@ namespace Scumle.ViewModel
 
             Lines.Add(new LineViewModel(new Line(ELine.Inheritance, cp1, cp2)));
 
-            SelectedColor = Color.FromRgb(0, 153, 255);
+            
 
             DeleteSelectedShapesCommand = new RelayCommand(DeleteSelectedShapes, HasSelectedShapes);
         }
@@ -195,6 +199,29 @@ namespace Scumle.ViewModel
             double change = ((double) e.Delta) / _ZOOMFACTOR;
             Zoom *= (1.0 + change);
             e.Handled = true;
+        }
+        #endregion
+
+        #region
+        //Nemt at implementere når tingene bliver serializable https://www.codeproject.com/articles/23832/implementing-deep-cloning-via-serializing-objects
+        private void Copy()
+        {
+            foreach (IShape i in Selected) 
+            {
+                CopiedShapes.Add(i);
+            }
+        }
+        private void Cut()
+        {
+            Copy();
+            DeleteSelectedShapes();
+        }
+        private void Paste()
+        {
+            foreach (IShape i in CopiedShapes)
+            {
+                Shapes.Add(i);
+            }
         }
         #endregion
 
@@ -318,13 +345,13 @@ namespace Scumle.ViewModel
             switch (SelectedFigure)
             {
                 case 0:
-                    shape = new BasicShapeViewModel(new BasicShape(EBasicShape.Ellipse, p.X, p.Y));
+                    shape = new BasicShapeViewModel(new BasicShape(EBasicShape.Ellipse, p.X, p.Y, SelectedColor));
                     break;
                 case 1:
-                     shape = new UMLClassViewModel(new UMLClass(p.X, p.Y, "New Shape"));
+                     shape = new UMLClassViewModel(new UMLClass(p.X, p.Y, "New Shape", SelectedColor));
                     break;
                 case 2:
-                    shape = new BasicShapeViewModel(new BasicShape(EBasicShape.Rectangle, p.X, p.Y));
+                    shape = new BasicShapeViewModel(new BasicShape(EBasicShape.Rectangle, p.X, p.Y, SelectedColor));
                     break;
                 default:
                     Console.WriteLine("Figure selection error");
