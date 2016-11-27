@@ -16,9 +16,9 @@
             </Grid.RowDefinitions>
             <TextBox Text="{Binding Name, Mode=TwoWay}" FontSize="14" FontWeight="Bold" TextAlignment="Center"
                    HorizontalAlignment="Center"  VerticalAlignment="Stretch"  Padding="2,2" Background="Transparent" BorderThickness="0" Grid.Row="0"/>
-            <TextBox AcceptsReturn="True" TextWrapping="Wrap" VerticalAlignment="Stretch" Grid.Row="1" Margin="3,3"></TextBox>
+            <TextBox AcceptsReturn="True" TextWrapping="Wrap" VerticalAlignment="Stretch" Grid.Row="1" Margin="3,3" Text="{Binding UMLFields, Mode=TwoWay}"></TextBox>
 
-            <TextBox AcceptsReturn="True" TextWrapping="Wrap" VerticalAlignment="Stretch" Grid.Row="2" Margin="3,0,3,3"></TextBox>
+            <TextBox AcceptsReturn="True" TextWrapping="Wrap" VerticalAlignment="Stretch" Grid.Row="2" Margin="3,0,3,3" Text="{Binding UMLMethods, Mode=TwoWay}"></TextBox>
         </Grid>
     </Border>
 
