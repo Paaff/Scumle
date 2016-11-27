@@ -111,7 +111,7 @@ namespace Scumle.ViewModel
         #region Commands
         public ICommand ZoomCommand => new RelayCommand<MouseWheelEventArgs>(ZoomEvent);
         public ICommand SetLineConnectionCommand => new RelayCommand(SetLineConnection);
-        public ICommand ExportImageCommand => new RelayCommand<System.Windows.Controls.Ribbon.RibbonWindow>(ExportImage);
+        public ICommand ExportImageCommand => new RelayCommand<Window>(ExportImage);
         public ICommand ChangeZoomCommand => new RelayCommand<string>(ChangeZoom);
         public ICommand SetShapeSelectionCommand => new RelayCommand(SetShapeInsertion);
         public ICommand SaveAsWorkSpaceCommand => new RelayCommand(SaveAsWorkSpace);
@@ -194,7 +194,7 @@ namespace Scumle.ViewModel
             }
         }
 
-        private void ZoomEvent(MouseWheelEventArgs e)
+        internal void ZoomEvent(MouseWheelEventArgs e)
         {
             double change = ((double)e.Delta) / _ZOOMFACTOR;
             Zoom *= (1.0 + change);
@@ -575,15 +575,12 @@ namespace Scumle.ViewModel
         }
 
         //The image conversion code is inspired by http://stackoverflow.com/questions/4560173/save-wpf-view-as-image-preferably-png
-        public void ExportImage(System.Windows.Controls.Ribbon.RibbonWindow grid)
+        public void ExportImage(Window grid)
         {
             SaveFileDialog save = new SaveFileDialog();
             save.DefaultExt = ".png";
             if (save.ShowDialog() == true)
             {
-
-
-
                 Size size = new Size(grid.ActualWidth, grid.ActualHeight);
                 RenderTargetBitmap img = new RenderTargetBitmap((int)size.Width, (int)size.Height, 96, 96, PixelFormats.Pbgra32);
                 DrawingVisual drawingvisual = new DrawingVisual();

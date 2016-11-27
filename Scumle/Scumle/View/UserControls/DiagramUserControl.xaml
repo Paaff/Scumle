@@ -17,18 +17,21 @@
         </ResourceDictionary>
     </UserControl.Resources>
     
-    <ScrollViewer HorizontalScrollBarVisibility="Visible" Margin="1,0,0,0" Background="LightGray">
+    <ScrollViewer HorizontalScrollBarVisibility="Visible" Margin="0,0,0,0" Background="LightGray">
+        <!--
         <i:Interaction.Triggers>
             <i:EventTrigger EventName="PreviewMouseWheel">
                 <gala:EventToCommand Command="{Binding ZoomCommand}" PassEventArgsToCommand="True"></gala:EventToCommand>
             </i:EventTrigger>
         </i:Interaction.Triggers>
-        <Grid x:Name="Diagram" Background="White" Width="1250" Height="950">
+        -->
+        <Grid x:Name="Diagram" Background="White" Width="1685" Height="867">
             <Grid.LayoutTransform>
                 <ScaleTransform ScaleX="{Binding Zoom}" ScaleY="{Binding Zoom}"></ScaleTransform>
             </Grid.LayoutTransform>
             <Grid.Style>
                 <Style TargetType="{x:Type Grid}">
+                    <EventSetter Event="PreviewMouseWheel" Handler="Zoom"></EventSetter>
                     <Setter Property="Cursor" Value="Arrow"></Setter>
                     <Style.Triggers>
                         <DataTrigger Binding="{Binding Tool}" Value="{x:Static Model:ETool.ShapeTool}">
@@ -42,9 +45,11 @@
             </Grid.Style>
 
             <i:Interaction.Triggers>
+                <!--
                 <i:EventTrigger EventName="PreviewMouseWheel">
-                    <!--<gala:EventToCommand Command="{Binding ZoomCommand}" PassEventArgsToCommand="True"></gala:EventToCommand>-->
+                    <gala:EventToCommand Command="{Binding ZoomCommand}" PassEventArgsToCommand="True"></gala:EventToCommand>
                 </i:EventTrigger>
+                -->
                 <i:EventTrigger EventName="MouseLeftButtonDown">
                     <gala:EventToCommand Command="{Binding MouseDownGridCommand}" PassEventArgsToCommand="True"/>
                 </i:EventTrigger>

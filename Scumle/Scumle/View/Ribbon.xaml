@@ -37,7 +37,7 @@
 
                 <RibbonApplicationMenuItem Header="Export as .PNG" ImageSource="/Images/Picture.png" 
                                            Command="{Binding ExportImageCommand, Mode=OneWay}" 
-                                           CommandParameter="{Binding Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type RibbonWindow}}}"/>
+                                           CommandParameter="{Binding Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"/>
 
                 <RibbonApplicationMenuItem Header="Exit" ImageSource="/Images/Exit.png" Command="{Binding ExitCommand}"/>
 
@@ -93,11 +93,11 @@
                  Zoom should also work on mouse scrolling-->
             <RibbonGroup Header="View">
                 <RibbonMenuButton Label="Zoom" LargeImageSource="/Images/Search.png">
-                    <RibbonMenuItem Header="25%" Command="{Binding ChangeZoomCommand}" CommandParameter="0,25"/>
-                    <RibbonMenuItem Header="50%" Command="{Binding ChangeZoomCommand}" CommandParameter="0,5"/>
-                    <RibbonMenuItem Header="100%" Command="{Binding ChangeZoomCommand}" CommandParameter="1,0"/>
-                    <RibbonMenuItem Header="200%" Command="{Binding ChangeZoomCommand}" CommandParameter="2,0"/>
-                    <RibbonMenuItem Header="500%" Command="{Binding ChangeZoomCommand}" CommandParameter="5,0"/>
+                    <RibbonMenuItem Header="25%" Command="{Binding ChangeZoomCommand}" CommandParameter="0.25"/>
+                    <RibbonMenuItem Header="50%" Command="{Binding ChangeZoomCommand}" CommandParameter="0.5"/>
+                    <RibbonMenuItem Header="100%" Command="{Binding ChangeZoomCommand}" CommandParameter="1.0"/>
+                    <RibbonMenuItem Header="200%" Command="{Binding ChangeZoomCommand}" CommandParameter="2.0"/>
+                    <RibbonMenuItem Header="500%" Command="{Binding ChangeZoomCommand}" CommandParameter="5.0"/>
                 </RibbonMenuButton>
             </RibbonGroup>
 
