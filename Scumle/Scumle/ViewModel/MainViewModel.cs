@@ -44,6 +44,8 @@ namespace Scumle.ViewModel
         #endregion
 
         #region Properties
+        public int SelectedConnector { get; set; }
+        public int SelectedFigure { get; set; }
         public ETool Tool
         {
             get { return _tool; }
@@ -178,7 +180,7 @@ namespace Scumle.ViewModel
             {
                 if (_connectionFrom != _connectionTo)
                 {
-                    new LineAddCommand(Lines, new LineViewModel(new Line(ELine.Association, _connectionFrom, _connectionTo))).Execute();
+                    new LineAddCommand(Lines, new LineViewModel(new Line((ELine)SelectedConnector, _connectionFrom, _connectionTo))).Execute();
                 }
 
                 EndLineConnection();
@@ -309,10 +311,25 @@ namespace Scumle.ViewModel
         public void AddShape(MouseButtonEventArgs e)
         {
             Point p = e.MouseDevice.GetPosition(e.Source as IInputElement);
-
-            IShape shape = new UMLClassViewModel(new UMLClass(p.X, p.Y, "New Shape"));
-            new ShapeAddCommand(Shapes, shape).Execute();
-            Tool = ETool.Default;
+            IShape shape = null;
+            switch (SelectedFigure)
+            {
+                case 0:
+                    shape = new BasicShapeViewModel(new BasicShape(EBasicShape.Ellipse, p.X, p.Y));
+                    break;
+                case 1:
+                     shape = new UMLClassViewModel(new UMLClass(p.X, p.Y, "New Shape"));
+                    break;
+                case 2:
+                    shape = new BasicShapeViewModel(new BasicShape(EBasicShape.Rectangle, p.X, p.Y));
+                    break;
+                default:
+                    Console.WriteLine("Figure selection error");
+                    break;
+            }
+            if(shape != null)
+                new ShapeAddCommand(Shapes, shape).Execute();
+            Tool = ETool.Default;            
         }
         #endregion
 

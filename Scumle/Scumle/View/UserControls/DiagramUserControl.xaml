@@ -101,7 +101,11 @@
                             BorderBrush="Black" BorderThickness="0.8">
                     <Rectangle Fill="SteelBlue" Opacity=".15"/>
                 </Border>
-                <Line Stroke="#33FF33" X1="{Binding ConnectionX1}" Y1="{Binding ConnectionY1}" X2="{Binding ConnectionX2}" Y2="{Binding ConnectionY2}" StrokeThickness="2"/>
+                <Line Stroke="#33FF33" X1="{Binding ConnectionX1}" 
+                      Y1="{Binding ConnectionY1}" 
+                      X2="{Binding ConnectionX2}" 
+                      Y2="{Binding ConnectionY2}" 
+                      StrokeThickness="2"/>
             </Canvas>
         </Grid>
     </ScrollViewer>

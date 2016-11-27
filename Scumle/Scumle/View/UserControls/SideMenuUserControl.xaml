@@ -33,10 +33,11 @@
                     <Setter.Value>
                         <DataTemplate>
                             <Viewbox StretchDirection="Both" Stretch="Uniform" Width="50" Height="50">
-                                <ContentPresenter Width="100" Height="100" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="{Binding}" 
+                                <ContentPresenter Width="100" Height="100" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="{Binding}" IsHitTestVisible="False"
                                                   ContentTemplateSelector="{Binding ItemTemplateSelector, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBox}}}"/>
                             </Viewbox>
                         </DataTemplate>
+
                     </Setter.Value>
                 </Setter>
                 <Setter Property="ItemContainerStyle">
@@ -49,6 +50,7 @@
             </Style>
 
             <DataTemplate x:Key="LinesPreview">
+                
                 <Viewbox StretchDirection="Both" Stretch="Uniform" Width="50" Height="50">
                     <ContentPresenter Width="50" Height="50" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="{Binding}" 
                                                   ContentTemplateSelector="{Binding ItemTemplateSelector, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBox}}}"/>
@@ -63,7 +65,9 @@
             <Separator/>
 
             <Expander Header="UML Figures">
-                <ListBox Style="{StaticResource PreviewListBox}"
+                <ListBox x:Name="figuresList"
+                         SelectedIndex="{Binding SelectedFigure}"
+                         Style="{StaticResource PreviewListBox}"
                          ItemTemplateSelector="{StaticResource ShapeTemplateSelector}"
                          ItemsSource="{Binding Source={x:Static Preview:ShapesPreview.List}}"/>
                 
@@ -74,7 +78,9 @@
             <Separator/>
 
             <Expander Header="UML Connectors">
-                <ListBox Style="{StaticResource PreviewListBox}"
+                <ListBox x:Name="linesList"
+                         SelectedIndex="{Binding SelectedConnector}"
+                         Style="{StaticResource PreviewListBox}"
                          ItemTemplate="{StaticResource LinesPreview}"
                          ItemTemplateSelector="{StaticResource LineTemplateSelector}"
                          ItemsSource="{Binding Source={x:Static Preview:LinesPreview.List}}"/>
