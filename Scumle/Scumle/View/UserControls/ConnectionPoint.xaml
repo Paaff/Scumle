@@ -22,7 +22,7 @@
             </Style.Triggers>
         </Style>
     </UserControl.Style>
-    <Ellipse Width="12" Height="12" Fill="{Binding ShapeColor}" StrokeThickness="2">
+    <Ellipse Width="12" Height="12" Fill="{Binding ShapeColor}" StrokeThickness="2" >
         <i:Interaction.Triggers>
             <i:EventTrigger EventName="MouseLeftButtonDown">
                 <gala:EventToCommand Command="{Binding DataContext.LineToConnectionCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type View:MainWindow}}}" PassEventArgsToCommand="True"/>

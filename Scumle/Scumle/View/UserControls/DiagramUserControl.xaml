@@ -77,7 +77,8 @@
             </ItemsControl>
 
             <!-- Lines -->
-            <ItemsControl ItemsSource="{Binding Lines}" ItemTemplateSelector="{StaticResource LineTemplateSelector}">
+            <ItemsControl ItemsSource="{Binding Lines}" ItemTemplateSelector="{StaticResource LineTemplateSelector}"/>
+            <!--Not needed ask mathias opinion
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
                         <Canvas/>
@@ -91,6 +92,7 @@
                     </Style>
                 </ItemsControl.ItemContainerStyle>
             </ItemsControl>
+            -->
 
             <!-- Selection and temp line -->
             <Canvas IsHitTestVisible="False">

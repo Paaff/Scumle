@@ -7,14 +7,22 @@
              mc:Ignorable="d" 
              d:DesignHeight="200" d:DesignWidth="200">
 
-    <Border BorderThickness="0.5" BorderBrush="Black">
-        <StackPanel Background="#E8E8E8">
-        
-         <!-- Name of the Shape (Class Name) -->
-        <TextBox Text="{Binding Name, Mode=TwoWay}" FontSize="14" FontWeight="Bold" TextAlignment="Center"
-                   HorizontalAlignment="Stretch"  VerticalAlignment="Stretch"  Background="{Binding ShapeColor}" />
-        
-        <!-- Contents of the Class Diagram -->
+    <Border BorderThickness="1" BorderBrush="#4d4d4d">
+        <Grid Background="{Binding ShapeColor}" VerticalAlignment="Stretch">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <TextBox Text="{Binding Name, Mode=TwoWay}" FontSize="14" FontWeight="Bold" TextAlignment="Center"
+                   HorizontalAlignment="Center"  VerticalAlignment="Stretch"  Padding="2,2" Background="Transparent" BorderThickness="0" Grid.Row="0"/>
+            <TextBox AcceptsReturn="True" TextWrapping="Wrap" VerticalAlignment="Stretch" Grid.Row="1" Margin="3,3"></TextBox>
+
+            <TextBox AcceptsReturn="True" TextWrapping="Wrap" VerticalAlignment="Stretch" Grid.Row="2" Margin="3,0,3,3"></TextBox>
+        </Grid>
+    </Border>
+
+    <!-- Contents of the Class Diagram 
         <Expander Header="Fields" >            
             <StackPanel Orientation="Vertical">
                 
@@ -44,10 +52,9 @@
                 <Button Content="Delete Method" Command="{Binding removeMethodCommand}"  CommandParameter="{Binding ElementName=UMLMethods, Path=SelectedItem}"/>
             </StackPanel>
           
-        </Expander>
+        </Expander> -->
 
-    </StackPanel>
-    </Border>
+
 
 
     <!--  <StackPanel Background="{Binding ShapeColor}">
