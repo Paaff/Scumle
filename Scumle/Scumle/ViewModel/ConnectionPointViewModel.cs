@@ -23,7 +23,7 @@ namespace Scumle.ViewModel
             }
             */
             Shape = shape;
-            ShapeColor = new SolidColorBrush(Color.FromRgb(47, 79, 79));
+            ShapeColor = new SolidColorBrush(Color.FromRgb(128,128,128));
         }
 
         private Brush _shapeColor;

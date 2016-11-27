@@ -8,11 +8,11 @@
                     xmlns:Arrows="clr-namespace:Scumle.View.Arrows">
 
     <DataTemplate x:Key="EllipseTemplate">
-        <Ellipse Fill="{Binding ShapeColor}"/>
+        <Ellipse Fill="{Binding ShapeColor}" StrokeThickness="1" Stroke="#4d4d4d"/>
     </DataTemplate>
 
     <DataTemplate x:Key="RectangleTemplate">
-        <Rectangle Fill="{Binding ShapeColor}"/>
+        <Rectangle Fill="{Binding ShapeColor}" StrokeThickness="1" Stroke="#4d4d4d"/>
     </DataTemplate>
 
     <DataTemplate DataType="{x:Type vm:UMLClassViewModel}">

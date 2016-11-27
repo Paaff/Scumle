@@ -506,11 +506,11 @@ namespace Scumle.ViewModel
         {
             if (_connectionFrom != null)
             {
-                _connectionFrom.ShapeColor = new SolidColorBrush(Color.FromRgb(47, 79, 79));
+                _connectionFrom.ShapeColor = new SolidColorBrush(Color.FromRgb(128, 128, 128));
             }
             if(_connectionTo != null)
             {
-                _connectionTo.ShapeColor = new SolidColorBrush(Color.FromRgb(47, 79, 79));
+                _connectionTo.ShapeColor = new SolidColorBrush(Color.FromRgb(128, 128, 128));
             }
             _connectionFrom = null;
             _connectionTo = null;
