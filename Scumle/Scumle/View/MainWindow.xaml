@@ -51,7 +51,7 @@
         </Border>
         <Control:SideMenuUserControl DockPanel.Dock="Left" Width="225"></Control:SideMenuUserControl>
 
-        <Control:DiagramUserControl></Control:DiagramUserControl>
+        <Control:DiagramUserControl x:Name="Print"></Control:DiagramUserControl>
     </DockPanel>
 
 </RibbonWindow> 

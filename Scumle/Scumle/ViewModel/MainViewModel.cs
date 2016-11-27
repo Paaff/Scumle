@@ -111,7 +111,7 @@ namespace Scumle.ViewModel
         #region Commands
         public ICommand ZoomCommand => new RelayCommand<MouseWheelEventArgs>(ZoomEvent);
         public ICommand SetLineConnectionCommand => new RelayCommand(SetLineConnection);
-        public ICommand ExportImageCommand => new RelayCommand<Canvas>(ExportImage);
+        public ICommand ExportImageCommand => new RelayCommand<System.Windows.Controls.Ribbon.RibbonWindow>(ExportImage);
         public ICommand ChangeZoomCommand => new RelayCommand<string>(ChangeZoom);
         public ICommand SetShapeSelectionCommand => new RelayCommand(SetShapeInsertion);
         public ICommand SaveAsWorkSpaceCommand => new RelayCommand(SaveAsWorkSpace);
@@ -575,7 +575,7 @@ namespace Scumle.ViewModel
         }
 
         //The image conversion code is inspired by http://stackoverflow.com/questions/4560173/save-wpf-view-as-image-preferably-png
-        public void ExportImage(Canvas grid)
+        public void ExportImage(System.Windows.Controls.Ribbon.RibbonWindow grid)
         {
             SaveFileDialog save = new SaveFileDialog();
             save.DefaultExt = ".png";
