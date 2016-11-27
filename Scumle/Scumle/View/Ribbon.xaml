@@ -13,11 +13,11 @@
             <RibbonQuickAccessToolBar>
                 <DockPanel>
                     <RibbonButton DockPanel.Dock="Right" SmallImageSource="/Images/Redo.png"
-                                       ToolTip="Undo" Command="{Binding UndoRedo.RedoCommand}"/>
+                                       ToolTip="Undo" Command="{Binding UndoCommand}"/>
                     <RibbonButton DockPanel.Dock="Right" SmallImageSource="/Images/Undo.png"
-                                       ToolTip="Undo" Command="{Binding UndoRedo.UndoCommand}"/>
+                                       ToolTip="Undo" Command="{Binding RedoCommand}"/>
                     <RibbonButton DockPanel.Dock="Right" SmallImageSource="/Images/Save.png"
-                                       ToolTip="Save" Command="{Binding SaveWorkspaceCommand}"/>
+                                       ToolTip="Save" Command="{Binding SaveWorkSpaceCommand}"/>
                 </DockPanel>
             </RibbonQuickAccessToolBar>
         </Ribbon.QuickAccessToolBar>
@@ -26,17 +26,17 @@
 
             <RibbonApplicationMenu>
 
-                <RibbonApplicationMenuItem Header="New" ImageSource="/Images/New.png" Command="{Binding NewWorkspaceCommand}"/>
+                <RibbonApplicationMenuItem Header="New" ImageSource="/Images/New.png" Command="{Binding NewWorkSpaceCommand}"/>
 
-                <RibbonApplicationMenuItem Header="Open" ImageSource="/Images/Open.png" Command="{Binding OpenWorkspaceCommand}"/>
+                <RibbonApplicationMenuItem Header="Open" ImageSource="/Images/Open.png" Command="{Binding OpenWorkSpaceCommand}"/>
                 
-                <RibbonApplicationMenuItem Header="Save" ImageSource="/Images/Save.png" Command="{Binding SaveWorkspaceCommand}"/>
+                <RibbonApplicationMenuItem Header="Save" ImageSource="/Images/Save.png" Command="{Binding SaveWorkSpaceCommand}"/>
 
-                <RibbonApplicationMenuItem Header="Save as" ImageSource="/Images/Saveas.png" Command="{Binding SaveWorkspaceCommand}"/>
+                <RibbonApplicationMenuItem Header="Save as" ImageSource="/Images/Saveas.png" Command="{Binding SaveAsWorkSpaceCommand}"/>
 
-                <RibbonApplicationMenuItem Header="Export as .PNG" ImageSource="/Images/Picture.png" Command="{Binding ExportImageCommand}" CommandParameter="{Binding ElementName=Canvas}"/>
+                <RibbonApplicationMenuItem Header="Export as .PNG" ImageSource="/Images/Picture.png" Command="{Binding ExportImageCommand}"/>
 
-                <RibbonApplicationMenuItem Header="Exit" ImageSource="/Images/Exit.png"/>
+                <RibbonApplicationMenuItem Header="Exit" ImageSource="/Images/Exit.png" Command="{Binding ExitCommand}"/>
 
                 <RibbonApplicationMenu.SmallImageSource>
                     <DrawingImage>

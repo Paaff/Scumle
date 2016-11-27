@@ -59,33 +59,26 @@
         </ResourceDictionary>
     </UserControl.Resources>
 
-    <ScrollViewer>
+    <Border BorderThickness="0,0,1,0" BorderBrush="Black">
         <StackPanel Margin="5,5,5,5">
             <TextBlock Text="Shapes" IsEnabled="False" HorizontalAlignment="Center" FontSize="15"/>
-            <Separator/>
-
-            <Expander Header="UML Figures">
-                <ListBox x:Name="figuresList"
+            <Separator Margin="0,5"/>
+            <ListBox x:Name="figuresList"
                          SelectedIndex="{Binding SelectedFigure}"
                          Style="{StaticResource PreviewListBox}"
                          ItemTemplateSelector="{StaticResource ShapeTemplateSelector}"
                          ItemsSource="{Binding Source={x:Static Preview:ShapesPreview.List}}"/>
-                
-            </Expander>
             <Button Content="Add Shape" Command="{Binding SetShapeSelectionCommand}" Margin="5,5,5,0"/>
 
             <TextBlock Text="Connectors" IsEnabled="False" HorizontalAlignment="Center" FontSize="15" Margin="0,20,0,0"/>
-            <Separator/>
-
-            <Expander Header="UML Connectors">
-                <ListBox x:Name="linesList"
+            <Separator Margin="0,5"/>
+            <ListBox x:Name="linesList"
                          SelectedIndex="{Binding SelectedConnector}"
                          Style="{StaticResource PreviewListBox}"
                          ItemTemplate="{StaticResource LinesPreview}"
                          ItemTemplateSelector="{StaticResource LineTemplateSelector}"
                          ItemsSource="{Binding Source={x:Static Preview:LinesPreview.List}}"/>
-            </Expander>
             <Button Content="Add Connection" Command="{Binding SetLineConnectionCommand}" Margin="5,5,5,10"/>
         </StackPanel>
-    </ScrollViewer>
+    </Border>
 </UserControl>

@@ -39,6 +39,7 @@ namespace Scumle.ViewModel
         private double _connectionX2=0;
         private double _connectionY2=0;
         private bool _isOneConnectedPoint = false;
+        private string _currentFileName = null;
 
         public UndoRedoController UndoRedo = UndoRedoController.Instance;
         #endregion
@@ -113,10 +114,11 @@ namespace Scumle.ViewModel
         public ICommand ExportImageCommand => new RelayCommand<Canvas>(ExportImage);
         public ICommand ChangeZoomCommand => new RelayCommand<string>(ChangeZoom);
         public ICommand SetShapeSelectionCommand => new RelayCommand(SetShapeInsertion);
-        public ICommand SaveWorkspaceCommand => new RelayCommand(SaveWorkspace);
-        public ICommand OpenWorkspaceCommand => new RelayCommand(OpenWorkspace);
+        public ICommand SaveAsWorkSpaceCommand => new RelayCommand(SaveAsWorkSpace);
+        public ICommand SaveWorkSpaceCommand => new RelayCommand(SaveWorkSpace);
+        public ICommand OpenWorkSpaceCommand => new RelayCommand(OpenWorkSpace);
         public RelayCommand DeleteSelectedShapesCommand { get; set; }
-        public ICommand NewWorkspaceCommand => new RelayCommand(NewWorkspace);
+        public ICommand NewWorkSpaceCommand => new RelayCommand(NewWorkSpace);
         public ICommand UndoCommand => UndoRedoController.Instance.UndoCommand;
         public ICommand RedoCommand => UndoRedoController.Instance.RedoCommand;
         public ICommand LineToConnectionCommand => new RelayCommand<MouseEventArgs>(LineToConnection);
@@ -126,6 +128,7 @@ namespace Scumle.ViewModel
         public ICommand EscCommand => new RelayCommand(Escape);
         public ICommand SelectAllCommand => new RelayCommand(SelectAll);
         public ICommand ColorSelectedCommand => new RelayCommand(ColorSelected);
+        public ICommand ExitCommand => new RelayCommand(Exit);
         #endregion
 
         #region Constructor
@@ -360,12 +363,25 @@ namespace Scumle.ViewModel
         #endregion
 
         #region WorkSpace
+        public void SaveWorkSpace()
+        {
+            if(_currentFileName != null)
+            {
+                throw new NotImplementedException();
+                //Implementer save med _currentFileName
+            }
+            else
+            {
+                SaveAsWorkSpace();
+            }
+        }
 
-        public void SaveWorkspace()
+        public void SaveAsWorkSpace()
         {
             SaveFileDialog save = new SaveFileDialog();
             save.DefaultExt = ".scumle";
             save.Filter = "(.scumle)|*.scumle";
+            _currentFileName = save.FileName;
             if (save.ShowDialog() == true)
             {
               
@@ -407,7 +423,7 @@ namespace Scumle.ViewModel
 
         }
 
-        public void OpenWorkspace()
+        public void OpenWorkSpace()
         {
 
             OpenFileDialog open = new OpenFileDialog();
@@ -441,14 +457,20 @@ namespace Scumle.ViewModel
         }
 
         //TODO: Implement adding a new "window pane" instead of just deleting the one we have.
-        public void NewWorkspace()
+        public void NewWorkSpace()
         {
             Shapes.Clear();
+            Lines.Clear();
         }
 
         #endregion
 
         #region methods
+        private void Exit()
+        {
+            Application.Current.Shutdown();
+        }
+
         private void SetLineConnection()
         {
             Tool = ETool.LineTool;
@@ -472,6 +494,7 @@ namespace Scumle.ViewModel
             ConnectionY2 = 0;
             Tool = ETool.Default;
         }
+
         public void ColorSelected()
         {
             new ShapeColorCommand(Selected, new SolidColorBrush(SelectedColor)).Execute();
