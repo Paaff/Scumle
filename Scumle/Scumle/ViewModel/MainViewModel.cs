@@ -376,8 +376,12 @@ namespace Scumle.ViewModel
 
 
                 foreach (var ViewModel in Lines)
-                {
+                {                    
                     var actualModel = ViewModel.Model as Line;
+                    var actualTo = actualModel.To as ConnectionPoint;
+                    var actualFrom = actualModel.From as ConnectionPoint;
+                    
+
                     linesToSave.Add(actualModel);
                 }
 
@@ -396,28 +400,37 @@ namespace Scumle.ViewModel
             OpenFileDialog open = new OpenFileDialog();
             open.DefaultExt = ".scumle";
             open.Filter = "(.scumle)|*.scumle";
-            List<Shape> loadedModels = new List<Shape>();
+            List<List<ModelBase>> loadedModelsList = new List<List<ModelBase>>();
 
 
 
             // Show open file dialog box
-            Nullable<bool> result = open.ShowDialog();
+            bool? result = open.ShowDialog();
 
             // Process open file dialog box results
             if (result == true)
             {
-                loadedModels = Helpers.GenericSerializer.convertFromXML<List<Shape>>(Path.GetFullPath(open.FileName));
+                loadedModelsList = Helpers.GenericSerializer.convertFromXML<List<List<ModelBase>>>(Path.GetFullPath(open.FileName));
                 Shapes.Clear();
-                foreach (var loadedModel in loadedModels)
+                foreach (var modelList in loadedModelsList)
                 {
-                    if (loadedModel is UMLClass)
+                    foreach(var loadedModel in modelList)
                     {
-                     //   Shapes.Add(new UMLClassViewModel());
-                    }
-                    else
-                    {                        
-                    //    Shapes.Add(new BasicShapeViewModel());                      
-                    }
+                        if (loadedModel is UMLClass)
+                        {
+                            var actualModel = (UMLClass)loadedModel;
+                            IShape actualViewModel = new UMLClassViewModel(actualModel);
+                            Shapes.Add(actualViewModel);                     
+                        }
+                        else if(loadedModel is BasicShape)
+                        {
+                            var actualModel = (BasicShape)loadedModel;
+                            IShape actualViewModel = new BasicShapeViewModel(actualModel);
+                            Shapes.Add(actualViewModel);     
+                           
+                        }                   
+                    }                  
+                   
                 }
 
             }

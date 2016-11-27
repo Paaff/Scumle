@@ -43,6 +43,7 @@ namespace Scumle.Model
         // For XML Serialization
         public Shape() { }
 
+        [XmlIgnore]
         public bool IsSelected { get; set; }
         public double X { get; set; }
         public double Y { get; set; }

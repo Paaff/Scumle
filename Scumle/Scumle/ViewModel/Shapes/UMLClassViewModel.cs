@@ -16,16 +16,19 @@ namespace Scumle.ViewModel
     public class UMLClassViewModel : ShapeViewModel<UMLClass>
     {
 
-
+        #region Fields
         public ObservableCollection<UMLItem> fields;
         public ObservableCollection<UMLItem> methods;
-       
+        #endregion
 
+        #region Commands
 
         public ICommand removeFieldCommand => new RelayCommand<UMLItem>(removeField);
         public ICommand removeMethodCommand => new RelayCommand<UMLItem>(removeMethod);
         public ICommand addFieldCommand => new RelayCommand(addField);
         public ICommand addMethodCommand => new RelayCommand(addMethod);
+ 
+        #endregion
 
         #region Constructor  
         public UMLClassViewModel(UMLClass uml) : base(uml)
@@ -41,10 +44,8 @@ namespace Scumle.ViewModel
 
         }
         #endregion
-
-        #region Properties
-
-     
+            
+        #region Properties    
 
         public string Name
         {
@@ -68,6 +69,7 @@ namespace Scumle.ViewModel
 
         #endregion
 
+        #region Command Methods
         private void removeField(UMLItem field)
         {
             if (field != null)
@@ -99,7 +101,9 @@ namespace Scumle.ViewModel
             Model.umlMethods.Add(new UMLItem("New Method .."));
         }
 
-       
+        #endregion
+
+
 
     }
 }

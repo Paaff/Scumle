@@ -7,11 +7,11 @@ using System.Xml.Serialization;
 using Scumle.Model.Shapes;
 
 namespace Scumle.Model
-{
-    [Serializable]
+{   
     [XmlInclude(typeof(BasicShape))]
     [XmlInclude(typeof(UMLClass))]
     [XmlInclude(typeof(Line))]
+    [XmlInclude(typeof(ConnectionPoint))] // Maybe not used.
     public class ModelBase
     {
 

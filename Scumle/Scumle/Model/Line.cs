@@ -3,28 +3,32 @@ using System.Xml.Serialization;
 
 namespace Scumle.Model
 {
-    [XmlInclude(typeof(ConnectionPoint))]
     public class Line : ModelBase, ILine
-    {
+    {   
+ 
         public Line(ELine type, IPoint from, IPoint to)
         {
             From = from;
             To = to;
             Type = type;
+                      
         }
 
         // For Serialization
         public Line() { }
-
         [XmlIgnore]
         public IPoint From { get; set; }
         [XmlIgnore]
         public IPoint To { get; set; }
         public ELine Type { get; set; }
+
+
         public double Angle
         {
             get { return calculateAngle(); }
         }
+
+       
 
         private double calculateAngle()
         {

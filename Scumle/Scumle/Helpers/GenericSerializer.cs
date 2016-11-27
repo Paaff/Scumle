@@ -1,9 +1,8 @@
-﻿using System;
+﻿using Scumle.Model;
+using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Windows;
 using System.Xml;
 using System.Xml.Serialization;
 
@@ -21,7 +20,7 @@ namespace Scumle.Helpers
             StreamWriter streamWriter = null;
 
             try
-            {
+            {               
                 XmlSerializer serializer = new XmlSerializer(typeof(T));
                 streamWriter = new StreamWriter(path, false);
 

@@ -25,7 +25,6 @@ namespace Scumle.Model
         // For XML Serialization
         public ConnectionPoint() { }
 
-        // Changed set to public - Maybe yes/no?
         public HorizontalAlignment Horizontal { get; set; }
         public VerticalAlignment Vertical { get; set; }
 
