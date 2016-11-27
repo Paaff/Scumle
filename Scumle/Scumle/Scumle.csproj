@@ -115,7 +115,6 @@
     <Compile Include="Model\Shape.cs" />
     <Compile Include="Model\Shapes\BasicShape.cs" />
     <Compile Include="Model\Shapes\UMLClass.cs" />
-    <Compile Include="Model\UML\UMLItem.cs" />
     <Compile Include="Tools\DictionaryTemplateSelector.cs" />
     <Compile Include="Tools\LineTemplateSelector.cs" />
     <Compile Include="Tools\BasicShapeTemplateSelector.cs" />
@@ -134,7 +133,6 @@
     <Compile Include="ViewModel\Shapes\BasicShapeViewModel.cs" />
     <Compile Include="ViewModel\Shapes\UMLClassViewModel.cs" />
     <Compile Include="ViewModel\ShapeViewModel.cs" />
-    <Compile Include="ViewModel\UML\UMLItemsViewModel.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="View\Arrows\BasicArrow.xaml.cs">
