@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Scumle.ViewModel;
+using System;
 using System.Xml.Serialization;
 
 namespace Scumle.Model
@@ -11,6 +12,11 @@ namespace Scumle.Model
             From = from;
             To = to;
             Type = type;
+
+            // For Serialization
+            storeTo = (to as ConnectionPointViewModel).Model as ConnectionPoint;
+            storeFrom = (from as ConnectionPointViewModel).Model as ConnectionPoint;
+
                       
         }
 
@@ -22,6 +28,8 @@ namespace Scumle.Model
         public IPoint To { get; set; }
         public ELine Type { get; set; }
 
+        public ConnectionPoint storeTo { get; set; }
+        public ConnectionPoint storeFrom { get; set; }
 
         public double Angle
         {

@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
 using System.Xml.Serialization;
+using System.Runtime.Serialization;
 
 namespace Scumle.Model
 {
@@ -19,6 +20,8 @@ namespace Scumle.Model
             Horizontal = horizontal;
             Vertical = vertical;
             this.ShapeColor = new SolidColorBrush(Color.FromRgb(47, 79, 79));
+            storeShape = _shape;
+            
         }
         private Brush _shapeColor;
 
@@ -37,6 +40,9 @@ namespace Scumle.Model
             get { return _shapeColor; }
             set { _shapeColor = value; }
         }
+
+        // For Serialization
+        public Shape storeShape { set; get; }
 
         public double CenterX
         {

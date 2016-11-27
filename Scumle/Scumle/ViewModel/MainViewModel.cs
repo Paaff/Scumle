@@ -19,7 +19,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Scumle.ViewModel.Shapes;
 
-namespace Scumle.ViewModel  
+namespace Scumle.ViewModel
 {
     class MainViewModel : ViewModelBase<Model.Scumle>, INotifyPropertyChanged
     {
@@ -34,10 +34,10 @@ namespace Scumle.ViewModel
         private double _selectionY;
         private double _selectionWidth;
         private double _selectionHeight;
-        private double _connectionX1=0;
-        private double _connectionY1=0;
-        private double _connectionX2=0;
-        private double _connectionY2=0;
+        private double _connectionX1 = 0;
+        private double _connectionY1 = 0;
+        private double _connectionX2 = 0;
+        private double _connectionY2 = 0;
         private bool _isOneConnectedPoint = false;
         private string _currentFileName = null;
 
@@ -144,10 +144,10 @@ namespace Scumle.ViewModel
 
             IShape shape1 = new BasicShapeViewModel(new BasicShape(EBasicShape.Ellipse, 400, 50, SelectedColor));
             IShape shape2 = new BasicShapeViewModel(new BasicShape(EBasicShape.Rectangle, 50, 400, SelectedColor));
-            
+
 
             Shapes = new ObservableCollection<IShape>() { uml1, uml2, shape1, shape2 };
-            
+
 
 
 
@@ -157,7 +157,7 @@ namespace Scumle.ViewModel
 
             Lines.Add(new LineViewModel(new Line(ELine.Inheritance, cp1, cp2)));
 
-            
+
 
             DeleteSelectedShapesCommand = new RelayCommand(DeleteSelectedShapes, HasSelectedShapes);
         }
@@ -168,7 +168,7 @@ namespace Scumle.ViewModel
         {
             FrameworkElement source = e.Source as FrameworkElement;
             ConnectionPointViewModel point = source.DataContext as ConnectionPointViewModel;
-            
+
             if (_connectionFrom == null)
             {
                 _connectionFrom = point;
@@ -176,13 +176,13 @@ namespace Scumle.ViewModel
                 _isOneConnectedPoint = true;
                 ConnectionX1 = _connectionFrom.CenterX;
                 ConnectionY1 = _connectionFrom.CenterY;
-                
+
             }
             else if (_connectionTo == null)
             {
                 _connectionTo = point;
             }
-            
+
             if (_connectionFrom != null && _connectionTo != null)
             {
                 if (_connectionFrom != _connectionTo)
@@ -196,7 +196,7 @@ namespace Scumle.ViewModel
 
         private void ZoomEvent(MouseWheelEventArgs e)
         {
-            double change = ((double) e.Delta) / _ZOOMFACTOR;
+            double change = ((double)e.Delta) / _ZOOMFACTOR;
             Zoom *= (1.0 + change);
             e.Handled = true;
         }
@@ -206,7 +206,7 @@ namespace Scumle.ViewModel
         //Nemt at implementere når tingene bliver serializable https://www.codeproject.com/articles/23832/implementing-deep-cloning-via-serializing-objects
         private void Copy()
         {
-            foreach (IShape i in Selected) 
+            foreach (IShape i in Selected)
             {
                 CopiedShapes.Add(i);
             }
@@ -248,7 +248,9 @@ namespace Scumle.ViewModel
                 Selected.Add(shape);
                 shape.IsSelected = true;
                 DeleteSelectedShapesCommand.RaiseCanExecuteChanged();
-            } else {
+            }
+            else
+            {
                 Selected.Add(shape);
                 shape.IsSelected = true;
                 DeleteSelectedShapesCommand.RaiseCanExecuteChanged();
@@ -296,7 +298,7 @@ namespace Scumle.ViewModel
                 SelectionHeight = Math.Abs(curPos.Y - StartingPoint.Y);
                 SelectionWidth = Math.Abs(curPos.X - StartingPoint.X);
             }
-            else if(_isOneConnectedPoint)
+            else if (_isOneConnectedPoint)
             {
                 ConnectionX2 = curPos.X;
                 ConnectionY2 = curPos.Y;
@@ -348,7 +350,7 @@ namespace Scumle.ViewModel
                     shape = new BasicShapeViewModel(new BasicShape(EBasicShape.Ellipse, p.X, p.Y, SelectedColor));
                     break;
                 case 1:
-                     shape = new UMLClassViewModel(new UMLClass(p.X, p.Y, "New Shape", SelectedColor));
+                    shape = new UMLClassViewModel(new UMLClass(p.X, p.Y, "New Shape", SelectedColor));
                     break;
                 case 2:
                     shape = new BasicShapeViewModel(new BasicShape(EBasicShape.Rectangle, p.X, p.Y, SelectedColor));
@@ -357,9 +359,9 @@ namespace Scumle.ViewModel
                     Console.WriteLine("Figure selection error");
                     break;
             }
-            if(shape != null)
+            if (shape != null)
                 new ShapeAddCommand(Shapes, shape).Execute();
-            Tool = ETool.Default;            
+            Tool = ETool.Default;
         }
         #endregion
 
@@ -392,7 +394,7 @@ namespace Scumle.ViewModel
         #region WorkSpace
         public void SaveWorkSpace()
         {
-            if(_currentFileName != null)
+            if (_currentFileName != null)
             {
                 throw new NotImplementedException();
                 //Implementer save med _currentFileName
@@ -411,42 +413,39 @@ namespace Scumle.ViewModel
             _currentFileName = save.FileName;
             if (save.ShowDialog() == true)
             {
-              
-                    
-                // List containing all models to be saved.
-                List<List<ModelBase>> modelsToSave = new List<List<ModelBase>>();
 
-                // Lists for each different type of 
-                List<ModelBase> shapesToSave = new List<ModelBase>();
-                List<ModelBase> linesToSave = new List<ModelBase>();
+
+                // List containing all models to be saved.
+                List<ModelBase> modelsToSave = new List<ModelBase>();
+
+                //  Lists for each different type of 
+                //  List<ModelBase> shapesToSave = new List<ModelBase>();
+                //  List<ModelBase> linesToSave = new List<ModelBase>();
 
                 foreach (var ViewModel in Shapes)
                 {
                     if (ViewModel is UMLClassViewModel)
                     {
-                        var actualViewModel = (UMLClassViewModel)ViewModel;
-                        shapesToSave.Add(actualViewModel.Shape);
+                        var actualViewModel = ViewModel as UMLClassViewModel;
+                        modelsToSave.Add(actualViewModel.Shape);
                     }
                     else if (ViewModel is BasicShapeViewModel)
                     {
-                        var actualViewModel = (BasicShapeViewModel)ViewModel;
-                        shapesToSave.Add(actualViewModel.Shape);
+                        var actualViewModel = ViewModel as BasicShapeViewModel;
+                        modelsToSave.Add(actualViewModel.Shape);
                     }
                 }
 
-
                 foreach (var ViewModel in Lines)
-                {                    
+                {
                     var actualModel = ViewModel.Model as Line;
                     var actualTo = actualModel.To as ConnectionPoint;
                     var actualFrom = actualModel.From as ConnectionPoint;
-                    
-
-                    linesToSave.Add(actualModel);
+                    modelsToSave.Add(actualModel);
                 }
 
-                modelsToSave.Add(shapesToSave);
-                modelsToSave.Add(linesToSave);
+                //      modelsToSave.Add(shapesToSave);
+                //      modelsToSave.Add(linesToSave);
 
                 Helpers.GenericSerializer.convertToXML(modelsToSave, Path.GetFullPath(save.FileName));
             }
@@ -456,11 +455,13 @@ namespace Scumle.ViewModel
 
         public void OpenWorkSpace()
         {
+            Shapes.Clear();
+            Lines.Clear();
 
             OpenFileDialog open = new OpenFileDialog();
             open.DefaultExt = ".scumle";
             open.Filter = "(.scumle)|*.scumle";
-            List<List<ModelBase>> loadedModelsList = new List<List<ModelBase>>();
+            List<ModelBase> loadedModelsList = new List<ModelBase>();
 
 
 
@@ -470,30 +471,63 @@ namespace Scumle.ViewModel
             // Process open file dialog box results
             if (result == true)
             {
-                loadedModelsList = Helpers.GenericSerializer.convertFromXML<List<List<ModelBase>>>(Path.GetFullPath(open.FileName));
+                loadedModelsList = Helpers.GenericSerializer.convertFromXML<List<ModelBase>>(Path.GetFullPath(open.FileName));
                 Shapes.Clear();
-                foreach (var modelList in loadedModelsList)
+                foreach (var loadedModel in loadedModelsList)
                 {
-                    foreach(var loadedModel in modelList)
+                    if (loadedModel is UMLClass)
                     {
-                        if (loadedModel is UMLClass)
+                        var actualUMLClass = loadedModel as UMLClass;
+                        IShape actualViewModel = new UMLClassViewModel(new UMLClass(actualUMLClass.X, actualUMLClass.Y, actualUMLClass.Name, SelectedColor));
+                        Shapes.Add(actualViewModel);
+                    }
+                    else if (loadedModel is BasicShape)
+                    {
+                        var actualBasicShape = loadedModel as BasicShape;
+                        IShape actualViewModel = new BasicShapeViewModel(new BasicShape(actualBasicShape.Type, actualBasicShape.X, actualBasicShape.Y, SelectedColor));
+                        Shapes.Add(actualViewModel);
+
+                    }
+                    else if (loadedModel is Line)
+                    {
+                        var actualLine = loadedModel as Line;
+                        var from = actualLine.storeFrom;
+                        var to = actualLine.storeTo;
+                        IPoint cpFrom = null;
+                        IPoint cpTo = null;
+
+                        
+
+                        foreach (var viewModel in Shapes)
                         {
-                            var actualModel = (UMLClass)loadedModel;
-                            IShape actualViewModel = new UMLClassViewModel(actualModel);
-                            Shapes.Add(actualViewModel);                     
+                            var actualViewModel = viewModel as IShape;                                    
+                         
+                            if (actualViewModel.X == from.storeShape.X && actualViewModel.Y == from.storeShape.Y)
+                            {
+                               cpFrom = actualViewModel.ConnectionPoints.ElementAt(0);
+                            }
+                            if (actualViewModel.X == to.storeShape.X && actualViewModel.Y == to.storeShape.Y)
+                            {
+                               cpTo = actualViewModel.ConnectionPoints.ElementAt(3);
+                            }
+
+                                                      
                         }
-                        else if(loadedModel is BasicShape)
-                        {
-                            var actualModel = (BasicShape)loadedModel;
-                            IShape actualViewModel = new BasicShapeViewModel(actualModel);
-                            Shapes.Add(actualViewModel);     
-                           
-                        }                   
-                    }                  
-                   
+
+                        Lines.Add(new LineViewModel(new Line(actualLine.Type, cpFrom, cpTo)));
+
+
+
+                    }
                 }
 
+
+
             }
+
+
+
+
         }
 
         //TODO: Implement adding a new "window pane" instead of just deleting the one we have.
@@ -521,7 +555,7 @@ namespace Scumle.ViewModel
             {
                 _connectionFrom.ShapeColor = new SolidColorBrush(Color.FromRgb(47, 79, 79));
             }
-            if(_connectionTo != null)
+            if (_connectionTo != null)
             {
                 _connectionTo.ShapeColor = new SolidColorBrush(Color.FromRgb(47, 79, 79));
             }
@@ -560,7 +594,7 @@ namespace Scumle.ViewModel
             PngBitmapEncoder encoder = new PngBitmapEncoder();
             encoder.Frames.Add(BitmapFrame.Create(img));
             encoder.Save(fileStream);
-    
+
             fileStream.Close();
 
         }
