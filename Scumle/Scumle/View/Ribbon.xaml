@@ -34,7 +34,8 @@
 
                 <RibbonApplicationMenuItem Header="Save as" ImageSource="/Images/Saveas.png" Command="{Binding SaveAsWorkSpaceCommand}"/>
 
-                <RibbonApplicationMenuItem Header="Export as .PNG" ImageSource="/Images/Picture.png" Command="{Binding ExportImageCommand}"/>
+                <RibbonApplicationMenuItem Header="Export as .PNG" ImageSource="/Images/Picture.png" 
+                                           Command="{Binding ExportImageCommand, Mode=OneWay}" />
 
                 <RibbonApplicationMenuItem Header="Exit" ImageSource="/Images/Exit.png" Command="{Binding ExitCommand}"/>
 
