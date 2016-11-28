@@ -81,7 +81,7 @@
             </ItemsControl>
 
             <!-- Lines -->
-            <ItemsControl ItemsSource="{Binding Lines}" ItemTemplateSelector="{StaticResource LineTemplateSelector}"/>
+            <ItemsControl ItemsSource="{Binding Lines}" ItemTemplateSelector="{StaticResource LineTemplateSelector}"></ItemsControl>
             <!--Not needed ask mathias opinion
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
