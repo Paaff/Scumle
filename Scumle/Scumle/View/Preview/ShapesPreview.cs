@@ -25,6 +25,5 @@ namespace Scumle.View.Preview
             new UMLClassViewModel(new UMLClass(0, 0,50,50, "UML Class",Color.FromRgb(205,92,92),"previewID", "-First field : int\n-Second Field : String", "+First method()\n+Second method()")),
             new BasicShapeViewModel(new BasicShape(EBasicShape.Rectangle, 0, 0, 50,50,Color.FromRgb(205,92,92), "previewID"))
         };
-
     }
 }

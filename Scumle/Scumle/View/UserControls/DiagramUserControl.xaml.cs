@@ -31,17 +31,6 @@ namespace Scumle.View.UserControls
             get { return DataContext as MainViewModel; }
         }
         
-        private void SelectShape(object sender, MouseButtonEventArgs e)
-        {
-            FrameworkElement elem = sender as FrameworkElement;
-            IShape shape = elem.DataContext as IShape;
-            bool clearSelection = true;
-            if (Keyboard.IsKeyDown(Key.LeftShift))
-            {
-                clearSelection = false;
-            }
-            Main.SelectShape(shape, clearSelection);
-        }
         private void Zoom(object sender, MouseWheelEventArgs e)
         {
             if (Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl))

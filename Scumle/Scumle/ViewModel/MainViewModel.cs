@@ -18,6 +18,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Scumle.ViewModel.Shapes;
+using Scumle.View.Preview;
+using System.Windows.Controls.Primitives;
 
 namespace Scumle.ViewModel
 {
@@ -43,6 +45,8 @@ namespace Scumle.ViewModel
         private string _statusText;
         private string _memoryOfCopy;
         private double _loadingOffSet = 5;
+        private static Color _selectedColor;
+        private System.Drawing.Point OldMousePos;
 
         public UndoRedoController UndoRedo = UndoRedoController.Instance;
         #endregion
@@ -107,7 +111,19 @@ namespace Scumle.ViewModel
             set { _zoom = value; OnPropertyChanged(); }
         }
 
-        public static Color SelectedColor { get; set; }
+        public static Color SelectedColor
+        {
+            get { return _selectedColor; }
+            set
+            {
+                _selectedColor = value;
+                foreach (var viewModel in ShapesPreview.List)
+                {
+                    var actualViewModel = viewModel as IShape;
+                    actualViewModel.ShapeColor = new SolidColorBrush(value);
+                }
+            }
+        }
         public ObservableCollection<IShape> Shapes { get; }
         public ObservableCollection<LineViewModel> Lines { get; } = new ObservableCollection<LineViewModel>();
         public List<IShape> Selected { get; } = new List<IShape>();
@@ -140,6 +156,53 @@ namespace Scumle.ViewModel
         public ICommand SelectAllCommand => new RelayCommand(SelectAll);
         public ICommand ColorSelectedCommand => new RelayCommand(ColorSelected);
         public ICommand ExitCommand => new RelayCommand(Exit);
+        public ICommand MoveShapesCommand => new RelayCommand<DragDeltaEventArgs>(MoveShapes);
+        public ICommand StartMoveShapesCommand => new RelayCommand<DragStartedEventArgs>(StartMoveShapes);
+        public ICommand EndMoveShapesCommand => new RelayCommand<DragCompletedEventArgs>(EndMoveShapes);
+
+        private void MoveShapes(DragDeltaEventArgs e)
+        {
+            IShape shape = getShapeFromElement(e.Source);
+            if (!shape.IsSelected)
+            {
+                SelectShape(shape, true);
+            }
+
+            foreach (IShape i in Selected)
+            {
+                i.ShapeMove(e.HorizontalChange, e.VerticalChange);
+            }
+        }
+
+        private void StartMoveShapes(DragStartedEventArgs e)
+        {
+            IShape shape = getShapeFromElement(e.Source);
+            OldMousePos = System.Windows.Forms.Cursor.Position;
+        }
+
+        private IShape getShapeFromElement(object obj)
+        {
+            FrameworkElement element = obj as FrameworkElement;
+            return element.DataContext as IShape;
+        }
+
+        private void EndMoveShapes(DragCompletedEventArgs e)
+        {
+            System.Drawing.Point NewMousePos = System.Windows.Forms.Cursor.Position;
+            if (NewMousePos.Equals(OldMousePos))
+            {
+                IShape shape = getShapeFromElement(e.Source);
+                bool clearSelection = !Keyboard.IsKeyDown(Key.LeftShift);
+                SelectShape(shape, clearSelection);
+            }
+            else
+            {
+                double offsetX = NewMousePos.X - OldMousePos.X;
+                double offsetY = NewMousePos.Y - OldMousePos.Y;
+                new ShapeMoveCommand(Selected, offsetX, offsetY).Add();
+            }
+        }
+
         #endregion
 
         #region Constructor
@@ -418,7 +481,11 @@ namespace Scumle.ViewModel
         {
             if (_currentFilePath != null)
             {
+
                 Helpers.GenericSerializer.convertToXML(saving(Shapes, Lines), _currentFilePath);
+
+                UndoRedo.ChangeSinceSave=false;
+
                 StatusText = "File: \"" + _currentFilePath + "\" Saved successfully";
             }
             else
@@ -428,7 +495,9 @@ namespace Scumle.ViewModel
         }
 
         public void SaveAsWorkSpace()
+
         {           
+
                 SaveFileDialog save = new SaveFileDialog();
                 save.DefaultExt = ".scumle";
                 save.Filter = "(.scumle)|*.scumle";
@@ -437,6 +506,8 @@ namespace Scumle.ViewModel
                 {
                     _currentFilePath = Path.GetFullPath(save.FileName);
                     Helpers.GenericSerializer.convertToXML(saving(Shapes, Lines), _currentFilePath);
+                    UndoRedo.ChangeSinceSave = false;
+
                 }
             
         }
@@ -488,6 +559,7 @@ namespace Scumle.ViewModel
                     Shapes.Clear();
                     Lines.Clear();
                     UndoRedo.clear();
+                    UndoRedo.ChangeSinceSave = false;
                     _currentFilePath = Path.GetFullPath(open.FileName);
 
                     loading(loadedModelsList);               

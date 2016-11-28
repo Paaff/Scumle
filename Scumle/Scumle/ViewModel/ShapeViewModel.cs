@@ -18,7 +18,7 @@ namespace Scumle.ViewModel
 
     public abstract class ShapeViewModel<T> : ViewModelBase<T>, IShape where T : Shape
     {
-        #region fields
+        #region Fields
         private bool _isSelected = false;
         private bool isResizing = false;
         private Point oldPos;
@@ -26,9 +26,6 @@ namespace Scumle.ViewModel
         private Size oldSize;
         private Size newSize;
 
-        public ICommand ShapeMoveCommand => new RelayCommand<DragDeltaEventArgs>(ShapeMoveEvent);
-        public ICommand MoveStartedCommand => new RelayCommand(MoveStartedEvent);
-        public ICommand MoveCompletedCommand => new RelayCommand(MoveCompletedEvent);
         public ICommand ResizeStartedCommand => new RelayCommand(ResizeStartedEvent);
         public ICommand ResizeCompletedCommand => new RelayCommand<DragCompletedEventArgs>(ResizeCompletedEvent);
         #endregion
@@ -39,25 +36,6 @@ namespace Scumle.ViewModel
         }
 
         #region Private methods
-        private void ShapeMoveEvent(DragDeltaEventArgs e)
-        {
-            if (isResizing || MainViewModel._tool == ETool.LineTool) return;
-            ShapeMove(e.HorizontalChange, e.VerticalChange);
-        } 
-
-        private void MoveStartedEvent()
-        {
-            oldPos = new System.Windows.Point(X, Y);
-        }
-
-        private void MoveCompletedEvent()
-        {
-            newPos = new System.Windows.Point(X, Y);
-            if (!oldPos.Equals(newPos))
-            {
-                new ShapeMoveCommand(this, oldPos, newPos).Execute();
-            }
-        }
 
         private void ResizeStartedEvent()
         {

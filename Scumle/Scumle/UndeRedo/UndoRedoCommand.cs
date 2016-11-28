@@ -18,5 +18,10 @@ namespace Scumle.UndeRedo
             this.Redo();
             UndoRedoController.Instance.UpdateCommandStatus();
         }
+
+        public void Add()
+        {
+            UndoRedoController.Instance.Add(this);
+        }
     }
 }

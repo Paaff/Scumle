@@ -169,8 +169,8 @@
             </RibbonGroup>
             <RibbonGroup Header="Authors">
                 <TextBlock Margin="5,5">
-                Peter<LineBreak/>
-                Mathias<LineBreak/>
+                Peter Fischer s140436<LineBreak/>
+                Mathias Mortensen s144450<LineBreak/>
                 Sebastian Ake Aaen s144463<LineBreak/>
                 </TextBlock>
             </RibbonGroup>
