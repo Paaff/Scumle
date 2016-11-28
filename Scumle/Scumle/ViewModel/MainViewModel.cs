@@ -112,7 +112,7 @@ namespace Scumle.ViewModel
         public ICommand ZoomCommand => new RelayCommand<MouseWheelEventArgs>(ZoomEvent);
         public ICommand SetLineConnectionCommand => new RelayCommand(SetLineConnection);
         public ICommand ExportImageCommand => new RelayCommand<Window>(ExportImage);
-        public ICommand ChangeZoomCommand => new RelayCommand<string>(ChangeZoom);
+        public ICommand ChangeZoomCommand => new RelayCommand<double>(ChangeZoom);
         public ICommand SetShapeSelectionCommand => new RelayCommand(SetShapeInsertion);
         public ICommand SaveAsWorkSpaceCommand => new RelayCommand(SaveAsWorkSpace);
         public ICommand SaveWorkSpaceCommand => new RelayCommand(SaveWorkSpace);
@@ -602,9 +602,9 @@ namespace Scumle.ViewModel
             }
         }
 
-        public void ChangeZoom(string value)
+        public void ChangeZoom(double value)
         {
-            Zoom = Double.Parse(value);
+            Zoom = value;
         }
         #endregion
 
