@@ -18,6 +18,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Scumle.ViewModel.Shapes;
+using Scumle.View.Preview;
 
 namespace Scumle.ViewModel
 {
@@ -41,6 +42,7 @@ namespace Scumle.ViewModel
         private bool _isOneConnectedPoint = false;
         private string _currentFilePath = null;
         private string _statusText;
+        private static Color _selectedColor;
 
         public UndoRedoController UndoRedo = UndoRedoController.Instance;
         #endregion
@@ -105,7 +107,19 @@ namespace Scumle.ViewModel
             set { _zoom = value; OnPropertyChanged(); }
         }
 
-        public static Color SelectedColor { get; set; }
+        public static Color SelectedColor
+        {
+            get { return _selectedColor; }
+            set
+            {
+                _selectedColor = value;
+                foreach (var viewModel in ShapesPreview.List)
+                {
+                    var actualViewModel = viewModel as IShape;
+                    actualViewModel.ShapeColor = new SolidColorBrush(value);
+                }
+            }
+        }
         public ObservableCollection<IShape> Shapes { get; }
         public ObservableCollection<LineViewModel> Lines { get; } = new ObservableCollection<LineViewModel>();
         public List<IShape> Selected { get; } = new List<IShape>();
@@ -138,6 +152,7 @@ namespace Scumle.ViewModel
         public ICommand SelectAllCommand => new RelayCommand(SelectAll);
         public ICommand ColorSelectedCommand => new RelayCommand(ColorSelected);
         public ICommand ExitCommand => new RelayCommand(Exit);
+
         #endregion
 
         #region Constructor
