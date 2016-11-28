@@ -422,6 +422,7 @@ namespace Scumle.ViewModel
             if (_currentFilePath != null)
             {
                 Helpers.GenericSerializer.convertToXML(saving(), _currentFilePath);
+                UndoRedo.clear();
                 StatusText = "File: \"" + _currentFilePath + "\" Saved successfully";
             }
             else
@@ -432,8 +433,6 @@ namespace Scumle.ViewModel
 
         public void SaveAsWorkSpace()
         {
-
-           
                 SaveFileDialog save = new SaveFileDialog();
                 save.DefaultExt = ".scumle";
                 save.Filter = "(.scumle)|*.scumle";
@@ -442,6 +441,7 @@ namespace Scumle.ViewModel
                 {
                     _currentFilePath = Path.GetFullPath(save.FileName);
                     Helpers.GenericSerializer.convertToXML(saving(), _currentFilePath);
+                    UndoRedo.clear();
                 }
             
 
