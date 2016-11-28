@@ -22,7 +22,7 @@ namespace Scumle.View.Preview
         public static ObservableCollection<IShape> List = new ObservableCollection<IShape>()
         {
             new BasicShapeViewModel(new BasicShape(EBasicShape.Ellipse, 50, 50, 50,50, Color.FromRgb(205,92,92), "previewID")),
-            new UMLClassViewModel(new UMLClass(0, 0,50,50, "UML Class",Color.FromRgb(205,92,92),"previewID")),
+            new UMLClassViewModel(new UMLClass(0, 0,50,50, "UML Class",Color.FromRgb(205,92,92),"previewID", "-First field : int\n-Second Field : String", "+First method()\n+Second method()")),
             new BasicShapeViewModel(new BasicShape(EBasicShape.Rectangle, 0, 0, 50,50,Color.FromRgb(205,92,92), "previewID"))
         };
 

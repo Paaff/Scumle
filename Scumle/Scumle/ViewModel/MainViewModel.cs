@@ -145,8 +145,10 @@ namespace Scumle.ViewModel
         {
             SelectedColor = Color.FromRgb(205, 92, 92);
 
-            IShape uml1 = new UMLClassViewModel(new UMLClass(400, 400, 300, 200, "My Class 1", SelectedColor, CreateShapeID()));
-            IShape uml2 = new UMLClassViewModel(new UMLClass(50, 50, 300, 200, "My Class 2", SelectedColor, CreateShapeID()));
+            string UMLFields = "-First field : int\n-Second Field : String";
+            string UMLMethods = "+First method()\n+Second method()";
+            IShape uml1 = new UMLClassViewModel(new UMLClass(400, 400, 300, 200, "My Class 1", SelectedColor, CreateShapeID(), UMLFields, UMLMethods));
+            IShape uml2 = new UMLClassViewModel(new UMLClass(50, 50, 300, 200, "My Class 2", SelectedColor, CreateShapeID(), UMLFields, UMLMethods));
 
             IShape shape1 = new BasicShapeViewModel(new BasicShape(EBasicShape.Ellipse, 400, 50, 50, 50, SelectedColor, CreateShapeID()));
             IShape shape2 = new BasicShapeViewModel(new BasicShape(EBasicShape.Rectangle, 50, 400, 50, 50, SelectedColor, CreateShapeID()));
@@ -348,6 +350,8 @@ namespace Scumle.ViewModel
 
         public void AddShape(MouseButtonEventArgs e)
         {
+            string UMLFields = "-First field : int\n-Second Field : String";
+            string UMLMethods = "+First method()\n+Second method()";
             Point p = e.MouseDevice.GetPosition(e.Source as IInputElement);
             IShape shape = null;
             switch (SelectedFigure)
@@ -356,7 +360,7 @@ namespace Scumle.ViewModel
                     shape = new BasicShapeViewModel(new BasicShape(EBasicShape.Ellipse, p.X, p.Y, 50, 50, SelectedColor, CreateShapeID()));
                     break;
                 case 1:
-                    shape = new UMLClassViewModel(new UMLClass(p.X, p.Y, 150, 200, "New Shape", SelectedColor, CreateShapeID()));
+                    shape = new UMLClassViewModel(new UMLClass(p.X, p.Y, 300, 200, "New Shape", SelectedColor, CreateShapeID(), UMLFields, UMLMethods));
                     break;
                 case 2:
                     shape = new BasicShapeViewModel(new BasicShape(EBasicShape.Rectangle, p.X, p.Y, 50, 50, SelectedColor, CreateShapeID()));
@@ -479,11 +483,12 @@ namespace Scumle.ViewModel
                     foreach (var loadedModel in loadedModelsList)
                     {
                         if (loadedModel is UMLClass)
-                        {
+                        {                            
                             var actualUMLClass = loadedModel as UMLClass;
                             var storedColor = Color.FromRgb(actualUMLClass.ColorR, actualUMLClass.ColorG, actualUMLClass.ColorB);
                             IShape actualViewModel = new UMLClassViewModel(new UMLClass(actualUMLClass.X, actualUMLClass.Y, actualUMLClass.Width, actualUMLClass.Height,
-                                                                                          actualUMLClass.Name, storedColor, actualUMLClass.ID));
+                                                                                        actualUMLClass.Name, storedColor, actualUMLClass.ID, actualUMLClass.UMLFields, actualUMLClass.UMLMethods));
+                    
                             Shapes.Add(actualViewModel);
                         }
                         else if (loadedModel is BasicShape)
