@@ -522,6 +522,17 @@ namespace Scumle.ViewModel
             }
         }
 
+        //TODO: Implement adding a new "window pane" instead of just deleting the one we have.
+        public void NewWorkSpace()
+        {
+            if (DiscardChanges())
+            {
+                _currentFilePath = null;
+                Shapes.Clear();
+                Lines.Clear();
+                UndoRedo.clear();
+            }
+        }
         private bool DiscardChanges()
         {
 
@@ -535,18 +546,6 @@ namespace Scumle.ViewModel
                 }
             }
             return true;
-        }
-
-        //TODO: Implement adding a new "window pane" instead of just deleting the one we have.
-        public void NewWorkSpace()
-        {
-            if (DiscardChanges())
-            {
-                _currentFilePath = null;
-                Shapes.Clear();
-                Lines.Clear();
-                UndoRedo.clear();
-            }
         }
 
         #endregion
