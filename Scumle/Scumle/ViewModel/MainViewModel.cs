@@ -457,90 +457,96 @@ namespace Scumle.ViewModel
         }
 
         public void OpenWorkSpace()
-        {        
-            OpenFileDialog open = new OpenFileDialog();
-            open.DefaultExt = ".scumle";
-            open.Filter = "(.scumle)|*.scumle";
-            List<ModelBase> loadedModelsList = new List<ModelBase>();
-            
-            // Show open file dialog box
-            bool? result = open.ShowDialog();
-
-            // Process open file dialog box results
-            if (result == true)
+        {
+            if (DiscardChanges())
             {
-                loadedModelsList = Helpers.GenericSerializer.convertFromXML<List<ModelBase>>(Path.GetFullPath(open.FileName));
-                Shapes.Clear();
-                Lines.Clear();
-                UndoRedo.clear();
-                _currentFilePath = Path.GetFullPath(open.FileName);
-                foreach (var loadedModel in loadedModelsList)
+                OpenFileDialog open = new OpenFileDialog();
+                open.DefaultExt = ".scumle";
+                open.Filter = "(.scumle)|*.scumle";
+                List<ModelBase> loadedModelsList = new List<ModelBase>();
+
+                // Show open file dialog box
+                bool? result = open.ShowDialog();
+
+                // Process open file dialog box results
+                if (result == true)
                 {
-                    if (loadedModel is UMLClass)
+                    loadedModelsList = Helpers.GenericSerializer.convertFromXML<List<ModelBase>>(Path.GetFullPath(open.FileName));
+                    Shapes.Clear();
+                    Lines.Clear();
+                    UndoRedo.clear();
+                    _currentFilePath = Path.GetFullPath(open.FileName);
+                    foreach (var loadedModel in loadedModelsList)
                     {
-                        var actualUMLClass = loadedModel as UMLClass;
-                        var storedColor = Color.FromRgb(actualUMLClass.ColorR, actualUMLClass.ColorG, actualUMLClass.ColorB);
-                        IShape actualViewModel = new UMLClassViewModel(new UMLClass(actualUMLClass.X, actualUMLClass.Y, actualUMLClass.Name, storedColor));
-                        Shapes.Add(actualViewModel);
-                    }
-                    else if (loadedModel is BasicShape)
-                    {
-                        var actualBasicShape = loadedModel as BasicShape;
-                        var storedColor = Color.FromRgb(actualBasicShape.ColorR, actualBasicShape.ColorG, actualBasicShape.ColorB);
-                        
-                        IShape actualViewModel = new BasicShapeViewModel(new BasicShape(actualBasicShape.Type, actualBasicShape.X, actualBasicShape.Y, storedColor));
-                        Shapes.Add(actualViewModel);
-
-                    }
-                    else if (loadedModel is Line)
-                    {
-                        var actualLine = loadedModel as Line;
-                        var from = actualLine.storeFrom;
-                        var to = actualLine.storeTo;
-                        IPoint cpFrom = null;
-                        IPoint cpTo = null;
-
-                        
-
-                        foreach (var viewModel in Shapes)
+                        if (loadedModel is UMLClass)
                         {
-                            var actualViewModel = viewModel as IShape;                                    
-                         
-                            if (actualViewModel.X == from.storeShape.X && actualViewModel.Y == from.storeShape.Y)
-                            {
-                               cpFrom = actualViewModel.ConnectionPoints.ElementAt(0);
-                            }
-                            if (actualViewModel.X == to.storeShape.X && actualViewModel.Y == to.storeShape.Y)
-                            {
-                               cpTo = actualViewModel.ConnectionPoints.ElementAt(3);
-                            }
-
-                                                      
+                            var actualUMLClass = loadedModel as UMLClass;
+                            var storedColor = Color.FromRgb(actualUMLClass.ColorR, actualUMLClass.ColorG, actualUMLClass.ColorB);
+                            IShape actualViewModel = new UMLClassViewModel(new UMLClass(actualUMLClass.X, actualUMLClass.Y, actualUMLClass.Name, storedColor));
+                            Shapes.Add(actualViewModel);
                         }
+                        else if (loadedModel is BasicShape)
+                        {
+                            var actualBasicShape = loadedModel as BasicShape;
+                            var storedColor = Color.FromRgb(actualBasicShape.ColorR, actualBasicShape.ColorG, actualBasicShape.ColorB);
 
-                        Lines.Add(new LineViewModel(new Line(actualLine.Type, cpFrom, cpTo)));
+                            IShape actualViewModel = new BasicShapeViewModel(new BasicShape(actualBasicShape.Type, actualBasicShape.X, actualBasicShape.Y, storedColor));
+                            Shapes.Add(actualViewModel);
 
+                        }
+                        else if (loadedModel is Line)
+                        {
+                            var actualLine = loadedModel as Line;
+                            var from = actualLine.storeFrom;
+                            var to = actualLine.storeTo;
+                            IPoint cpFrom = null;
+                            IPoint cpTo = null;
 
+                            foreach (var viewModel in Shapes)
+                            {
+                                var actualViewModel = viewModel as IShape;
 
+                                if (actualViewModel.X == from.storeShape.X && actualViewModel.Y == from.storeShape.Y)
+                                {
+                                    cpFrom = actualViewModel.ConnectionPoints.ElementAt(0);
+                                }
+                                if (actualViewModel.X == to.storeShape.X && actualViewModel.Y == to.storeShape.Y)
+                                {
+                                    cpTo = actualViewModel.ConnectionPoints.ElementAt(3);
+                                }
+                            }
+                            Lines.Add(new LineViewModel(new Line(actualLine.Type, cpFrom, cpTo)));
+                        }
                     }
                 }
-
-
-
             }
+        }
 
+        private bool DiscardChanges()
+        {
 
+            if (UndoRedo.ChangeSinceSave)
+            {
+                MessageBoxResult messageBoxResult = MessageBox.Show("Changes to your file will be lost.\n Do you wish to proceed?", "Unsaved changes", MessageBoxButton.YesNo, MessageBoxImage.Question);
 
-
+                if (messageBoxResult == MessageBoxResult.No)
+                {
+                    return false;
+                }
+            }
+            return true;
         }
 
         //TODO: Implement adding a new "window pane" instead of just deleting the one we have.
         public void NewWorkSpace()
         {
-            _currentFilePath = null;
-            Shapes.Clear();
-            Lines.Clear();
-            UndoRedo.clear();
+            if (DiscardChanges())
+            {
+                _currentFilePath = null;
+                Shapes.Clear();
+                Lines.Clear();
+                UndoRedo.clear();
+            }
         }
 
         #endregion

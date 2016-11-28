@@ -16,6 +16,13 @@ namespace Scumle.UndeRedo
 
         public RelayCommand UndoCommand;
         public RelayCommand RedoCommand;
+        private bool _changeSinceSave = false;
+
+        public bool ChangeSinceSave
+        {
+            get { return _changeSinceSave; }
+            set { _changeSinceSave = value; }
+        }
 
 
         internal void UpdateCommandStatus()
@@ -38,6 +45,7 @@ namespace Scumle.UndeRedo
             undoStack.Push(command);
             redoStack.Clear();
             UpdateCommandStatus();
+            _changeSinceSave = true;
         }
 
         public void clear()
@@ -45,6 +53,7 @@ namespace Scumle.UndeRedo
             redoStack.Clear();
             undoStack.Clear();
             UpdateCommandStatus();
+            _changeSinceSave = false;
         }
 
         public void Undo()
@@ -54,6 +63,7 @@ namespace Scumle.UndeRedo
             redoStack.Push(command);
             command.Undo();
             UpdateCommandStatus();
+            _changeSinceSave = true;
         }
 
         public void Redo()
@@ -63,6 +73,7 @@ namespace Scumle.UndeRedo
             undoStack.Push(command);
             command.Redo();
             UpdateCommandStatus();
+            _changeSinceSave = true;
         }
 
     }
