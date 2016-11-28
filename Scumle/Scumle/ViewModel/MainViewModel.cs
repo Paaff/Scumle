@@ -452,17 +452,12 @@ namespace Scumle.ViewModel
         }
 
         public void OpenWorkSpace()
-        {
-            Shapes.Clear();
-            Lines.Clear();
-
+        {        
             OpenFileDialog open = new OpenFileDialog();
             open.DefaultExt = ".scumle";
             open.Filter = "(.scumle)|*.scumle";
             List<ModelBase> loadedModelsList = new List<ModelBase>();
-
-
-
+            
             // Show open file dialog box
             bool? result = open.ShowDialog();
 
@@ -471,6 +466,8 @@ namespace Scumle.ViewModel
             {
                 loadedModelsList = Helpers.GenericSerializer.convertFromXML<List<ModelBase>>(Path.GetFullPath(open.FileName));
                 Shapes.Clear();
+                Lines.Clear();
+                UndoRedo.clear();
                 foreach (var loadedModel in loadedModelsList)
                 {
                     if (loadedModel is UMLClass)
@@ -534,6 +531,7 @@ namespace Scumle.ViewModel
             _currentFilePath = null;
             Shapes.Clear();
             Lines.Clear();
+            UndoRedo.clear();
         }
 
         #endregion

@@ -40,6 +40,13 @@ namespace Scumle.UndeRedo
             UpdateCommandStatus();
         }
 
+        public void clear()
+        {
+            redoStack.Clear();
+            undoStack.Clear();
+            UpdateCommandStatus();
+        }
+
         public void Undo()
         {
             if (!CanUndo()) throw new InvalidOperationException();
