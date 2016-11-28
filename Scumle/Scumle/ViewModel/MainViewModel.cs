@@ -19,6 +19,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Scumle.ViewModel.Shapes;
 using Scumle.View.Preview;
+using System.Windows.Controls.Primitives;
 
 namespace Scumle.ViewModel
 {
@@ -43,6 +44,7 @@ namespace Scumle.ViewModel
         private string _currentFilePath = null;
         private string _statusText;
         private static Color _selectedColor;
+        private System.Drawing.Point OldMousePos;
 
         public UndoRedoController UndoRedo = UndoRedoController.Instance;
         #endregion
@@ -152,6 +154,52 @@ namespace Scumle.ViewModel
         public ICommand SelectAllCommand => new RelayCommand(SelectAll);
         public ICommand ColorSelectedCommand => new RelayCommand(ColorSelected);
         public ICommand ExitCommand => new RelayCommand(Exit);
+        public ICommand MoveShapesCommand => new RelayCommand<DragDeltaEventArgs>(MoveShapes);
+        public ICommand StartMoveShapesCommand => new RelayCommand<DragStartedEventArgs>(StartMoveShapes);
+        public ICommand EndMoveShapesCommand => new RelayCommand<DragCompletedEventArgs>(EndMoveShapes);
+
+        private void MoveShapes(DragDeltaEventArgs e)
+        {
+            IShape shape = getShapeFromElement(e.Source);
+            if (!shape.IsSelected)
+            {
+                SelectShape(shape, true);
+            }
+
+            foreach (IShape i in Selected)
+            {
+                i.ShapeMove(e.HorizontalChange, e.VerticalChange);
+            }
+        }
+
+        private void StartMoveShapes(DragStartedEventArgs e)
+        {
+            IShape shape = getShapeFromElement(e.Source);
+            OldMousePos = System.Windows.Forms.Cursor.Position;
+        }
+
+        private IShape getShapeFromElement(object obj)
+        {
+            FrameworkElement element = obj as FrameworkElement;
+            return element.DataContext as IShape;
+        }
+
+        private void EndMoveShapes(DragCompletedEventArgs e)
+        {
+            System.Drawing.Point NewMousePos = System.Windows.Forms.Cursor.Position;
+            if (NewMousePos.Equals(OldMousePos))
+            {
+                IShape shape = getShapeFromElement(e.Source);
+                bool clearSelection = !Keyboard.IsKeyDown(Key.LeftShift);
+                SelectShape(shape, clearSelection);
+            }
+            else
+            {
+                double offsetX = NewMousePos.X - OldMousePos.X;
+                double offsetY = NewMousePos.Y - OldMousePos.Y;
+                new ShapeMoveCommand(Selected, offsetX, offsetY).Add();
+            }
+        }
 
         #endregion
 

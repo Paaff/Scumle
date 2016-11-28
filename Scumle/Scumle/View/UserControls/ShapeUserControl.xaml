@@ -21,13 +21,13 @@
     </Thumb.Resources>
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="DragDelta">
-            <gala:EventToCommand Command="{Binding ShapeMoveCommand}" PassEventArgsToCommand="True"></gala:EventToCommand>
+            <gala:EventToCommand Command="{Binding DataContext.MoveShapesCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type View:MainWindow}}}" PassEventArgsToCommand="True"></gala:EventToCommand>
         </i:EventTrigger>
         <i:EventTrigger EventName="DragStarted">
-            <gala:EventToCommand Command="{Binding MoveStartedCommand}" PassEventArgsToCommand="True"></gala:EventToCommand>
+            <gala:EventToCommand Command="{Binding DataContext.StartMoveShapesCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type View:MainWindow}}}" PassEventArgsToCommand="True"></gala:EventToCommand>
         </i:EventTrigger>
         <i:EventTrigger EventName="DragCompleted">
-            <gala:EventToCommand Command="{Binding MoveCompletedCommand}" PassEventArgsToCommand="True"></gala:EventToCommand>
+            <gala:EventToCommand Command="{Binding DataContext.EndMoveShapesCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type View:MainWindow}}}" PassEventArgsToCommand="True"></gala:EventToCommand>
         </i:EventTrigger>
     </i:Interaction.Triggers>
     

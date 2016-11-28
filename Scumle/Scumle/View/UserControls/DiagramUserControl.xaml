@@ -69,7 +69,6 @@
                 </ItemsControl.ItemsPanel>
                 <ItemsControl.ItemContainerStyle>
                     <Style TargetType="ContentPresenter">
-                        <EventSetter Event="PreviewMouseLeftButtonUp" Handler="SelectShape"></EventSetter>
                         <Setter Property="Canvas.Left" Value="{Binding X}"/>
                         <Setter Property="Canvas.Top" Value="{Binding Y}"/>
                     </Style>

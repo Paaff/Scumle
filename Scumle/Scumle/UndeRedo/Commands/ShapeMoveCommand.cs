@@ -11,27 +11,33 @@ namespace Scumle.UndeRedo.Commands
 {
     class ShapeMoveCommand : UndoRedoCommand
     {
-        IShape shape;
-        Point oldPos;
-        Point newPos;
+        IList<IShape> shapes;
+        double offsetX;
+        double offsetY;
 
-        public ShapeMoveCommand(IShape _shape, Point _oldPos, Point _newPos)
+        public ShapeMoveCommand(IList<IShape> _shapes, double _offsetX, double _offsetY)
         {
-            shape = _shape;
-            oldPos = _oldPos;
-            newPos = _newPos;
+            shapes = _shapes.ToList();
+            offsetX = _offsetX;
+            offsetY = _offsetY;
         }
 
         public override void Redo()
         {
-            shape.X = newPos.X;
-            shape.Y = newPos.Y;
+            foreach (IShape shape in shapes)
+            {
+                shape.X += offsetX;
+                shape.Y += offsetY;
+            }
         }
 
         public override void Undo()
         {
-            shape.X = oldPos.X;
-            shape.Y = oldPos.Y;
+            foreach (IShape shape in shapes)
+            {
+                shape.X -= offsetX;
+                shape.Y -= offsetY;
+            }
         }
     }
 }
