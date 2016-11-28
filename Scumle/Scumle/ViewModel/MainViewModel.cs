@@ -41,6 +41,8 @@ namespace Scumle.ViewModel
         private bool _isOneConnectedPoint = false;
         private string _currentFilePath = null;
         private string _statusText;
+        private string _memoryOfCopy;
+        private double _loadingOffSet = 5;
 
         public UndoRedoController UndoRedo = UndoRedoController.Instance;
         #endregion
@@ -110,7 +112,7 @@ namespace Scumle.ViewModel
         public ObservableCollection<LineViewModel> Lines { get; } = new ObservableCollection<LineViewModel>();
         public List<IShape> Selected { get; } = new List<IShape>();
         public ObservableCollection<LineViewModel> CopiedLines { get; } = new ObservableCollection<LineViewModel>();
-        public List<IShape> CopiedShapes { get; } = new List<IShape>();
+        public ObservableCollection<IShape> CopiedShapes { get; } = new ObservableCollection<IShape>();
         public string Version { get; } = "Version 1.0.0";
         #endregion
 
@@ -214,10 +216,21 @@ namespace Scumle.ViewModel
         //Nemt at implementere når tingene bliver serializable https://www.codeproject.com/articles/23832/implementing-deep-cloning-via-serializing-objects
         private void Copy()
         {
+            CopiedShapes.Clear();
+            CopiedLines.Clear();
             foreach (IShape i in Selected)
             {
                 CopiedShapes.Add(i);
+                foreach(LineViewModel l in Lines)
+                {
+                    // Only copy the line if the user chooses both the shapes connected.
+                    if(l.From.Shape.ID == i.ID && l.To.Shape.ID == i.ID)
+                    {
+                        CopiedLines.Add(l);
+                    }
+                }
             }
+            _memoryOfCopy = Helpers.GenericSerializer.SerializeToXMLInMemory(saving(CopiedShapes, CopiedLines));          
         }
         private void Cut()
         {
@@ -226,10 +239,9 @@ namespace Scumle.ViewModel
         }
         private void Paste()
         {
-            foreach (IShape i in CopiedShapes)
-            {
-                Shapes.Add(i);
-            }
+            List<ModelBase> copyMemoryShapes = Helpers.GenericSerializer.convertFromXMLInMemory(_memoryOfCopy);
+            if(copyMemoryShapes != null) loading(copyMemoryShapes);
+            
         }
         #endregion
 
@@ -406,7 +418,7 @@ namespace Scumle.ViewModel
         {
             if (_currentFilePath != null)
             {
-                Helpers.GenericSerializer.convertToXML(saving(), _currentFilePath);
+                Helpers.GenericSerializer.convertToXML(saving(Shapes, Lines), _currentFilePath);
                 StatusText = "File: \"" + _currentFilePath + "\" Saved successfully";
             }
             else
@@ -416,9 +428,7 @@ namespace Scumle.ViewModel
         }
 
         public void SaveAsWorkSpace()
-        {
-
-           
+        {           
                 SaveFileDialog save = new SaveFileDialog();
                 save.DefaultExt = ".scumle";
                 save.Filter = "(.scumle)|*.scumle";
@@ -426,18 +436,17 @@ namespace Scumle.ViewModel
                 if (save.ShowDialog() == true)
                 {
                     _currentFilePath = Path.GetFullPath(save.FileName);
-                    Helpers.GenericSerializer.convertToXML(saving(), _currentFilePath);
+                    Helpers.GenericSerializer.convertToXML(saving(Shapes, Lines), _currentFilePath);
                 }
             
-
         }
 
-        public List<ModelBase> saving()
+        public List<ModelBase> saving(ObservableCollection<IShape> shapesToSave, ObservableCollection<LineViewModel> linesToSave)
         {
             // List containing all models to be saved.
             List<ModelBase> modelsToSave = new List<ModelBase>();
 
-            foreach (var ViewModel in Shapes)
+            foreach (var ViewModel in shapesToSave)
             {
                 if (ViewModel is UMLClassViewModel)
                 {
@@ -447,11 +456,11 @@ namespace Scumle.ViewModel
                 else if (ViewModel is BasicShapeViewModel)
                 {
                     var actualViewModel = ViewModel as BasicShapeViewModel;
-                    modelsToSave.Add(actualViewModel.Shape);
+                    modelsToSave.Add(actualViewModel.Shape);             
                 }
             }
 
-            foreach (var ViewModel in Lines)
+            foreach (var ViewModel in linesToSave)
             {
                 var actualModel = ViewModel.Model as Line;             
                 modelsToSave.Add(actualModel);
@@ -480,73 +489,72 @@ namespace Scumle.ViewModel
                     Lines.Clear();
                     UndoRedo.clear();
                     _currentFilePath = Path.GetFullPath(open.FileName);
-                    foreach (var loadedModel in loadedModelsList)
+
+                    loading(loadedModelsList);               
+                }
+            }
+        }
+
+        private void loading(List<ModelBase> loadedModelsList)
+        {
+            foreach (var loadedModel in loadedModelsList)
+            {
+                if (loadedModel is UMLClass)
+                {
+                    var actualUMLClass = loadedModel as UMLClass;
+                    var storedColor = Color.FromRgb(actualUMLClass.ColorR, actualUMLClass.ColorG, actualUMLClass.ColorB);
+                    IShape actualViewModel = new UMLClassViewModel(new UMLClass(actualUMLClass.X + _loadingOffSet, actualUMLClass.Y + _loadingOffSet, actualUMLClass.Width, actualUMLClass.Height,
+                                                                                actualUMLClass.Name, storedColor, actualUMLClass.ID, actualUMLClass.UMLFields, actualUMLClass.UMLMethods));
+
+                    Shapes.Add(actualViewModel);
+                }
+                else if (loadedModel is BasicShape)
+                {
+                    var actualBasicShape = loadedModel as BasicShape;
+                    var storedColor = Color.FromRgb(actualBasicShape.ColorR, actualBasicShape.ColorG, actualBasicShape.ColorB);
+
+                    IShape actualViewModel = new BasicShapeViewModel(new BasicShape(actualBasicShape.Type, actualBasicShape.X + _loadingOffSet, actualBasicShape.Y + _loadingOffSet,
+                                                                                    actualBasicShape.Width, actualBasicShape.Height, storedColor, actualBasicShape.ID));
+                    Shapes.Add(actualViewModel);
+
+                }
+                else if (loadedModel is Line)
+                {
+
+                    var actualLine = loadedModel as Line;
+                    var from = actualLine.storeFrom;
+                    var to = actualLine.storeTo;
+                    IPoint cpFrom = null;
+                    IPoint cpTo = null;
+
+                    foreach (var viewModel in Shapes)
                     {
-                        if (loadedModel is UMLClass)
-                        {                            
-                            var actualUMLClass = loadedModel as UMLClass;
-                            var storedColor = Color.FromRgb(actualUMLClass.ColorR, actualUMLClass.ColorG, actualUMLClass.ColorB);
-                            IShape actualViewModel = new UMLClassViewModel(new UMLClass(actualUMLClass.X, actualUMLClass.Y, actualUMLClass.Width, actualUMLClass.Height,
-                                                                                        actualUMLClass.Name, storedColor, actualUMLClass.ID, actualUMLClass.UMLFields, actualUMLClass.UMLMethods));
-                    
-                            Shapes.Add(actualViewModel);
-                        }
-                        else if (loadedModel is BasicShape)
+                        var actualViewModel = viewModel as IShape;
+
+                        if (actualViewModel.ID == from.storeShape.ID)
                         {
-                            var actualBasicShape = loadedModel as BasicShape;
-                            var storedColor = Color.FromRgb(actualBasicShape.ColorR, actualBasicShape.ColorG, actualBasicShape.ColorB);
-
-                            IShape actualViewModel = new BasicShapeViewModel(new BasicShape(actualBasicShape.Type, actualBasicShape.X, actualBasicShape.Y,
-                                                                                            actualBasicShape.Width, actualBasicShape.Height, storedColor, actualBasicShape.ID));
-                            Shapes.Add(actualViewModel);
-
+                            if (from.Horizontal == HorizontalAlignment.Center && from.Vertical == VerticalAlignment.Top) { cpFrom = actualViewModel.ConnectionPoints.ElementAt(0); }
+                            else if (from.Horizontal == HorizontalAlignment.Left && from.Vertical == VerticalAlignment.Center) { cpFrom = actualViewModel.ConnectionPoints.ElementAt(1); }
+                            else if (from.Horizontal == HorizontalAlignment.Right && from.Vertical == VerticalAlignment.Center) { cpFrom = actualViewModel.ConnectionPoints.ElementAt(2); }
+                            else if (from.Horizontal == HorizontalAlignment.Center && from.Vertical == VerticalAlignment.Bottom) { cpFrom = actualViewModel.ConnectionPoints.ElementAt(3); }
                         }
-                        else if (loadedModel is Line)
+
+                        if (actualViewModel.ID == to.storeShape.ID)
                         {
-                            
-                            var actualLine = loadedModel as Line;
-                            var from = actualLine.storeFrom;
-                            var to = actualLine.storeTo;
-                            IPoint cpFrom = null;
-                            IPoint cpTo = null;
-
-                            foreach (var viewModel in Shapes)
-                            {
-                                var actualViewModel = viewModel as IShape;
-
-                                if (actualViewModel.ID == from.storeShape.ID)
-                                {
-                                    if (from.Horizontal == HorizontalAlignment.Center && from.Vertical == VerticalAlignment.Top) { cpFrom = actualViewModel.ConnectionPoints.ElementAt(0); }
-                                    else if (from.Horizontal == HorizontalAlignment.Left && from.Vertical == VerticalAlignment.Center) { cpFrom = actualViewModel.ConnectionPoints.ElementAt(1); }
-                                    else if (from.Horizontal == HorizontalAlignment.Right && from.Vertical == VerticalAlignment.Center) { cpFrom = actualViewModel.ConnectionPoints.ElementAt(2); }
-                                    else if (from.Horizontal == HorizontalAlignment.Center && from.Vertical == VerticalAlignment.Bottom) { cpFrom = actualViewModel.ConnectionPoints.ElementAt(3); }
-                                }
-
-                                if (actualViewModel.ID == to.storeShape.ID)
-                                {
-                                    if (to.Horizontal == HorizontalAlignment.Center && to.Vertical == VerticalAlignment.Top) { cpTo = actualViewModel.ConnectionPoints.ElementAt(0); }
-                                    else if (to.Horizontal == HorizontalAlignment.Left && to.Vertical == VerticalAlignment.Center) { cpTo = actualViewModel.ConnectionPoints.ElementAt(1); }
-                                    else if (to.Horizontal == HorizontalAlignment.Right && to.Vertical == VerticalAlignment.Center) { cpTo = actualViewModel.ConnectionPoints.ElementAt(2); }
-                                    else if (to.Horizontal == HorizontalAlignment.Center && to.Vertical == VerticalAlignment.Bottom) { cpTo = actualViewModel.ConnectionPoints.ElementAt(3); }
-
-                                }
-                            }                                
-
-
-                            Lines.Add(new LineViewModel(new Line(actualLine.Type, cpFrom, cpTo)));
+                            if (to.Horizontal == HorizontalAlignment.Center && to.Vertical == VerticalAlignment.Top) { cpTo = actualViewModel.ConnectionPoints.ElementAt(0); }
+                            else if (to.Horizontal == HorizontalAlignment.Left && to.Vertical == VerticalAlignment.Center) { cpTo = actualViewModel.ConnectionPoints.ElementAt(1); }
+                            else if (to.Horizontal == HorizontalAlignment.Right && to.Vertical == VerticalAlignment.Center) { cpTo = actualViewModel.ConnectionPoints.ElementAt(2); }
+                            else if (to.Horizontal == HorizontalAlignment.Center && to.Vertical == VerticalAlignment.Bottom) { cpTo = actualViewModel.ConnectionPoints.ElementAt(3); }
 
                         }
                     }
+
+
+                    Lines.Add(new LineViewModel(new Line(actualLine.Type, cpFrom, cpTo)));
+
                 }
             }
-
-
-         
-
-
         }
-
-
 
         public string CreateShapeID()
         {

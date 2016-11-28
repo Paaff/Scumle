@@ -1,7 +1,10 @@
 ﻿using Scumle.Model;
+using Scumle.ViewModel;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
+using System.Text;
 using System.Windows;
 using System.Xml;
 using System.Xml.Serialization;
@@ -9,10 +12,10 @@ using System.Xml.Serialization;
 namespace Scumle.Helpers
 {
 
-    // OBS: Heavy inspired by http://www.c-sharpcorner.com/UploadFile/manishkdwivedi/save-a-observablecollection-to-application-storage-in-window/ for learning purpose. 
+    
     public static class GenericSerializer
     {
-
+        // OBS: Heavy inspired by http://www.c-sharpcorner.com/UploadFile/manishkdwivedi/save-a-observablecollection-to-application-storage-in-window/ 
         #region Methods
         // Method to take an object and serialize to XML
         public static void convertToXML<T>(T objectToSave, string path) where T : new()
@@ -71,6 +74,41 @@ namespace Scumle.Helpers
 
 
 
+        }
+
+
+
+
+
+        // Below methods heavely inspired by http://www.java2s.com/Code/CSharp/File-Stream/UsingMemoryStreamtoSerializeandDesirialize.htm
+        // Method to serialize XML in memory
+        public static string SerializeToXMLInMemory(List<ModelBase> objectToSave)
+        {
+           XmlSerializer serializer = new XmlSerializer(typeof(List<ModelBase>));
+
+            using (var stream = new MemoryStream())
+            {
+                serializer.Serialize(stream, objectToSave);
+                stream.Position = 0;
+                return Encoding.UTF8.GetString(stream.GetBuffer());
+            }
+        }
+
+        // Method to deserialize from XML to object in memory.
+        public static List<ModelBase> convertFromXMLInMemory(string dataInMemory)
+        {
+            XmlSerializer serializer = new XmlSerializer(typeof(List<ModelBase>));
+
+            if (string.IsNullOrEmpty(dataInMemory))
+                return null;
+
+            using (var stream = new MemoryStream())
+            {
+                var bytes = Encoding.UTF8.GetBytes(dataInMemory);
+                stream.Write(bytes, 0, bytes.Length);
+                stream.Position = 0;
+                return (List<ModelBase>)serializer.Deserialize(stream);
+            }
         }
         #endregion
 
