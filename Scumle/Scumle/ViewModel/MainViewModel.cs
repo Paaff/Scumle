@@ -40,6 +40,7 @@ namespace Scumle.ViewModel
         private double _connectionY2 = 0;
         private bool _isOneConnectedPoint = false;
         private string _currentFilePath = null;
+        private string _statusText;
 
         public UndoRedoController UndoRedo = UndoRedoController.Instance;
         #endregion
@@ -47,6 +48,11 @@ namespace Scumle.ViewModel
         #region Properties
         public int SelectedConnector { get; set; }
         public int SelectedFigure { get; set; }
+        public string StatusText
+        {
+            get { return _statusText; }
+            set { _statusText = value; OnPropertyChanged(); }
+        }
         public ETool Tool
         {
             get { return _tool; }
@@ -397,6 +403,7 @@ namespace Scumle.ViewModel
             if (_currentFilePath != null)
             {
                 Helpers.GenericSerializer.convertToXML(saving(), _currentFilePath);
+                StatusText = "File: \"" + _currentFilePath + "\" Saved successfully";
             }
             else
             {
