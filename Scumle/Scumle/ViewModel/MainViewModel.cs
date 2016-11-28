@@ -105,7 +105,7 @@ namespace Scumle.ViewModel
         public List<IShape> Selected { get; } = new List<IShape>();
         public ObservableCollection<LineViewModel> CopiedLines { get; } = new ObservableCollection<LineViewModel>();
         public List<IShape> CopiedShapes { get; } = new List<IShape>();
-        public String Version { get; } = "Version 1.0.0";
+        public string Version { get; } = "Version 1.0.0";
         #endregion
 
         #region Commands
@@ -114,7 +114,7 @@ namespace Scumle.ViewModel
         public ICommand ExportImageCommand => new RelayCommand<Window>(ExportImage);
         public ICommand ChangeZoomCommand => new RelayCommand<string>(ChangeZoom);
         public ICommand SetShapeSelectionCommand => new RelayCommand(SetShapeInsertion);
-     //   public ICommand SaveAsWorkSpaceCommand => new RelayCommand(SaveAsWorkSpace);
+        public ICommand SaveAsWorkSpaceCommand => new RelayCommand(SaveAsWorkSpace);
         public ICommand SaveWorkSpaceCommand => new RelayCommand(SaveWorkSpace);
         public ICommand OpenWorkSpaceCommand => new RelayCommand(OpenWorkSpace);
         public ICommand CopyCommand => new RelayCommand(Copy);
@@ -396,19 +396,18 @@ namespace Scumle.ViewModel
         {
             if (_currentFilePath != null)
             {
-                SaveAsWorkSpace(_currentFilePath);
+                Helpers.GenericSerializer.convertToXML(saving(), _currentFilePath);
             }
             else
             {
-                SaveAsWorkSpace("newFilePath");
+                SaveAsWorkSpace();
             }
         }
 
-        public void SaveAsWorkSpace(string filePath)
+        public void SaveAsWorkSpace()
         {
 
-            if (filePath != _currentFilePath)
-            {
+           
                 SaveFileDialog save = new SaveFileDialog();
                 save.DefaultExt = ".scumle";
                 save.Filter = "(.scumle)|*.scumle";
@@ -418,10 +417,7 @@ namespace Scumle.ViewModel
                     _currentFilePath = Path.GetFullPath(save.FileName);
                     Helpers.GenericSerializer.convertToXML(saving(), _currentFilePath);
                 }
-            } else
-            {
-                Helpers.GenericSerializer.convertToXML(saving(), _currentFilePath);
-            }
+            
 
         }
 
