@@ -15,9 +15,9 @@
             <RibbonQuickAccessToolBar>
                 <DockPanel>
                     <RibbonButton DockPanel.Dock="Right" SmallImageSource="/Images/Redo.png"
-                                       ToolTip="Undo" Command="{Binding UndoCommand}"/>
-                    <RibbonButton DockPanel.Dock="Right" SmallImageSource="/Images/Undo.png"
                                        ToolTip="Undo" Command="{Binding RedoCommand}"/>
+                    <RibbonButton DockPanel.Dock="Right" SmallImageSource="/Images/Undo.png"
+                                       ToolTip="Redo" Command="{Binding UndoCommand}"/>
                     <RibbonButton DockPanel.Dock="Right" SmallImageSource="/Images/Save.png"
                                        ToolTip="Save" Command="{Binding SaveWorkSpaceCommand}"/>
                 </DockPanel>
