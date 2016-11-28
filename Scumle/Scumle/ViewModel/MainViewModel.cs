@@ -39,7 +39,7 @@ namespace Scumle.ViewModel
         private double _connectionX2 = 0;
         private double _connectionY2 = 0;
         private bool _isOneConnectedPoint = false;
-        private string _currentFileName = null;
+        private string _currentFilePath = null;
 
         public UndoRedoController UndoRedo = UndoRedoController.Instance;
         #endregion
@@ -114,7 +114,7 @@ namespace Scumle.ViewModel
         public ICommand ExportImageCommand => new RelayCommand<Window>(ExportImage);
         public ICommand ChangeZoomCommand => new RelayCommand<string>(ChangeZoom);
         public ICommand SetShapeSelectionCommand => new RelayCommand(SetShapeInsertion);
-        public ICommand SaveAsWorkSpaceCommand => new RelayCommand(SaveAsWorkSpace);
+     //   public ICommand SaveAsWorkSpaceCommand => new RelayCommand(SaveAsWorkSpace);
         public ICommand SaveWorkSpaceCommand => new RelayCommand(SaveWorkSpace);
         public ICommand OpenWorkSpaceCommand => new RelayCommand(OpenWorkSpace);
         public ICommand CopyCommand => new RelayCommand(Copy);
@@ -394,63 +394,65 @@ namespace Scumle.ViewModel
         #region WorkSpace
         public void SaveWorkSpace()
         {
-            if (_currentFileName != null)
+            if (_currentFilePath != null)
             {
-                throw new NotImplementedException();
-                //Implementer save med _currentFileName
+                SaveAsWorkSpace(_currentFilePath);
             }
             else
             {
-                SaveAsWorkSpace();
+                SaveAsWorkSpace("newFilePath");
             }
         }
 
-        public void SaveAsWorkSpace()
+        public void SaveAsWorkSpace(string filePath)
         {
-            SaveFileDialog save = new SaveFileDialog();
-            save.DefaultExt = ".scumle";
-            save.Filter = "(.scumle)|*.scumle";
-            _currentFileName = save.FileName;
-            if (save.ShowDialog() == true)
+
+            if (filePath != _currentFilePath)
             {
-
-
-                // List containing all models to be saved.
-                List<ModelBase> modelsToSave = new List<ModelBase>();
-
-                //  Lists for each different type of 
-                //  List<ModelBase> shapesToSave = new List<ModelBase>();
-                //  List<ModelBase> linesToSave = new List<ModelBase>();
-
-                foreach (var ViewModel in Shapes)
+                SaveFileDialog save = new SaveFileDialog();
+                save.DefaultExt = ".scumle";
+                save.Filter = "(.scumle)|*.scumle";
+                
+                if (save.ShowDialog() == true)
                 {
-                    if (ViewModel is UMLClassViewModel)
-                    {
-                        var actualViewModel = ViewModel as UMLClassViewModel;
-                        modelsToSave.Add(actualViewModel.Shape);
-                    }
-                    else if (ViewModel is BasicShapeViewModel)
-                    {
-                        var actualViewModel = ViewModel as BasicShapeViewModel;
-                        modelsToSave.Add(actualViewModel.Shape);
-                    }
+                    _currentFilePath = Path.GetFullPath(save.FileName);
+                    Helpers.GenericSerializer.convertToXML(saving(), _currentFilePath);
                 }
-
-                foreach (var ViewModel in Lines)
-                {
-                    var actualModel = ViewModel.Model as Line;
-                    var actualTo = actualModel.To as ConnectionPoint;
-                    var actualFrom = actualModel.From as ConnectionPoint;
-                    modelsToSave.Add(actualModel);
-                }
-
-                //      modelsToSave.Add(shapesToSave);
-                //      modelsToSave.Add(linesToSave);
-
-                Helpers.GenericSerializer.convertToXML(modelsToSave, Path.GetFullPath(save.FileName));
+            } else
+            {
+                Helpers.GenericSerializer.convertToXML(saving(), _currentFilePath);
             }
 
+        }
 
+        public List<ModelBase> saving()
+        {
+            // List containing all models to be saved.
+            List<ModelBase> modelsToSave = new List<ModelBase>();
+
+            foreach (var ViewModel in Shapes)
+            {
+                if (ViewModel is UMLClassViewModel)
+                {
+                    var actualViewModel = ViewModel as UMLClassViewModel;
+                    modelsToSave.Add(actualViewModel.Shape);
+                }
+                else if (ViewModel is BasicShapeViewModel)
+                {
+                    var actualViewModel = ViewModel as BasicShapeViewModel;
+                    modelsToSave.Add(actualViewModel.Shape);
+                }
+            }
+
+            foreach (var ViewModel in Lines)
+            {
+                var actualModel = ViewModel.Model as Line;
+                var actualTo = actualModel.To as ConnectionPoint;
+                var actualFrom = actualModel.From as ConnectionPoint;
+                modelsToSave.Add(actualModel);
+            }
+            return modelsToSave;
+         
         }
 
         public void OpenWorkSpace()
@@ -533,6 +535,7 @@ namespace Scumle.ViewModel
         //TODO: Implement adding a new "window pane" instead of just deleting the one we have.
         public void NewWorkSpace()
         {
+            _currentFilePath = null;
             Shapes.Clear();
             Lines.Clear();
         }
