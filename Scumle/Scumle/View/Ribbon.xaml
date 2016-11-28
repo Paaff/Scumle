@@ -4,6 +4,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+      xmlns:System="clr-namespace:System;assembly=mscorlib"
       xmlns:dia="clr-namespace:Scumle.View.UserControls"
       mc:Ignorable="d" 
       d:DesignHeight="150" d:DesignWidth="600"
@@ -93,11 +94,41 @@
                  Zoom should also work on mouse scrolling-->
             <RibbonGroup Header="View">
                 <RibbonMenuButton Label="Zoom" LargeImageSource="/Images/Search.png">
-                    <RibbonMenuItem Header="25%" Command="{Binding ChangeZoomCommand}" CommandParameter="0.25"/>
-                    <RibbonMenuItem Header="50%" Command="{Binding ChangeZoomCommand}" CommandParameter="0.5"/>
-                    <RibbonMenuItem Header="100%" Command="{Binding ChangeZoomCommand}" CommandParameter="1.0"/>
-                    <RibbonMenuItem Header="200%" Command="{Binding ChangeZoomCommand}" CommandParameter="2.0"/>
-                    <RibbonMenuItem Header="500%" Command="{Binding ChangeZoomCommand}" CommandParameter="5.0"/>
+                    <RibbonMenuItem Header="25%" Command="{Binding ChangeZoomCommand}">
+                        <RibbonMenuItem.CommandParameter>
+                            <System:Double>
+                                0.25
+                            </System:Double>
+                        </RibbonMenuItem.CommandParameter>
+                    </RibbonMenuItem>
+                    <RibbonMenuItem Header="50%" Command="{Binding ChangeZoomCommand}">
+                        <RibbonMenuItem.CommandParameter>
+                            <System:Double>
+                                0.50
+                            </System:Double>
+                        </RibbonMenuItem.CommandParameter>
+                    </RibbonMenuItem>
+                    <RibbonMenuItem Header="100%" Command="{Binding ChangeZoomCommand}">
+                        <RibbonMenuItem.CommandParameter>
+                            <System:Double>
+                                1.00
+                            </System:Double>
+                        </RibbonMenuItem.CommandParameter>
+                    </RibbonMenuItem>
+                    <RibbonMenuItem Header="200%" Command="{Binding ChangeZoomCommand}">
+                        <RibbonMenuItem.CommandParameter>
+                            <System:Double>
+                                2.00
+                            </System:Double>
+                        </RibbonMenuItem.CommandParameter>
+                    </RibbonMenuItem>
+                    <RibbonMenuItem Header="500%" Command="{Binding ChangeZoomCommand}">
+                        <RibbonMenuItem.CommandParameter>
+                            <System:Double>
+                                5.00
+                            </System:Double>
+                        </RibbonMenuItem.CommandParameter>
+                    </RibbonMenuItem>
                 </RibbonMenuButton>
             </RibbonGroup>
 
