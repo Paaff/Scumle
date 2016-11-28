@@ -9,7 +9,7 @@ namespace Scumle.Model.Shapes
 {
     public class BasicShape : Shape
     {
-        public BasicShape(EBasicShape type, double X, double Y,Color col) : base(X,Y,col)
+        public BasicShape(EBasicShape type, double X, double Y,Color col, string ID) : base(X,Y,col,ID)
         {
             Type = type;
         }

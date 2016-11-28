@@ -154,5 +154,7 @@ namespace Scumle.ViewModel
             }
         }
 
+        public string ID { get { return Model.ID; } set { SetValue(value); } }
+
     }
 }

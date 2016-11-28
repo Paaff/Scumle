@@ -20,5 +20,6 @@ namespace Scumle.ViewModel
         IList<IPoint> ConnectionPoints { get; } 
         void ShapeResize(double dX, double dY);
         void ShapeMove(double dX, double dY);
+        string ID { get; set; }
     }
 }

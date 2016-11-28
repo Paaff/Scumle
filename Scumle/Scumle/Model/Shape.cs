@@ -17,9 +17,10 @@ namespace Scumle.Model
     {
         private double _width;
         private double _height;
-        private byte a, r, g, b;      
+        private byte a, r, g, b;
+        
                 
-        public Shape(double _X, double _Y,Color col)
+        public Shape(double _X, double _Y,Color col, string _ID)
         {
             IsSelected = false;
             Width = 50;
@@ -28,7 +29,9 @@ namespace Scumle.Model
             Y = _Y;
             InitializeConnectionPoints();
             ShapeColor = new SolidColorBrush(col);
-       
+            ID = _ID;       
+
+
         }
 
         private void InitializeConnectionPoints()
@@ -95,6 +98,8 @@ namespace Scumle.Model
             get { return b; }
             set { b = value; }
         }
+
+        public string ID  { get; set; }
 
         public void ShapeMove(double X, double Y)
         {

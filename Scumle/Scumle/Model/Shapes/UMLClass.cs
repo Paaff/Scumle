@@ -19,7 +19,7 @@ namespace Scumle.Model.Shapes
 
 
         #region Constructor
-        public UMLClass(double X, double Y, string Name,Color col) : base(X, Y, col)
+        public UMLClass(double X, double Y, string Name,Color col, string ID) : base(X, Y, col, ID)
         {
             UMLFields = "-First field : int\n-Second Field : String";
             UMLMethods = "+First method()\n+Second method()";

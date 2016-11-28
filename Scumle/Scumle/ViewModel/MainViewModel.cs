@@ -139,11 +139,11 @@ namespace Scumle.ViewModel
         {
             SelectedColor = Color.FromRgb(205, 92, 92);
 
-            IShape uml1 = new UMLClassViewModel(new UMLClass(400, 400, "My Class 1", SelectedColor));
-            IShape uml2 = new UMLClassViewModel(new UMLClass(50, 50, "My Class 2", SelectedColor));
+            IShape uml1 = new UMLClassViewModel(new UMLClass(400, 400, "My Class 1", SelectedColor, CreateShapeID()));
+            IShape uml2 = new UMLClassViewModel(new UMLClass(50, 50, "My Class 2", SelectedColor, CreateShapeID()));
 
-            IShape shape1 = new BasicShapeViewModel(new BasicShape(EBasicShape.Ellipse, 400, 50, SelectedColor));
-            IShape shape2 = new BasicShapeViewModel(new BasicShape(EBasicShape.Rectangle, 50, 400, SelectedColor));
+            IShape shape1 = new BasicShapeViewModel(new BasicShape(EBasicShape.Ellipse, 400, 50, SelectedColor, CreateShapeID()));
+            IShape shape2 = new BasicShapeViewModel(new BasicShape(EBasicShape.Rectangle, 50, 400, SelectedColor, CreateShapeID()));
 
 
             Shapes = new ObservableCollection<IShape>() { uml1, uml2, shape1, shape2 };
@@ -347,13 +347,13 @@ namespace Scumle.ViewModel
             switch (SelectedFigure)
             {
                 case 0:
-                    shape = new BasicShapeViewModel(new BasicShape(EBasicShape.Ellipse, p.X, p.Y, SelectedColor));
+                    shape = new BasicShapeViewModel(new BasicShape(EBasicShape.Ellipse, p.X, p.Y, SelectedColor, CreateShapeID()));
                     break;
                 case 1:
-                    shape = new UMLClassViewModel(new UMLClass(p.X, p.Y, "New Shape", SelectedColor));
+                    shape = new UMLClassViewModel(new UMLClass(p.X, p.Y, "New Shape", SelectedColor, CreateShapeID()));
                     break;
                 case 2:
-                    shape = new BasicShapeViewModel(new BasicShape(EBasicShape.Rectangle, p.X, p.Y, SelectedColor));
+                    shape = new BasicShapeViewModel(new BasicShape(EBasicShape.Rectangle, p.X, p.Y, SelectedColor, CreateShapeID()));
                     break;
                 default:
                     Console.WriteLine("Figure selection error");
@@ -450,12 +450,17 @@ namespace Scumle.ViewModel
         }
 
         public void OpenWorkSpace()
-        {        
+        {
+            Shapes.Clear();
+            Lines.Clear();
+
             OpenFileDialog open = new OpenFileDialog();
             open.DefaultExt = ".scumle";
             open.Filter = "(.scumle)|*.scumle";
             List<ModelBase> loadedModelsList = new List<ModelBase>();
-            
+
+
+
             // Show open file dialog box
             bool? result = open.ShowDialog();
 
@@ -464,15 +469,13 @@ namespace Scumle.ViewModel
             {
                 loadedModelsList = Helpers.GenericSerializer.convertFromXML<List<ModelBase>>(Path.GetFullPath(open.FileName));
                 Shapes.Clear();
-                Lines.Clear();
-                UndoRedo.clear();
                 foreach (var loadedModel in loadedModelsList)
                 {
                     if (loadedModel is UMLClass)
                     {
                         var actualUMLClass = loadedModel as UMLClass;
                         var storedColor = Color.FromRgb(actualUMLClass.ColorR, actualUMLClass.ColorG, actualUMLClass.ColorB);
-                        IShape actualViewModel = new UMLClassViewModel(new UMLClass(actualUMLClass.X, actualUMLClass.Y, actualUMLClass.Name, storedColor));
+                        IShape actualViewModel = new UMLClassViewModel(new UMLClass(actualUMLClass.X, actualUMLClass.Y, actualUMLClass.Name, storedColor, actualUMLClass.ID));
                         Shapes.Add(actualViewModel);
                     }
                     else if (loadedModel is BasicShape)
@@ -480,7 +483,7 @@ namespace Scumle.ViewModel
                         var actualBasicShape = loadedModel as BasicShape;
                         var storedColor = Color.FromRgb(actualBasicShape.ColorR, actualBasicShape.ColorG, actualBasicShape.ColorB);
                         
-                        IShape actualViewModel = new BasicShapeViewModel(new BasicShape(actualBasicShape.Type, actualBasicShape.X, actualBasicShape.Y, storedColor));
+                        IShape actualViewModel = new BasicShapeViewModel(new BasicShape(actualBasicShape.Type, actualBasicShape.X, actualBasicShape.Y, storedColor, actualBasicShape.ID));
                         Shapes.Add(actualViewModel);
 
                     }
@@ -498,16 +501,31 @@ namespace Scumle.ViewModel
                         {
                             var actualViewModel = viewModel as IShape;                                    
                          
-                            if (actualViewModel.X == from.storeShape.X && actualViewModel.Y == from.storeShape.Y)
+                          /*  if (actualViewModel.X == from.storeShape.X && actualViewModel.Y == from.storeShape.Y)
                             {
                                cpFrom = actualViewModel.ConnectionPoints.ElementAt(0);
                             }
                             if (actualViewModel.X == to.storeShape.X && actualViewModel.Y == to.storeShape.Y)
                             {
                                cpTo = actualViewModel.ConnectionPoints.ElementAt(3);
+                            }*/
+                            if (actualViewModel.ID == from.storeShape.ID)
+                            {
+                                if(from.Horizontal == HorizontalAlignment.Center && from.Vertical == VerticalAlignment.Top) { cpFrom = actualViewModel.ConnectionPoints.ElementAt(0); }
+                                else if (from.Horizontal == HorizontalAlignment.Left && from.Vertical == VerticalAlignment.Center) { cpFrom = actualViewModel.ConnectionPoints.ElementAt(1); }
+                                else if (from.Horizontal == HorizontalAlignment.Right && from.Vertical == VerticalAlignment.Center) { cpFrom = actualViewModel.ConnectionPoints.ElementAt(2); }
+                                else if (from.Horizontal == HorizontalAlignment.Center && from.Vertical == VerticalAlignment.Bottom) { cpFrom = actualViewModel.ConnectionPoints.ElementAt(3); }
                             }
 
-                                                      
+                            if (actualViewModel.ID == to.storeShape.ID)
+                            {                               
+                                if (to.Horizontal == HorizontalAlignment.Center && to.Vertical == VerticalAlignment.Top) { cpTo = actualViewModel.ConnectionPoints.ElementAt(0); }
+                                else if (to.Horizontal == HorizontalAlignment.Left && to.Vertical == VerticalAlignment.Center) { cpTo = actualViewModel.ConnectionPoints.ElementAt(1); }
+                                else if (to.Horizontal == HorizontalAlignment.Right && to.Vertical == VerticalAlignment.Center) { cpTo = actualViewModel.ConnectionPoints.ElementAt(2); }
+                                else if (to.Horizontal == HorizontalAlignment.Center && to.Vertical == VerticalAlignment.Bottom) { cpTo = actualViewModel.ConnectionPoints.ElementAt(3); }
+                              
+                            }                                   
+
                         }
 
                         Lines.Add(new LineViewModel(new Line(actualLine.Type, cpFrom, cpTo)));
@@ -521,9 +539,16 @@ namespace Scumle.ViewModel
 
             }
 
+         
+
+
+        }
 
 
 
+        public string CreateShapeID()
+        {
+            return Guid.NewGuid().ToString();
         }
 
         //TODO: Implement adding a new "window pane" instead of just deleting the one we have.
@@ -532,7 +557,6 @@ namespace Scumle.ViewModel
             _currentFilePath = null;
             Shapes.Clear();
             Lines.Clear();
-            UndoRedo.clear();
         }
 
         #endregion
