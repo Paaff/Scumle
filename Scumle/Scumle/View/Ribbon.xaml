@@ -160,12 +160,19 @@
         </RibbonTab>
 
         <RibbonTab Header="About">
-            <RibbonGroup>
-            <TextBlock Margin="5,5">
-                Scumle, a UML diagram editor, was developped by: <LineBreak/>
-                Mathias, Peter and Sebastian Ake Aaen s144463 <LineBreak/>
-                As a part of the course Windows Programming, 02350, DTU 2016
-            </TextBlock>
+            <RibbonGroup Header="Info">
+                <TextBlock Margin="5,5">
+                Scumle, a UML diagram editor <LineBreak/>
+                developed for the course Windows<LineBreak/>
+                Programming, 02350, DTU 2016
+                </TextBlock>
+            </RibbonGroup>
+            <RibbonGroup Header="Authors">
+                <TextBlock Margin="5,5">
+                Peter<LineBreak/>
+                Mathias<LineBreak/>
+                Sebastian Ake Aaen s144463<LineBreak/>
+                </TextBlock>
             </RibbonGroup>
         </RibbonTab>
 
