@@ -20,8 +20,7 @@ namespace Scumle.ViewModel
         public UMLClassViewModel(UMLClass uml) : base(uml)
         {
             Width = 300;
-            Height = 150;
-            ShapeColor = new SolidColorBrush(Color.FromRgb(205, 92, 92));
+            Height = 150;           
         }
         #endregion
             

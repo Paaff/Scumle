@@ -16,7 +16,8 @@ namespace Scumle.Model
     public abstract class Shape : ModelBase, IShape
     {
         private double _width;
-        private double _height;      
+        private double _height;
+        private byte a, r, g, b;      
                 
         public Shape(double _X, double _Y,Color col)
         {
@@ -27,6 +28,7 @@ namespace Scumle.Model
             Y = _Y;
             InitializeConnectionPoints();
             ShapeColor = new SolidColorBrush(col);
+       
         }
 
         private void InitializeConnectionPoints()
@@ -63,6 +65,36 @@ namespace Scumle.Model
 
         [XmlIgnore]
         public Brush ShapeColor { get; set; }
+
+        
+        public Color StoreColor
+        {
+            get
+            {       
+                 g = ((Color)ShapeColor.GetValue(SolidColorBrush.ColorProperty)).G;
+                 r = ((Color)ShapeColor.GetValue(SolidColorBrush.ColorProperty)).R;
+                 b = ((Color)ShapeColor.GetValue(SolidColorBrush.ColorProperty)).B;           
+                 return Color.FromRgb(ColorR, ColorG, ColorB);
+            }
+            set {}
+        }
+
+   
+        public byte ColorR
+        {
+            get { return r; }
+            set { r = value; }
+        }
+        public byte ColorG
+        {
+            get { return g; }
+            set { g = value; }
+        }
+        public byte ColorB
+        {
+            get { return b; }
+            set { b = value; }
+        }
 
         public void ShapeMove(double X, double Y)
         {

@@ -28,6 +28,8 @@ namespace Scumle.Model
         public IPoint To { get; set; }
         public ELine Type { get; set; }
 
+
+        // For Serialization
         public ConnectionPoint storeTo { get; set; }
         public ConnectionPoint storeFrom { get; set; }
 

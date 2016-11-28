@@ -442,9 +442,7 @@ namespace Scumle.ViewModel
 
             foreach (var ViewModel in Lines)
             {
-                var actualModel = ViewModel.Model as Line;
-                var actualTo = actualModel.To as ConnectionPoint;
-                var actualFrom = actualModel.From as ConnectionPoint;
+                var actualModel = ViewModel.Model as Line;             
                 modelsToSave.Add(actualModel);
             }
             return modelsToSave;
@@ -476,13 +474,16 @@ namespace Scumle.ViewModel
                     if (loadedModel is UMLClass)
                     {
                         var actualUMLClass = loadedModel as UMLClass;
-                        IShape actualViewModel = new UMLClassViewModel(new UMLClass(actualUMLClass.X, actualUMLClass.Y, actualUMLClass.Name, SelectedColor));
+                        var storedColor = Color.FromRgb(actualUMLClass.ColorR, actualUMLClass.ColorG, actualUMLClass.ColorB);
+                        IShape actualViewModel = new UMLClassViewModel(new UMLClass(actualUMLClass.X, actualUMLClass.Y, actualUMLClass.Name, storedColor));
                         Shapes.Add(actualViewModel);
                     }
                     else if (loadedModel is BasicShape)
                     {
                         var actualBasicShape = loadedModel as BasicShape;
-                        IShape actualViewModel = new BasicShapeViewModel(new BasicShape(actualBasicShape.Type, actualBasicShape.X, actualBasicShape.Y, SelectedColor));
+                        var storedColor = Color.FromRgb(actualBasicShape.ColorR, actualBasicShape.ColorG, actualBasicShape.ColorB);
+                        
+                        IShape actualViewModel = new BasicShapeViewModel(new BasicShape(actualBasicShape.Type, actualBasicShape.X, actualBasicShape.Y, storedColor));
                         Shapes.Add(actualViewModel);
 
                     }
