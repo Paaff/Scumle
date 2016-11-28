@@ -466,6 +466,7 @@ namespace Scumle.ViewModel
                 Shapes.Clear();
                 Lines.Clear();
                 UndoRedo.clear();
+                _currentFilePath = Path.GetFullPath(open.FileName);
                 foreach (var loadedModel in loadedModelsList)
                 {
                     if (loadedModel is UMLClass)
