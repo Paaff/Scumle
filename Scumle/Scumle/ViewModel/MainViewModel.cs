@@ -422,7 +422,7 @@ namespace Scumle.ViewModel
             if (_currentFilePath != null)
             {
                 Helpers.GenericSerializer.convertToXML(saving(), _currentFilePath);
-                UndoRedo.clear();
+                UndoRedo.ChangeSinceSave=false;
                 StatusText = "File: \"" + _currentFilePath + "\" Saved successfully";
             }
             else
@@ -441,7 +441,7 @@ namespace Scumle.ViewModel
                 {
                     _currentFilePath = Path.GetFullPath(save.FileName);
                     Helpers.GenericSerializer.convertToXML(saving(), _currentFilePath);
-                    UndoRedo.clear();
+                UndoRedo.ChangeSinceSave = false;
                 }
             
 
@@ -494,6 +494,7 @@ namespace Scumle.ViewModel
                     Shapes.Clear();
                     Lines.Clear();
                     UndoRedo.clear();
+                    UndoRedo.ChangeSinceSave = false;
                     _currentFilePath = Path.GetFullPath(open.FileName);
                     foreach (var loadedModel in loadedModelsList)
                     {

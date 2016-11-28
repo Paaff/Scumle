@@ -53,7 +53,6 @@ namespace Scumle.UndeRedo
             redoStack.Clear();
             undoStack.Clear();
             UpdateCommandStatus();
-            _changeSinceSave = false;
         }
 
         public void Undo()
