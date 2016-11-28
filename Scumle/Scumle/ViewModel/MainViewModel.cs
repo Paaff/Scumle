@@ -145,11 +145,11 @@ namespace Scumle.ViewModel
         {
             SelectedColor = Color.FromRgb(205, 92, 92);
 
-            IShape uml1 = new UMLClassViewModel(new UMLClass(400, 400, "My Class 1", SelectedColor, CreateShapeID()));
-            IShape uml2 = new UMLClassViewModel(new UMLClass(50, 50, "My Class 2", SelectedColor, CreateShapeID()));
+            IShape uml1 = new UMLClassViewModel(new UMLClass(400, 400, 300, 200, "My Class 1", SelectedColor, CreateShapeID()));
+            IShape uml2 = new UMLClassViewModel(new UMLClass(50, 50, 300, 200, "My Class 2", SelectedColor, CreateShapeID()));
 
-            IShape shape1 = new BasicShapeViewModel(new BasicShape(EBasicShape.Ellipse, 400, 50, SelectedColor, CreateShapeID()));
-            IShape shape2 = new BasicShapeViewModel(new BasicShape(EBasicShape.Rectangle, 50, 400, SelectedColor, CreateShapeID()));
+            IShape shape1 = new BasicShapeViewModel(new BasicShape(EBasicShape.Ellipse, 400, 50, 50, 50, SelectedColor, CreateShapeID()));
+            IShape shape2 = new BasicShapeViewModel(new BasicShape(EBasicShape.Rectangle, 50, 400, 50, 50, SelectedColor, CreateShapeID()));
 
 
             Shapes = new ObservableCollection<IShape>() { uml1, uml2, shape1, shape2 };
@@ -353,13 +353,13 @@ namespace Scumle.ViewModel
             switch (SelectedFigure)
             {
                 case 0:
-                    shape = new BasicShapeViewModel(new BasicShape(EBasicShape.Ellipse, p.X, p.Y, SelectedColor, CreateShapeID()));
+                    shape = new BasicShapeViewModel(new BasicShape(EBasicShape.Ellipse, p.X, p.Y, 50, 50, SelectedColor, CreateShapeID()));
                     break;
                 case 1:
-                    shape = new UMLClassViewModel(new UMLClass(p.X, p.Y, "New Shape", SelectedColor, CreateShapeID()));
+                    shape = new UMLClassViewModel(new UMLClass(p.X, p.Y, 150, 200, "New Shape", SelectedColor, CreateShapeID()));
                     break;
                 case 2:
-                    shape = new BasicShapeViewModel(new BasicShape(EBasicShape.Rectangle, p.X, p.Y, SelectedColor, CreateShapeID()));
+                    shape = new BasicShapeViewModel(new BasicShape(EBasicShape.Rectangle, p.X, p.Y, 50, 50, SelectedColor, CreateShapeID()));
                     break;
                 default:
                     Console.WriteLine("Figure selection error");
@@ -482,7 +482,8 @@ namespace Scumle.ViewModel
                         {
                             var actualUMLClass = loadedModel as UMLClass;
                             var storedColor = Color.FromRgb(actualUMLClass.ColorR, actualUMLClass.ColorG, actualUMLClass.ColorB);
-                            IShape actualViewModel = new UMLClassViewModel(new UMLClass(actualUMLClass.X, actualUMLClass.Y, actualUMLClass.Name, storedColor, actualUMLClass.ID));
+                            IShape actualViewModel = new UMLClassViewModel(new UMLClass(actualUMLClass.X, actualUMLClass.Y, actualUMLClass.Width, actualUMLClass.Height,
+                                                                                          actualUMLClass.Name, storedColor, actualUMLClass.ID));
                             Shapes.Add(actualViewModel);
                         }
                         else if (loadedModel is BasicShape)
@@ -490,7 +491,8 @@ namespace Scumle.ViewModel
                             var actualBasicShape = loadedModel as BasicShape;
                             var storedColor = Color.FromRgb(actualBasicShape.ColorR, actualBasicShape.ColorG, actualBasicShape.ColorB);
 
-                            IShape actualViewModel = new BasicShapeViewModel(new BasicShape(actualBasicShape.Type, actualBasicShape.X, actualBasicShape.Y, storedColor, actualBasicShape.ID));
+                            IShape actualViewModel = new BasicShapeViewModel(new BasicShape(actualBasicShape.Type, actualBasicShape.X, actualBasicShape.Y,
+                                                                                            actualBasicShape.Width, actualBasicShape.Height, storedColor, actualBasicShape.ID));
                             Shapes.Add(actualViewModel);
 
                         }

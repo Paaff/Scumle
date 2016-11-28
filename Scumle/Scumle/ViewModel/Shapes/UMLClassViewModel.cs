@@ -19,8 +19,7 @@ namespace Scumle.ViewModel
         #region Constructor  
         public UMLClassViewModel(UMLClass uml) : base(uml)
         {
-            Width = 300;
-            Height = 150;           
+              
         }
         #endregion
             

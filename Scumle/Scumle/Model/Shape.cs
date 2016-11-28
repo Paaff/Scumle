@@ -20,11 +20,11 @@ namespace Scumle.Model
         private byte a, r, g, b;
         
                 
-        public Shape(double _X, double _Y,Color col, string _ID)
+        public Shape(double _X, double _Y, double _Width, double _Height, Color col, string _ID)
         {
             IsSelected = false;
-            Width = 50;
-            Height = 50;
+            Width = _Width;
+            Height = _Height;
             X = _X;
             Y = _Y;
             InitializeConnectionPoints();
