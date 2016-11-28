@@ -322,6 +322,7 @@ namespace Scumle.ViewModel
             Tool = ETool.Default;
             DeselectAllShapes();
             EndLineConnection();
+            Keyboard.ClearFocus();
         }
         internal void SelectShape(IShape shape, bool clearSelection)
         {
@@ -703,6 +704,7 @@ namespace Scumle.ViewModel
         //The image conversion code is inspired by http://stackoverflow.com/questions/4560173/save-wpf-view-as-image-preferably-png
         public void ExportImage(Window grid)
         {
+            Escape();
             SaveFileDialog save = new SaveFileDialog();
             save.DefaultExt = ".png";
             if (save.ShowDialog() == true)
