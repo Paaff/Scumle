@@ -14,8 +14,8 @@ namespace Scumle.UndeRedo
         private readonly Stack<UndoRedoCommand> undoStack = new Stack<UndoRedoCommand>();
         private readonly Stack<UndoRedoCommand> redoStack = new Stack<UndoRedoCommand>();
 
-        public RelayCommand UndoCommand => new RelayCommand(Undo, CanUndo);
-        public RelayCommand RedoCommand => new RelayCommand(Redo, CanRedo);
+        public RelayCommand UndoCommand;
+        public RelayCommand RedoCommand;
 
 
         internal void UpdateCommandStatus()
@@ -24,7 +24,10 @@ namespace Scumle.UndeRedo
             RedoCommand.RaiseCanExecuteChanged();
         }
 
-        private UndoRedoController() { }
+        private UndoRedoController() {
+            UndoCommand = new RelayCommand(Undo, CanUndo);
+            RedoCommand = new RelayCommand(Redo, CanRedo);
+        }
 
         public bool CanUndo() => undoStack.Count() > 0;
 
