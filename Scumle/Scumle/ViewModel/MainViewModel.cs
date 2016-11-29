@@ -284,28 +284,17 @@ namespace Scumle.ViewModel
             CopiedLines.Clear();
             foreach (IShape i in Selected)
             {
-                IShape shapeToCopy = i;
-                string newID = CreateShapeID();
-
                 foreach (LineViewModel l in Lines)
-                {                   
-                    LineViewModel lineToCopy = l;             
+                { 
                     // Copy the line if it is originating from a shape.
-                    if (lineToCopy.From.Shape.ID == shapeToCopy.ID)
+                    if (l.From.Shape.ID == i.ID)
                     {
-                        lineToCopy.From.Shape.ID = newID;
-                        shapeToCopy.ID = newID;
-                        CopiedLines.Add(lineToCopy);
+                      CopiedLines.Add(l);
                     }
-                    if (lineToCopy.To.Shape.ID == shapeToCopy.ID)
-                    {
-                        lineToCopy.To.Shape.ID = newID;
-                        shapeToCopy.ID = newID;
-                        CopiedLines.Add(lineToCopy);
-                    }
+                    
                 }
                              
-                CopiedShapes.Add(shapeToCopy);
+                CopiedShapes.Add(i);
                 
             }
             DeselectAllShapes();
@@ -320,6 +309,33 @@ namespace Scumle.ViewModel
         private void Paste()
         {
             List<ModelBase> copyMemoryShapes = Helpers.GenericSerializer.convertFromXMLInMemory(_memoryOfCopy);
+
+            foreach (var model in copyMemoryShapes)
+            {
+           
+                if (model is Shape)
+                {
+                    string newID = CreateShapeID();
+
+                    foreach (var line in copyMemoryShapes)
+                    {
+                        if (line is Line && (line as Line).storeFrom.storeShape.ID == (model as Shape).ID)
+                        {
+                            (line as Line).storeFrom.storeShape.ID = newID;
+
+                        }
+                        if (line is Line && (line as Line).storeTo.storeShape.ID == (model as Shape).ID)
+                        {
+                            (line as Line).storeTo.storeShape.ID = newID;
+
+                        }
+
+
+                    }
+
+                       (model as Shape).ID = newID;
+                }
+            }
             if (copyMemoryShapes != null) { loading(copyMemoryShapes); }           
          
         }
@@ -595,7 +611,7 @@ namespace Scumle.ViewModel
                     var storedColor = Color.FromRgb(actualUMLClass.ColorR, actualUMLClass.ColorG, actualUMLClass.ColorB);        
                         IShape actualViewModel = new UMLClassViewModel(new UMLClass(actualUMLClass.X + _loadingOffSet, actualUMLClass.Y + _loadingOffSet, actualUMLClass.Width, actualUMLClass.Height,
                                                                                actualUMLClass.Name, storedColor, actualUMLClass.ID, actualUMLClass.UMLFields, actualUMLClass.UMLMethods));
-
+              
                         Shapes.Add(actualViewModel);
               }
                 else if (loadedModel is BasicShape)
