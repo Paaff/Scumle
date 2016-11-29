@@ -159,7 +159,9 @@ namespace Scumle.ViewModel
         public ICommand MoveShapesCommand => new RelayCommand<DragDeltaEventArgs>(MoveShapes);
         public ICommand StartMoveShapesCommand => new RelayCommand<DragStartedEventArgs>(StartMoveShapes);
         public ICommand EndMoveShapesCommand => new RelayCommand<DragCompletedEventArgs>(EndMoveShapes);
+        #endregion
 
+        #region Moving
         private void MoveShapes(DragDeltaEventArgs e)
         {
             IShape shape = getShapeFromElement(e.Source);
@@ -275,8 +277,7 @@ namespace Scumle.ViewModel
         }
         #endregion
 
-        #region
-        //Nemt at implementere når tingene bliver serializable https://www.codeproject.com/articles/23832/implementing-deep-cloning-via-serializing-objects
+        #region copypaste
         private void Copy()
         {
             CopiedShapes.Clear();
@@ -337,6 +338,7 @@ namespace Scumle.ViewModel
             Tool = ETool.Default;
             DeselectAllShapes();
             EndLineConnection();
+            Keyboard.ClearFocus();
         }
         internal void SelectShape(IShape shape, bool clearSelection)
         {
@@ -492,7 +494,7 @@ namespace Scumle.ViewModel
         }
         #endregion
 
-        #region WorkSpace
+        #region SaveLoadWorkspace
         public void SaveWorkSpace()
         {
             if (_currentFilePath != null)
@@ -717,6 +719,7 @@ namespace Scumle.ViewModel
         //The image conversion code is inspired by http://stackoverflow.com/questions/4560173/save-wpf-view-as-image-preferably-png
         public void ExportImage(Window grid)
         {
+            Escape();
             SaveFileDialog save = new SaveFileDialog();
             save.DefaultExt = ".png";
             if (save.ShowDialog() == true)
