@@ -309,7 +309,7 @@ namespace Scumle.ViewModel
         private void Paste()
         {
             List<ModelBase> copyMemoryShapes = Helpers.GenericSerializer.convertFromXMLInMemory(_memoryOfCopy);
-
+            List<String> newIDList = new List<string>();
             foreach (var model in copyMemoryShapes)
             {
            
@@ -334,10 +334,16 @@ namespace Scumle.ViewModel
                     }
 
                        (model as Shape).ID = newID;
+                        newIDList.Add(newID);
                 }
             }
-            if (copyMemoryShapes != null) { loading(copyMemoryShapes); }           
-         
+            if (copyMemoryShapes != null) { loading(copyMemoryShapes); }
+
+            
+            foreach (IShape shape in Shapes)
+            {
+                if (newIDList.Contains(shape.ID)) { SelectShape(shape, false); }
+            }
         }
         #endregion
 
