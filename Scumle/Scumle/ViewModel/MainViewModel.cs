@@ -283,17 +283,33 @@ namespace Scumle.ViewModel
             CopiedLines.Clear();
             foreach (IShape i in Selected)
             {
-                CopiedShapes.Add(i);
-                foreach(LineViewModel l in Lines)
-                {
-                    // Only copy the line if the user chooses both the shapes connected.
-                    if(l.From.Shape.ID == i.ID && l.To.Shape.ID == i.ID)
+                IShape shapeToCopy = i;
+                string newID = CreateShapeID();
+
+                foreach (LineViewModel l in Lines)
+                {                   
+                    LineViewModel lineToCopy = l;             
+                    // Copy the line if it is originating from a shape.
+                    if (lineToCopy.From.Shape.ID == shapeToCopy.ID)
                     {
-                        CopiedLines.Add(l);
+                        lineToCopy.From.Shape.ID = newID;
+                        shapeToCopy.ID = newID;
+                        CopiedLines.Add(lineToCopy);
+                    }
+                    if (lineToCopy.To.Shape.ID == shapeToCopy.ID)
+                    {
+                        lineToCopy.To.Shape.ID = newID;
+                        shapeToCopy.ID = newID;
+                        CopiedLines.Add(lineToCopy);
                     }
                 }
+                             
+                CopiedShapes.Add(shapeToCopy);
+                
             }
-            _memoryOfCopy = Helpers.GenericSerializer.SerializeToXMLInMemory(saving(CopiedShapes, CopiedLines));          
+            DeselectAllShapes();
+            _memoryOfCopy = Helpers.GenericSerializer.SerializeToXMLInMemory(saving(CopiedShapes, CopiedLines));
+                 
         }
         private void Cut()
         {
@@ -303,8 +319,8 @@ namespace Scumle.ViewModel
         private void Paste()
         {
             List<ModelBase> copyMemoryShapes = Helpers.GenericSerializer.convertFromXMLInMemory(_memoryOfCopy);
-            if(copyMemoryShapes != null) loading(copyMemoryShapes);
-            
+            if (copyMemoryShapes != null) { loading(copyMemoryShapes); }           
+         
         }
         #endregion
 
@@ -574,20 +590,20 @@ namespace Scumle.ViewModel
                 if (loadedModel is UMLClass)
                 {
                     var actualUMLClass = loadedModel as UMLClass;
-                    var storedColor = Color.FromRgb(actualUMLClass.ColorR, actualUMLClass.ColorG, actualUMLClass.ColorB);
-                    IShape actualViewModel = new UMLClassViewModel(new UMLClass(actualUMLClass.X + _loadingOffSet, actualUMLClass.Y + _loadingOffSet, actualUMLClass.Width, actualUMLClass.Height,
-                                                                                actualUMLClass.Name, storedColor, actualUMLClass.ID, actualUMLClass.UMLFields, actualUMLClass.UMLMethods));
+                    var storedColor = Color.FromRgb(actualUMLClass.ColorR, actualUMLClass.ColorG, actualUMLClass.ColorB);        
+                        IShape actualViewModel = new UMLClassViewModel(new UMLClass(actualUMLClass.X + _loadingOffSet, actualUMLClass.Y + _loadingOffSet, actualUMLClass.Width, actualUMLClass.Height,
+                                                                               actualUMLClass.Name, storedColor, actualUMLClass.ID, actualUMLClass.UMLFields, actualUMLClass.UMLMethods));
 
-                    Shapes.Add(actualViewModel);
-                }
+                        Shapes.Add(actualViewModel);
+              }
                 else if (loadedModel is BasicShape)
                 {
                     var actualBasicShape = loadedModel as BasicShape;
                     var storedColor = Color.FromRgb(actualBasicShape.ColorR, actualBasicShape.ColorG, actualBasicShape.ColorB);
-
-                    IShape actualViewModel = new BasicShapeViewModel(new BasicShape(actualBasicShape.Type, actualBasicShape.X + _loadingOffSet, actualBasicShape.Y + _loadingOffSet,
-                                                                                    actualBasicShape.Width, actualBasicShape.Height, storedColor, actualBasicShape.ID));
-                    Shapes.Add(actualViewModel);
+              
+                        IShape actualViewModel = new BasicShapeViewModel(new BasicShape(actualBasicShape.Type, actualBasicShape.X + _loadingOffSet, actualBasicShape.Y + _loadingOffSet,
+                                                                           actualBasicShape.Width, actualBasicShape.Height, storedColor, actualBasicShape.ID));
+                        Shapes.Add(actualViewModel);  
 
                 }
                 else if (loadedModel is Line)
@@ -621,9 +637,8 @@ namespace Scumle.ViewModel
                         }
                     }
 
-
-                    Lines.Add(new LineViewModel(new Line(actualLine.Type, cpFrom, cpTo)));
-
+                    if (cpFrom != null || cpTo != null) { Lines.Add(new LineViewModel(new Line(actualLine.Type, cpFrom, cpTo))); }
+                  
                 }
             }
         }
