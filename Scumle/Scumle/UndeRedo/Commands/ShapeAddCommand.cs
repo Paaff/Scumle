@@ -23,7 +23,7 @@ namespace Scumle.UndeRedo
         public ShapeAddCommand(ObservableCollection<IShape> _shapes, IList<IShape> _add_shapes)
         {
             shapes = _shapes;
-            add_shapes = _shapes.ToList();
+            add_shapes = _add_shapes.ToList();
         }
 
         public override void Undo()

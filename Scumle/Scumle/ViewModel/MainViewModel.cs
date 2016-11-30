@@ -125,9 +125,9 @@ namespace Scumle.ViewModel
             }
         }
         public ObservableCollection<IShape> Shapes { get; }
-        public ObservableCollection<LineViewModel> Lines { get; } = new ObservableCollection<LineViewModel>();
+        public ObservableCollection<ILine> Lines { get; } = new ObservableCollection<ILine>();
         public List<IShape> Selected { get; } = new List<IShape>();
-        public ObservableCollection<LineViewModel> CopiedLines { get; } = new ObservableCollection<LineViewModel>();
+        public ObservableCollection<ILine> CopiedLines { get; } = new ObservableCollection<ILine>();
         public ObservableCollection<IShape> CopiedShapes { get; } = new ObservableCollection<IShape>();
         public string Version { get; } = "Version 1.0.0";
         #endregion
@@ -580,7 +580,7 @@ namespace Scumle.ViewModel
 
         }
 
-        public List<ModelBase> saving(ObservableCollection<IShape> shapesToSave, ObservableCollection<LineViewModel> linesToSave)
+        public List<ModelBase> saving(ObservableCollection<IShape> shapesToSave, ObservableCollection<ILine> linesToSave)
         {
             // List containing all models to be saved.
             List<ModelBase> modelsToSave = new List<ModelBase>();
@@ -599,9 +599,9 @@ namespace Scumle.ViewModel
                 }
             }
 
-            foreach (var ViewModel in linesToSave)
+            foreach (var viewModel in linesToSave)
             {
-                var actualModel = ViewModel.Model as Line;             
+                var actualModel = (viewModel as LineViewModel).Model as Line;             
                 modelsToSave.Add(actualModel);
             }
             return modelsToSave;
@@ -637,16 +637,19 @@ namespace Scumle.ViewModel
 
         private void loading(List<ModelBase> loadedModelsList)
         {
+            IList<ILine> linesAdd = new List<ILine>();
+            IList<IShape> shapesAdd = new List<IShape>();
             foreach (var loadedModel in loadedModelsList)
             {
+               
                 if (loadedModel is UMLClass)
                 {
                     var actualUMLClass = loadedModel as UMLClass;
                     var storedColor = Color.FromRgb(actualUMLClass.ColorR, actualUMLClass.ColorG, actualUMLClass.ColorB);        
                         IShape actualViewModel = new UMLClassViewModel(new UMLClass(actualUMLClass.X + _loadingOffSet, actualUMLClass.Y + _loadingOffSet, actualUMLClass.Width, actualUMLClass.Height,
                                                                                actualUMLClass.Name, storedColor, actualUMLClass.ID, actualUMLClass.UMLFields, actualUMLClass.UMLMethods));
-              
-                        Shapes.Add(actualViewModel);
+
+                    shapesAdd.Add(actualViewModel);
               }
                 else if (loadedModel is BasicShape)
                 {
@@ -655,7 +658,7 @@ namespace Scumle.ViewModel
               
                         IShape actualViewModel = new BasicShapeViewModel(new BasicShape(actualBasicShape.Type, actualBasicShape.X + _loadingOffSet, actualBasicShape.Y + _loadingOffSet,
                                                                            actualBasicShape.Width, actualBasicShape.Height, storedColor, actualBasicShape.ID));
-                        Shapes.Add(actualViewModel);  
+                        shapesAdd.Add(actualViewModel);
 
                 }
                 else if (loadedModel is Line)
@@ -667,7 +670,7 @@ namespace Scumle.ViewModel
                     IPoint cpFrom = null;
                     IPoint cpTo = null;
 
-                    foreach (var viewModel in Shapes)
+                    foreach (var viewModel in shapesAdd)
                     {
                         var actualViewModel = viewModel as IShape;
 
@@ -689,10 +692,14 @@ namespace Scumle.ViewModel
                         }
                     }
 
-                    if (cpFrom != null || cpTo != null) { Lines.Add(new LineViewModel(new Line(actualLine.Type, cpFrom, cpTo))); }
+                    if (cpFrom != null || cpTo != null) { linesAdd.Add(new LineViewModel(new Line(actualLine.Type, cpFrom, cpTo))); }
                   
                 }
+                
             }
+
+             new ShapeAddCommand(Shapes, shapesAdd).Execute();             
+             new LineAddCommand(Lines, linesAdd).Execute(); 
         }
 
         public string CreateShapeID()

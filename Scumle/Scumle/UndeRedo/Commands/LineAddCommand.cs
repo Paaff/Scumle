@@ -1,5 +1,7 @@
-﻿using Scumle.ViewModel;
+﻿using Scumle.Model;
+using Scumle.ViewModel;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
@@ -9,22 +11,36 @@ namespace Scumle.UndeRedo.Commands
 {
     class LineAddCommand : UndoRedoCommand
     {
-        Collection<LineViewModel> lines;
-        LineViewModel line;
-        public LineAddCommand(Collection<LineViewModel> _lines, LineViewModel _line)
+        ObservableCollection<ILine> lines;
+        IList<ILine> add_lines;
+        public LineAddCommand(ObservableCollection<ILine> _lines, ILine _line)
         {
             lines = _lines;
-            line = _line;
+            add_lines = new List<ILine>() { _line }; 
         }
 
-        public override void Redo()
+        public LineAddCommand(ObservableCollection<ILine> _lines, IList<ILine> _add_lines)
         {
-            lines.Add(line);
+            lines = _lines;
+            add_lines = _add_lines.ToList();
         }
 
         public override void Undo()
         {
-            lines.Remove(line);
+            foreach (ILine line in add_lines)
+            {
+                lines.Remove(line);
+             
+            }
+        }
+
+        public override void Redo()
+        {
+            foreach (ILine line in add_lines)
+            {
+                lines.Add(line);
+
+            }
         }
     }
 }
