@@ -289,7 +289,14 @@ namespace Scumle.ViewModel
                     // Copy the line if it is originating from a shape.
                     if (l.From.Shape.ID == i.ID)
                     {
-                      CopiedLines.Add(l);
+                        foreach(IShape j in Selected)
+                        {
+                            if(l.To.Shape.ID == j.ID )
+                            {
+                                CopiedLines.Add(l);
+                            }
+                        }
+                     
                     }
                     
                 }
@@ -309,41 +316,44 @@ namespace Scumle.ViewModel
         private void Paste()
         {
             List<ModelBase> copyMemoryShapes = Helpers.GenericSerializer.convertFromXMLInMemory(_memoryOfCopy);
-            List<String> newIDList = new List<string>();
-            foreach (var model in copyMemoryShapes)
-            {
-           
-                if (model is Shape)
+            List<string> newIDList = new List<string>();          
+                foreach (var model in copyMemoryShapes)
                 {
-                    string newID = CreateShapeID();
 
-                    foreach (var line in copyMemoryShapes)
+                    if (model is Shape)
                     {
-                        if (line is Line && (line as Line).storeFrom.storeShape.ID == (model as Shape).ID)
+                        string newID = CreateShapeID();
+
+                        foreach (var line in copyMemoryShapes)
                         {
-                            (line as Line).storeFrom.storeShape.ID = newID;
+                            if (line is Line && (line as Line).storeFrom.storeShape.ID == (model as Shape).ID)
+                            {
+                                (line as Line).storeFrom.storeShape.ID = newID;
+
+                            }
+                            if (line is Line && (line as Line).storeTo.storeShape.ID == (model as Shape).ID)
+                            {
+                                (line as Line).storeTo.storeShape.ID = newID;
+
+                            }
+
 
                         }
-                        if (line is Line && (line as Line).storeTo.storeShape.ID == (model as Shape).ID)
-                        {
-                            (line as Line).storeTo.storeShape.ID = newID;
 
-                        }
-
-
-                    }
-
-                       (model as Shape).ID = newID;
+                           (model as Shape).ID = newID;
                         newIDList.Add(newID);
+                    }
                 }
-            }
-            if (copyMemoryShapes != null) { loading(copyMemoryShapes); }
+                if (copyMemoryShapes != null) { loading(copyMemoryShapes); }
+
+
+                foreach (IShape shape in Shapes)
+                {
+                    if (newIDList.Contains(shape.ID)) { SelectShape(shape, false); }
+                }
 
             
-            foreach (IShape shape in Shapes)
-            {
-                if (newIDList.Contains(shape.ID)) { SelectShape(shape, false); }
-            }
+            
         }
         #endregion
 
@@ -531,6 +541,7 @@ namespace Scumle.ViewModel
             else
             {
                 SaveAsWorkSpace();
+                StatusText = "File: \"" + _currentFilePath + "\" Saved successfully";
             }
         }
 
