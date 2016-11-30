@@ -142,7 +142,7 @@ namespace Scumle.ViewModel
         public ICommand SaveWorkSpaceCommand => new RelayCommand(SaveWorkSpace);
         public ICommand OpenWorkSpaceCommand => new RelayCommand(OpenWorkSpace);
         public RelayCommand CopyCommand { get; private set; }
-        public ICommand CutCommand => new RelayCommand(Cut);
+        public RelayCommand CutCommand { get; private set; }
         public RelayCommand PasteCommand { get; private set; }
         public RelayCommand DeleteSelectedShapesCommand { get; private set; }
         public ICommand NewWorkSpaceCommand => new RelayCommand(NewWorkSpace);
@@ -236,6 +236,7 @@ namespace Scumle.ViewModel
             DeleteSelectedShapesCommand = new RelayCommand(DeleteSelectedShapes, HasSelectedShapes);
             CopyCommand = new RelayCommand(Copy, HasSelectedShapes);
             PasteCommand = new RelayCommand(Paste, HasCopiedShapes);
+            CutCommand = new RelayCommand(Cut, HasSelectedShapes);
         }
         #endregion
 
@@ -390,6 +391,7 @@ namespace Scumle.ViewModel
                 shape.IsSelected = true;
                 DeleteSelectedShapesCommand.RaiseCanExecuteChanged();
                 CopyCommand.RaiseCanExecuteChanged();
+                CutCommand.RaiseCanExecuteChanged();
             }
             else
             {
@@ -397,6 +399,7 @@ namespace Scumle.ViewModel
                 shape.IsSelected = true;
                 DeleteSelectedShapesCommand.RaiseCanExecuteChanged();
                 CopyCommand.RaiseCanExecuteChanged();
+                CutCommand.RaiseCanExecuteChanged();
             }
         }
 
@@ -409,6 +412,7 @@ namespace Scumle.ViewModel
             Selected.Clear();
             DeleteSelectedShapesCommand.RaiseCanExecuteChanged();
             CopyCommand.RaiseCanExecuteChanged();
+            CutCommand.RaiseCanExecuteChanged();
         }
         public bool HasSelectedShapes()
         {
