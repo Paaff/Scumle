@@ -159,6 +159,7 @@ namespace Scumle.ViewModel
         public ICommand MoveShapesCommand => new RelayCommand<DragDeltaEventArgs>(MoveShapes);
         public ICommand StartMoveShapesCommand => new RelayCommand<DragStartedEventArgs>(StartMoveShapes);
         public ICommand EndMoveShapesCommand => new RelayCommand<DragCompletedEventArgs>(EndMoveShapes);
+        public ICommand WindowExitCommand => new RelayCommand<CancelEventArgs>(WindowExit);
         #endregion
 
         #region Moving
@@ -734,8 +735,23 @@ namespace Scumle.ViewModel
         #region methods
         private void Exit()
         {
-            Application.Current.Shutdown();
+            if (DiscardChanges())
+            {
+                Application.Current.Shutdown();
+            }
         }
+        private void WindowExit(CancelEventArgs e)
+        {
+            if (DiscardChanges())
+            {
+                e.Cancel = false;
+            }
+            else
+            {
+                e.Cancel = true;
+            }
+        }
+
 
         private void SetLineConnection()
         {
