@@ -699,8 +699,10 @@ namespace Scumle.ViewModel
                 
             }
 
-             new ShapeAddCommand(Shapes, shapesAdd).Execute();             
-             new LineAddCommand(Lines, linesAdd).Execute(); 
+            new MultiUndoRedoCommand(new List<UndoRedoCommand>() {
+                new ShapeAddCommand(Shapes, shapesAdd),
+                new LineAddCommand(Lines, linesAdd)
+            }).Execute();
         }
 
         public string CreateShapeID()

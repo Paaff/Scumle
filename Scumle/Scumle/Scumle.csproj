@@ -120,6 +120,7 @@
     <Compile Include="Tools\BasicShapeTemplateSelector.cs" />
     <Compile Include="Tools\ShapeTemplateSelector.cs" />
     <Compile Include="UndeRedo\Commands\LineAddCommand.cs" />
+    <Compile Include="UndeRedo\Commands\MultiUndoRedoCommand.cs" />
     <Compile Include="UndeRedo\Commands\ShapeAddCommand.cs" />
     <Compile Include="UndeRedo\Commands\ShapeColorCommand.cs" />
     <Compile Include="UndeRedo\Commands\ShapeMoveCommand.cs" />
