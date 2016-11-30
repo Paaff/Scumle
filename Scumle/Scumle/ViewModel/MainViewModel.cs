@@ -548,18 +548,20 @@ namespace Scumle.ViewModel
 
         {           
 
-                SaveFileDialog save = new SaveFileDialog();
-                save.DefaultExt = ".scumle";
-                save.Filter = "(.scumle)|*.scumle";
+            SaveFileDialog save = new SaveFileDialog();
+            save.DefaultExt = ".scumle";
+            save.Filter = "(.scumle)|*.scumle";
                 
-                if (save.ShowDialog() == true)
-                {
-                    _currentFilePath = Path.GetFullPath(save.FileName);
-                    Helpers.GenericSerializer.convertToXML(saving(Shapes, Lines), _currentFilePath);
-                    UndoRedo.ChangeSinceSave = false;
+            if (save.ShowDialog() == true)
+            {
+                _currentFilePath = Path.GetFullPath(save.FileName);
+                Helpers.GenericSerializer.convertToXML(saving(Shapes, Lines), _currentFilePath);
+                UndoRedo.ChangeSinceSave = false;
 
-                }
-            
+            }
+
+            StatusText = "File: \"" + _currentFilePath + "\" Saved successfully";
+
         }
 
         public List<ModelBase> saving(ObservableCollection<IShape> shapesToSave, ObservableCollection<LineViewModel> linesToSave)
