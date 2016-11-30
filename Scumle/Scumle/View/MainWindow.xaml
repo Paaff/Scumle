@@ -10,9 +10,10 @@
               xmlns:View="clr-namespace:Scumle.View"
               xmlns:Preview="clr-namespace:Scumle.View.Preview"
               Title="Scumle UML Editor"
-              Height="800"
-              Width="1200"
-              Icon="/Images/scumle.ico">
+              Height="1000"
+              Width="1700"
+              Icon="/Images/scumle.ico"
+              WindowStartupLocation="CenterScreen">
 
 
     <Window.InputBindings >

@@ -728,7 +728,7 @@ namespace Scumle.ViewModel
 
             if (UndoRedo.ChangeSinceSave)
             {
-                MessageBoxResult messageBoxResult = MessageBox.Show("Changes to your file will be lost.\n Do you wish to proceed?", "Unsaved changes", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                MessageBoxResult messageBoxResult = MessageBox.Show("Changes to your file will be lost.\n Do you wish to proceed?", "Unsaved Changes", MessageBoxButton.YesNo, MessageBoxImage.Question);
 
                 if (messageBoxResult == MessageBoxResult.No)
                 {
