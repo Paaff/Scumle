@@ -7,6 +7,19 @@
              mc:Ignorable="d" 
              d:DesignHeight="200" d:DesignWidth="200">
 
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <Style TargetType="TextBox" x:Key="UMLText">
+                <Setter Property="BorderThickness" Value="0"></Setter>
+                <Setter Property="Padding" Value="5,5"></Setter>
+                <Setter Property="AcceptsReturn" Value="True"></Setter>
+                <Setter Property="TextWrapping" Value="Wrap"></Setter>
+                <Setter Property="Background" Value="#80FFFFFF"></Setter>
+                <Setter Property="VerticalAlignment" Value="Stretch"></Setter>
+            </Style>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    
     <Border BorderThickness="1" BorderBrush="#4d4d4d">
         <Grid Background="{Binding ShapeColor}" VerticalAlignment="Stretch">
             <Grid.RowDefinitions>
@@ -17,49 +30,9 @@
             </Grid.RowDefinitions>
             <TextBox Text="{Binding Name, Mode=TwoWay}" FontSize="14" FontWeight="Bold" TextAlignment="Center"
                    HorizontalAlignment="Center"  VerticalAlignment="Stretch"  Padding="2,8" Background="Transparent" BorderThickness="0" Grid.Row="0"/>
-            <TextBox BorderThickness="0" Padding="5,5" Grid.Row="1" AcceptsReturn="True" TextWrapping="Wrap" Background="#80FFFFFF" VerticalAlignment="Stretch" Text="{Binding UMLFields, Mode=TwoWay}"></TextBox>
+            <TextBox Grid.Row="1" Style="{StaticResource UMLText}" Text="{Binding UMLFields, Mode=TwoWay}"></TextBox>
             <Separator Grid.Row="2" Margin="0" Padding="0" BorderBrush="Black" Opacity="0.5"></Separator>
-            <TextBox BorderThickness="0" Padding="5,5" Grid.Row="3" AcceptsReturn="True" TextWrapping="Wrap" Background="#80FFFFFF" VerticalAlignment="Stretch" Text="{Binding UMLMethods, Mode=TwoWay}"></TextBox>
+            <TextBox Grid.Row="3" Style="{StaticResource UMLText}" Text="{Binding UMLMethods, Mode=TwoWay}"></TextBox>
         </Grid>
     </Border>
-
-    <!-- Contents of the Class Diagram 
-        <Expander Header="Fields" >            
-            <StackPanel Orientation="Vertical">
-                
-                <ListBox ItemsSource="{Binding UMLFields, Mode=TwoWay}" x:Name="UMLFields">
-                    <ListBox.ItemTemplate>
-                        <DataTemplate>
-                            <TextBox Text="{Binding ListValue, Mode=TwoWay }"/>
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
-                </ListBox> 
-                
-                <Button Content="Added new Field" Command="{Binding addFieldCommand}"/>
-                <Button Content="Delete Field" Command="{Binding removeFieldCommand}"  CommandParameter="{Binding ElementName=UMLFields, Path=SelectedItem}"/>
-            </StackPanel>
-
-        </Expander>
-        <Expander Header="Methods">
-            <StackPanel Orientation="Vertical">
-                <ListBox ItemsSource="{Binding UMLMethods, Mode=TwoWay}" x:Name="UMLMethods">
-                    <ListBox.ItemTemplate>
-                        <DataTemplate>
-                            <TextBox Text="{Binding ListValue, Mode=TwoWay}"/>
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
-                </ListBox>
-                <Button Content="Added new Method" Command="{Binding addMethodCommand}"/>
-                <Button Content="Delete Method" Command="{Binding removeMethodCommand}"  CommandParameter="{Binding ElementName=UMLMethods, Path=SelectedItem}"/>
-            </StackPanel>
-          
-        </Expander> -->
-
-
-
-
-    <!--  <StackPanel Background="{Binding ShapeColor}">
-        <Label Content="{Binding Name}" FontSize="12"></Label>
-        <TextBox AcceptsReturn="True" TextWrapping="Wrap" />
-    </StackPanel>-->
 </UserControl>
