@@ -12,23 +12,35 @@ namespace Scumle.UndeRedo
     public class ShapeAddCommand : UndoRedoCommand
     {
         private ObservableCollection<IShape> shapes;
-        private IShape shape;
+        private IList<IShape> add_shapes;
 
         public ShapeAddCommand(ObservableCollection<IShape> _shapes, IShape _shape)
         {
             shapes = _shapes;
-            shape = _shape;
+            add_shapes = new List<IShape>() { _shape };
+        }
+
+        public ShapeAddCommand(ObservableCollection<IShape> _shapes, IList<IShape> _add_shapes)
+        {
+            shapes = _shapes;
+            add_shapes = _shapes.ToList();
         }
 
         public override void Undo()
         {
-            shape.IsSelected = false;
-            shapes.Remove(shape);
+            foreach(IShape shape in add_shapes)
+            {
+                shapes.Remove(shape);
+                shape.IsSelected = false;
+            }
         }
 
         public override void Redo()
         {
-            shapes.Add(shape);
+            foreach (IShape shape in add_shapes)
+            {
+                shapes.Add(shape);
+            }
         }
     }
 }
