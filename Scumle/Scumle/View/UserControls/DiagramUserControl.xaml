@@ -18,6 +18,11 @@
     </UserControl.Resources>
     
     <ScrollViewer HorizontalScrollBarVisibility="Visible" Margin="0,0,0,0" Background="LightGray">
+        <ScrollViewer.Style>
+            <Style TargetType="ScrollViewer">
+                <EventSetter Event="PreviewMouseWheel" Handler="Zoom"></EventSetter>
+            </Style>
+        </ScrollViewer.Style>
         <!--
         <i:Interaction.Triggers>
             <i:EventTrigger EventName="PreviewMouseWheel">
@@ -31,7 +36,6 @@
             </Grid.LayoutTransform>
             <Grid.Style>
                 <Style TargetType="{x:Type Grid}">
-                    <EventSetter Event="PreviewMouseWheel" Handler="Zoom"></EventSetter>
                     <Setter Property="Cursor" Value="Arrow"></Setter>
                     <Style.Triggers>
                         <DataTrigger Binding="{Binding Tool}" Value="{x:Static Model:ETool.ShapeTool}">
