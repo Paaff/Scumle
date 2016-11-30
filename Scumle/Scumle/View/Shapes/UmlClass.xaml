@@ -12,17 +12,14 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <TextBox Text="{Binding Name, Mode=TwoWay}" FontSize="14" FontWeight="Bold" TextAlignment="Center"
                    HorizontalAlignment="Center"  VerticalAlignment="Stretch"  Padding="2,8" Background="Transparent" BorderThickness="0" Grid.Row="0"/>
-            <Border Grid.Row="1">
-                <TextBox AcceptsReturn="True" TextWrapping="Wrap" Background="#80FFFFFF" VerticalAlignment="Stretch" Margin="3,3" Text="{Binding UMLFields, Mode=TwoWay}"></TextBox>
-            </Border>
-
-            <Border Grid.Row="2">
-                <TextBox AcceptsReturn="True" TextWrapping="Wrap" Background="#80FFFFFF" VerticalAlignment="Stretch" Margin="3,0,3,3" Text="{Binding UMLMethods, Mode=TwoWay}"></TextBox>
-            </Border>
+            <TextBox BorderThickness="0" Padding="5,5" Grid.Row="1" AcceptsReturn="True" TextWrapping="Wrap" Background="#80FFFFFF" VerticalAlignment="Stretch" Text="{Binding UMLFields, Mode=TwoWay}"></TextBox>
+            <Separator Grid.Row="2" Margin="0" Padding="0" BorderBrush="Black" Opacity="0.5"></Separator>
+            <TextBox BorderThickness="0" Padding="5,5" Grid.Row="3" AcceptsReturn="True" TextWrapping="Wrap" Background="#80FFFFFF" VerticalAlignment="Stretch" Text="{Binding UMLMethods, Mode=TwoWay}"></TextBox>
         </Grid>
     </Border>
 
