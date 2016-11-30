@@ -15,10 +15,14 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <TextBox Text="{Binding Name, Mode=TwoWay}" FontSize="14" FontWeight="Bold" TextAlignment="Center"
-                   HorizontalAlignment="Center"  VerticalAlignment="Stretch"  Padding="2,2" Background="Transparent" BorderThickness="0" Grid.Row="0"/>
-            <TextBox AcceptsReturn="True" TextWrapping="Wrap" VerticalAlignment="Stretch" Grid.Row="1" Margin="3,3" Text="{Binding UMLFields, Mode=TwoWay}"></TextBox>
+                   HorizontalAlignment="Center"  VerticalAlignment="Stretch"  Padding="2,8" Background="Transparent" BorderThickness="0" Grid.Row="0"/>
+            <Border Grid.Row="1">
+                <TextBox AcceptsReturn="True" TextWrapping="Wrap" Background="#80FFFFFF" VerticalAlignment="Stretch" Margin="3,3" Text="{Binding UMLFields, Mode=TwoWay}"></TextBox>
+            </Border>
 
-            <TextBox AcceptsReturn="True" TextWrapping="Wrap" VerticalAlignment="Stretch" Grid.Row="2" Margin="3,0,3,3" Text="{Binding UMLMethods, Mode=TwoWay}"></TextBox>
+            <Border Grid.Row="2">
+                <TextBox AcceptsReturn="True" TextWrapping="Wrap" Background="#80FFFFFF" VerticalAlignment="Stretch" Margin="3,0,3,3" Text="{Binding UMLMethods, Mode=TwoWay}"></TextBox>
+            </Border>
         </Grid>
     </Border>
 
