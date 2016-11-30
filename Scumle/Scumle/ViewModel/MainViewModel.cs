@@ -311,7 +311,7 @@ namespace Scumle.ViewModel
                 CopiedShapes.Add(i);
                 
             }
-            DeselectAllShapes();
+            
             _memoryOfCopy = Helpers.GenericSerializer.SerializeToXMLInMemory(saving(CopiedShapes, CopiedLines));
             PasteCommand.RaiseCanExecuteChanged(); 
         }
@@ -322,6 +322,7 @@ namespace Scumle.ViewModel
         }
         private void Paste()
         {
+            DeselectAllShapes();
             List<ModelBase> copyMemoryShapes = Helpers.GenericSerializer.convertFromXMLInMemory(_memoryOfCopy);
             List<string> newIDList = new List<string>();          
                 foreach (var model in copyMemoryShapes)
