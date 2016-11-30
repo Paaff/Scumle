@@ -13,7 +13,7 @@
               Height="800"
               Width="1200"
               Icon="/Images/scumle.ico">
-    
+
 
     <Window.InputBindings >
         <KeyBinding Key="Delete" Command="{Binding DeleteSelectedShapesCommand}"></KeyBinding>
@@ -28,6 +28,12 @@
         <KeyBinding Gesture="CTRL+V" Command="{Binding PasteCommand}"/>
         <KeyBinding Gesture="Escape" Command="{Binding EscCommand}"/>
     </Window.InputBindings>
+
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Closing">
+            <gala:EventToCommand Command="{Binding WindowExitCommand}" PassEventArgsToCommand="True"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
 
     <Window.Resources>
         <ResourceDictionary>
