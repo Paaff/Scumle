@@ -738,9 +738,10 @@ namespace Scumle.ViewModel
             new ShapeColorCommand(Selected, new SolidColorBrush(SelectedColor)).Execute();
         }
 
-        //The image conversion code is inspired by http://stackoverflow.com/questions/4560173/save-wpf-view-as-image-preferably-png
-        public void ExportImage(Window grid)
+        public void ExportImage(Window window)
         {
+            FrameworkElement diagramUsercontrol = window.FindName("Print") as FrameworkElement;
+            Grid grid = diagramUsercontrol.FindName("Diagram") as Grid;
             Escape();
             SaveFileDialog save = new SaveFileDialog();
             save.DefaultExt = ".png";
@@ -748,20 +749,19 @@ namespace Scumle.ViewModel
             {
                 Size size = new Size(grid.ActualWidth, grid.ActualHeight);
                 RenderTargetBitmap img = new RenderTargetBitmap((int)size.Width, (int)size.Height, 96, 96, PixelFormats.Pbgra32);
-                DrawingVisual drawingvisual = new DrawingVisual();
-                using (DrawingContext context = drawingvisual.RenderOpen())
+                DrawingVisual visual = new DrawingVisual();
+                using (DrawingContext context = visual.RenderOpen())
                 {
                     context.DrawRectangle(new VisualBrush(grid), null, new Rect(new Point(), size));
                     context.Close();
                 }
-                img.Render(drawingvisual);
+                img.Render(visual);
 
-                var fileStream = File.Create(save.FileName);
+                FileStream fileStream = File.Create(save.FileName);
 
                 PngBitmapEncoder encoder = new PngBitmapEncoder();
                 encoder.Frames.Add(BitmapFrame.Create(img));
                 encoder.Save(fileStream);
-
                 fileStream.Close();
 
             }
