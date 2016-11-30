@@ -141,10 +141,10 @@ namespace Scumle.ViewModel
         public ICommand SaveAsWorkSpaceCommand => new RelayCommand(SaveAsWorkSpace);
         public ICommand SaveWorkSpaceCommand => new RelayCommand(SaveWorkSpace);
         public ICommand OpenWorkSpaceCommand => new RelayCommand(OpenWorkSpace);
-        public ICommand CopyCommand => new RelayCommand(Copy);
+        public RelayCommand CopyCommand { get; private set; }
         public ICommand CutCommand => new RelayCommand(Cut);
-        public ICommand PasteCommand => new RelayCommand(Paste);
-        public RelayCommand DeleteSelectedShapesCommand { get; set; }
+        public RelayCommand PasteCommand { get; private set; }
+        public RelayCommand DeleteSelectedShapesCommand { get; private set; }
         public ICommand NewWorkSpaceCommand => new RelayCommand(NewWorkSpace);
         public ICommand UndoCommand => UndoRedoController.Instance.UndoCommand;
         public ICommand RedoCommand => UndoRedoController.Instance.RedoCommand;
@@ -233,8 +233,9 @@ namespace Scumle.ViewModel
             Lines.Add(new LineViewModel(new Line(ELine.Inheritance, cp1, cp2)));
 
 
-
             DeleteSelectedShapesCommand = new RelayCommand(DeleteSelectedShapes, HasSelectedShapes);
+            CopyCommand = new RelayCommand(Copy, HasSelectedShapes);
+            PasteCommand = new RelayCommand(Paste, HasCopiedShapes);
         }
         #endregion
 
@@ -278,6 +279,12 @@ namespace Scumle.ViewModel
         #endregion
 
         #region copypaste
+
+        private bool HasCopiedShapes()
+        {
+            return CopiedShapes.Any();
+        }
+
         private void Copy()
         {
             CopiedShapes.Clear();
@@ -306,7 +313,7 @@ namespace Scumle.ViewModel
             }
             DeselectAllShapes();
             _memoryOfCopy = Helpers.GenericSerializer.SerializeToXMLInMemory(saving(CopiedShapes, CopiedLines));
-                 
+            PasteCommand.RaiseCanExecuteChanged(); 
         }
         private void Cut()
         {
@@ -381,12 +388,14 @@ namespace Scumle.ViewModel
                 Selected.Add(shape);
                 shape.IsSelected = true;
                 DeleteSelectedShapesCommand.RaiseCanExecuteChanged();
+                CopyCommand.RaiseCanExecuteChanged();
             }
             else
             {
                 Selected.Add(shape);
                 shape.IsSelected = true;
                 DeleteSelectedShapesCommand.RaiseCanExecuteChanged();
+                CopyCommand.RaiseCanExecuteChanged();
             }
         }
 
@@ -398,6 +407,7 @@ namespace Scumle.ViewModel
             }
             Selected.Clear();
             DeleteSelectedShapesCommand.RaiseCanExecuteChanged();
+            CopyCommand.RaiseCanExecuteChanged();
         }
         public bool HasSelectedShapes()
         {
@@ -549,18 +559,20 @@ namespace Scumle.ViewModel
 
         {           
 
-                SaveFileDialog save = new SaveFileDialog();
-                save.DefaultExt = ".scumle";
-                save.Filter = "(.scumle)|*.scumle";
+            SaveFileDialog save = new SaveFileDialog();
+            save.DefaultExt = ".scumle";
+            save.Filter = "(.scumle)|*.scumle";
                 
-                if (save.ShowDialog() == true)
-                {
-                    _currentFilePath = Path.GetFullPath(save.FileName);
-                    Helpers.GenericSerializer.convertToXML(saving(Shapes, Lines), _currentFilePath);
-                    UndoRedo.ChangeSinceSave = false;
+            if (save.ShowDialog() == true)
+            {
+                _currentFilePath = Path.GetFullPath(save.FileName);
+                Helpers.GenericSerializer.convertToXML(saving(Shapes, Lines), _currentFilePath);
+                UndoRedo.ChangeSinceSave = false;
 
-                }
-            
+            }
+
+            StatusText = "File: \"" + _currentFilePath + "\" Saved successfully";
+
         }
 
         public List<ModelBase> saving(ObservableCollection<IShape> shapesToSave, ObservableCollection<LineViewModel> linesToSave)
