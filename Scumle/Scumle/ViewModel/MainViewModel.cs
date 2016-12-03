@@ -213,26 +213,9 @@ namespace Scumle.ViewModel
         {
             SelectedColor = Color.FromRgb(205, 92, 92);
 
-            string UMLFields = "-First field : int\n-Second Field : String";
-            string UMLMethods = "+First method()\n+Second method()";
-            IShape uml1 = new UMLClassViewModel(new UMLClass(400, 400, 300, 200, "My Class 1", SelectedColor, CreateShapeID(), UMLFields, UMLMethods));
-            IShape uml2 = new UMLClassViewModel(new UMLClass(50, 50, 300, 200, "My Class 2", SelectedColor, CreateShapeID(), UMLFields, UMLMethods));
-
-            IShape shape1 = new BasicShapeViewModel(new BasicShape(EBasicShape.Ellipse, 400, 50, 50, 50, SelectedColor, CreateShapeID()));
-            IShape shape2 = new BasicShapeViewModel(new BasicShape(EBasicShape.Rectangle, 50, 400, 50, 50, SelectedColor, CreateShapeID()));
 
 
-            Shapes = new ObservableCollection<IShape>() { uml1, uml2, shape1, shape2 };
-
-
-
-
-
-            IPoint cp1 = uml1.ConnectionPoints.ElementAt(0);
-            IPoint cp2 = uml2.ConnectionPoints.ElementAt(3);
-
-            Lines.Add(new LineViewModel(new Line(ELine.Inheritance, cp1, cp2)));
-
+            Shapes = new ObservableCollection<IShape>();
 
             DeleteSelectedShapesCommand = new RelayCommand(DeleteSelectedShapes, HasSelectedShapes);
             CopyCommand = new RelayCommand(Copy, HasSelectedShapes);
