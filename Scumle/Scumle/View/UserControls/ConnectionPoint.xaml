@@ -8,7 +8,7 @@
       xmlns:gala="http://www.galasoft.ch/mvvmlight"
       xmlns:View="clr-namespace:Scumle.View"
       x:Class="Scumle.View.UserControls.ConnectionPoint"
-      xmlns:Model="clr-namespace:Scumle.Model"
+      xmlns:Model="clr-namespace:Scumle.Model;assembly=Scumle.Model"
       mc:Ignorable="d"
       d:DesignHeight="8" d:DesignWidth="8">
     <UserControl.Style>

@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace Scumle.Model
 {
-    enum ETool
+    public enum EHorizontal
     {
-        Default, ShapeTool, LineTool, MoveTool
+        Left, Center, Right
     }
 }

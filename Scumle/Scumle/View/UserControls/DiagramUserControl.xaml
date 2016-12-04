@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:Scumle.View.UserControls"
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:gala="http://www.galasoft.ch/mvvmlight"
-             xmlns:Model="clr-namespace:Scumle.Model"
+             xmlns:Model="clr-namespace:Scumle.Model;assembly=Scumle.Model"
              xmlns:Tools="clr-namespace:Scumle.Tools"
              mc:Ignorable="d" 
              d:DesignHeight="250" d:DesignWidth="450">

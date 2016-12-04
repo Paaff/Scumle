@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Scumle.Model
 {
-    class Scumle
+    public class Main
     {
     }
 }

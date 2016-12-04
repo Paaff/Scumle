@@ -12,7 +12,6 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -20,10 +19,11 @@ using System.Windows.Media.Imaging;
 using Scumle.ViewModel.Shapes;
 using Scumle.View.Preview;
 using System.Windows.Controls.Primitives;
+using System.Windows;
 
 namespace Scumle.ViewModel
 {
-    class MainViewModel : ViewModelBase<Model.Scumle>, INotifyPropertyChanged
+    class MainViewModel : ViewModelBase<Main>, INotifyPropertyChanged
     {
         #region Fields
         public static ETool _tool = ETool.Default;
@@ -209,7 +209,7 @@ namespace Scumle.ViewModel
         #endregion
 
         #region Constructor
-        public MainViewModel(Model.Scumle scumle) : base(scumle)
+        public MainViewModel(Main scumle) : base(scumle)
         {
             SelectedColor = Color.FromRgb(205, 92, 92);
 

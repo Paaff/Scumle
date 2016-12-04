@@ -5,7 +5,7 @@ using System.Xml.Serialization;
 namespace Scumle.Model
 {
     public class Line : ModelBase, ILine
-    {   
+    {  
  
         public Line(ELine type, IPoint from, IPoint to)
         {
@@ -14,10 +14,10 @@ namespace Scumle.Model
             Type = type;
 
             // For Serialization
-            storeTo = (to as ConnectionPointViewModel).Model as ConnectionPoint;
-            storeFrom = (from as ConnectionPointViewModel).Model as ConnectionPoint;
-
-                      
+            // TODO: You can't reference ConnectionPointViewModel because the model should
+            // not now anything about the view!
+            //storeTo = (to as ConnectionPointViewModel).Model as ConnectionPoint;
+            //storeFrom = (from as ConnectionPointViewModel).Model as ConnectionPoint; 
         }
 
         // For Serialization
