@@ -69,8 +69,6 @@ namespace Scumle.ViewModel
             OnPropertyChanged(nameof(CenterX));
             OnPropertyChanged(nameof(CenterY));
         }
-
-
       
     }
 }

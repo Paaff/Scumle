@@ -52,7 +52,36 @@ namespace Scumle.ViewModel
 
         public void UpdateProperties(object sender, EventArgs e)
         {
+            BindToClosestPoints();
             OnPropertyChanged(nameof(Angle));
+        }
+
+        private void BindToClosestPoints()
+        {
+            IPoint newFrom = From;
+            IPoint newTo = To;
+            double minDist = Double.MaxValue;
+            foreach (IPoint from in From.Shape.ConnectionPoints)
+            {
+                foreach (IPoint to in To.Shape.ConnectionPoints)
+                {
+                    double newDist = EuclidianDistanceNoSquareRoot(from, to);
+                    if (newDist < minDist)
+                    {
+                        minDist = newDist;
+                        newFrom = from;
+                        newTo = to;
+                    }
+                }
+            }
+
+            From = newFrom;
+            To = newTo;
+        }
+
+        private double EuclidianDistanceNoSquareRoot(IPoint from, IPoint to)
+        {
+            return Math.Pow(from.CenterX - to.CenterX, 2.0) + Math.Pow(from.CenterY - to.CenterY, 2.0);
         }
         #endregion
     }
