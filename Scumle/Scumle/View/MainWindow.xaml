@@ -46,12 +46,20 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
 
-    <DockPanel LastChildFill="True">
+        <local:Ribbon Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"/>
 
-        <local:Ribbon DockPanel.Dock="Top"/>
-
-        <Border  DockPanel.Dock="Bottom" BorderThickness="0,1,0,0" BorderBrush="Black">
+        <Border  DockPanel.Dock="Bottom" BorderThickness="0,1,0,0" BorderBrush="Black" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2">
             <Grid>
                 <TextBlock  VerticalAlignment="Center" HorizontalAlignment="Left" Margin="3,0,0,0" Text="{Binding StatusText, NotifyOnTargetUpdated=True}">
                     <TextBlock.Triggers>
@@ -72,9 +80,9 @@
                 <Label Content="{Binding Version}" Height="25" HorizontalAlignment="Right"></Label>
             </Grid>
         </Border>
-        <Control:SideMenuUserControl DockPanel.Dock="Left" Width="225"></Control:SideMenuUserControl>
+        <Control:SideMenuUserControl DockPanel.Dock="Left" Width="225" Grid.Row="1" Grid.Column="0"></Control:SideMenuUserControl>
 
-        <Control:DiagramUserControl x:Name="Print"></Control:DiagramUserControl>
-    </DockPanel>
+        <Control:DiagramUserControl x:Name="Print" Grid.Row="1" Grid.Column="1"></Control:DiagramUserControl>
+    </Grid>
 
 </RibbonWindow> 
