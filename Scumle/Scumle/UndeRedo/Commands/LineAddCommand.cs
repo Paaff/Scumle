@@ -30,7 +30,6 @@ namespace Scumle.UndeRedo.Commands
             foreach (ILine line in add_lines)
             {
                 lines.Remove(line);
-             
             }
         }
 
@@ -39,7 +38,7 @@ namespace Scumle.UndeRedo.Commands
             foreach (ILine line in add_lines)
             {
                 lines.Add(line);
-
+                (line as LineViewModel)?.UpdateProperties(this, EventArgs.Empty);
             }
         }
     }

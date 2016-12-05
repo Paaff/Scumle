@@ -56,6 +56,11 @@ namespace Scumle.ViewModel
             get { return Model.Vertical; }
         }
 
+        public string AttachedID
+        {
+            get { return Model.AttachedID; }
+        }
+
         public void PropertyChange()
         {
             OnPropertyChanged(nameof(CenterX));

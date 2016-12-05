@@ -45,6 +45,18 @@ namespace Scumle.ViewModel
             set { SetValue(value); }
         }
 
+        public string StoreToId
+        {
+            get { return Model.StoreToId; }
+            set { SetValue(value);}
+        }
+
+        public string StoreFromId
+        {
+            get { return Model.StoreFromId; }
+            set { SetValue(value);}
+        }
+
         public double Angle
         {
             get { return Model.Angle; }

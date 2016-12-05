@@ -16,5 +16,6 @@ namespace Scumle.Model
         double CenterY { get; }
         HorizontalAlignment Horizontal { get; } // TODO: This should not be neccesary
         VerticalAlignment Vertical { get; } // TODO: This should not be neccesary
+        string AttachedID { get; }
     }
 }

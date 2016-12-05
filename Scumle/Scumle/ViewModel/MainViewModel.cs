@@ -319,14 +319,14 @@ namespace Scumle.ViewModel
 
                         foreach (var line in copyMemoryShapes)
                         {
-                            if (line is Line && (line as Line).storeFrom.storeShape.ID == (model as Shape).ID)
+                            if (line is Line && (line as Line).StoreFromId == (model as Shape).ID)
                             {
-                                (line as Line).storeFrom.storeShape.ID = newID;
+                                (line as Line).StoreFromId = newID;
 
                             }
-                            if (line is Line && (line as Line).storeTo.storeShape.ID == (model as Shape).ID)
+                            if (line is Line && (line as Line).StoreToId == (model as Shape).ID)
                             {
-                                (line as Line).storeTo.storeShape.ID = newID;
+                                (line as Line).StoreToId = newID;
 
                             }
 
@@ -585,7 +585,7 @@ namespace Scumle.ViewModel
 
             foreach (var viewModel in linesToSave)
             {
-                var actualModel = (viewModel as LineViewModel).Model as Line;             
+                var actualModel = (viewModel as LineViewModel).Model as Line;
                 modelsToSave.Add(actualModel);
             }
             return modelsToSave;
@@ -649,8 +649,8 @@ namespace Scumle.ViewModel
                 {
 
                     var actualLine = loadedModel as Line;
-                    var from = actualLine.storeFrom;
-                    var to = actualLine.storeTo;
+                    string fromID = actualLine.StoreFromId;
+                    string toID = actualLine.StoreToId;
                     IPoint cpFrom = null;
                     IPoint cpTo = null;
 
@@ -658,20 +658,16 @@ namespace Scumle.ViewModel
                     {
                         var actualViewModel = viewModel as IShape;
 
-                        if (actualViewModel.ID == from.storeShape.ID)
+                        if (actualViewModel.ID == fromID)
                         {
-                            if (from.Horizontal == HorizontalAlignment.Center && from.Vertical == VerticalAlignment.Top) { cpFrom = actualViewModel.ConnectionPoints.ElementAt(0); }
-                            else if (from.Horizontal == HorizontalAlignment.Left && from.Vertical == VerticalAlignment.Center) { cpFrom = actualViewModel.ConnectionPoints.ElementAt(1); }
-                            else if (from.Horizontal == HorizontalAlignment.Right && from.Vertical == VerticalAlignment.Center) { cpFrom = actualViewModel.ConnectionPoints.ElementAt(2); }
-                            else if (from.Horizontal == HorizontalAlignment.Center && from.Vertical == VerticalAlignment.Bottom) { cpFrom = actualViewModel.ConnectionPoints.ElementAt(3); }
+
+                            cpFrom = actualViewModel.ConnectionPoints.ElementAt(0);
                         }
 
-                        if (actualViewModel.ID == to.storeShape.ID)
+                        if (actualViewModel.ID == toID)
                         {
-                            if (to.Horizontal == HorizontalAlignment.Center && to.Vertical == VerticalAlignment.Top) { cpTo = actualViewModel.ConnectionPoints.ElementAt(0); }
-                            else if (to.Horizontal == HorizontalAlignment.Left && to.Vertical == VerticalAlignment.Center) { cpTo = actualViewModel.ConnectionPoints.ElementAt(1); }
-                            else if (to.Horizontal == HorizontalAlignment.Right && to.Vertical == VerticalAlignment.Center) { cpTo = actualViewModel.ConnectionPoints.ElementAt(2); }
-                            else if (to.Horizontal == HorizontalAlignment.Center && to.Vertical == VerticalAlignment.Bottom) { cpTo = actualViewModel.ConnectionPoints.ElementAt(3); }
+
+                            cpTo = actualViewModel.ConnectionPoints.ElementAt(0);
 
                         }
                     }
@@ -694,7 +690,7 @@ namespace Scumle.ViewModel
 
         }
 
-        //TODO: Implement adding a new "window pane" instead of just deleting the one we have.
+   
         public void NewWorkSpace()
         {
 

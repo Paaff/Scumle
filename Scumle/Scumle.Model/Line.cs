@@ -12,10 +12,12 @@ namespace Scumle.Model
             From = from;
             To = to;
             Type = type;
-
+            StoreFromId = from.AttachedID;
+            StoreToId = to.AttachedID;
+          
             // For Serialization
             // TODO: You can't reference ConnectionPointViewModel because the model should
-            // not now anything about the view!
+            // not know anything about the view!
             //storeTo = (to as ConnectionPointViewModel).Model as ConnectionPoint;
             //storeFrom = (from as ConnectionPointViewModel).Model as ConnectionPoint; 
         }
@@ -27,11 +29,9 @@ namespace Scumle.Model
         [XmlIgnore]
         public IPoint To { get; set; }
         public ELine Type { get; set; }
-
-
         // For Serialization
-        public ConnectionPoint storeTo { get; set; }
-        public ConnectionPoint storeFrom { get; set; }
+        public string StoreToId { get; set; }
+        public string StoreFromId { get; set; }
 
         public double Angle
         {

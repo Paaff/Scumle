@@ -14,5 +14,7 @@ namespace Scumle.Model
         IPoint To { get; set; }
         ELine Type { get; set; }
         double Angle { get; }
+        string StoreToId { get; set; }
+        string StoreFromId { get; set; }
     }
 }

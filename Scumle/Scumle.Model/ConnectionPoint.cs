@@ -12,16 +12,18 @@ namespace Scumle.Model
         public ConnectionPoint(Shape _shape, HorizontalAlignment horizontal, VerticalAlignment vertical)
         {
             Shape = _shape;
+            AttachedID = Shape.ID;
             Horizontal = horizontal;
             Vertical = vertical;
             this.ShapeColor = new SolidColorBrush(Color.FromRgb(47, 79, 79));
-            storeShape = _shape;
-            
         }
         private Brush _shapeColor;
+        public string _attachedID;
 
         // For XML Serialization
         public ConnectionPoint() { }
+
+        public string AttachedID { get; set; }
 
         public HorizontalAlignment Horizontal { get; set; }
         public VerticalAlignment Vertical { get; set; }
@@ -35,9 +37,6 @@ namespace Scumle.Model
             get { return _shapeColor; }
             set { _shapeColor = value; }
         }
-
-        // For Serialization
-        public Shape storeShape { set; get; }
 
         public double CenterX
         {

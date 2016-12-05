@@ -26,10 +26,9 @@ namespace Scumle.Model
             Height = _Height;
             X = _X;
             Y = _Y;
-            InitializeConnectionPoints();
             ShapeColor = new SolidColorBrush(col);
-            ID = _ID;       
-
+            ID = _ID;
+            InitializeConnectionPoints();
 
         }
 
