@@ -9,6 +9,7 @@
               xmlns:Tools="clr-namespace:Scumle.Tools"
               xmlns:View="clr-namespace:Scumle.View"
               xmlns:Preview="clr-namespace:Scumle.View.Preview"
+              xmlns:Drag="clr-namespace:Scumle.View.UserControls"
               Title="Scumle UML Editor"
               Height="1000"
               Width="1700"
@@ -56,6 +57,29 @@
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
+
+        <i:Interaction.Triggers>
+            <i:EventTrigger EventName="PreviewMouseMove">
+                <gala:EventToCommand Command="{Binding MouseMoveDragCommand}" PassEventArgsToCommand="True"/>
+            </i:EventTrigger>
+        </i:Interaction.Triggers>
+
+        <Canvas Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Grid.RowSpan="3" Panel.ZIndex="100" IsHitTestVisible="False">
+            <ContentControl Content="{Binding DragElement}" Canvas.Left="{Binding DragElement.X}" Canvas.Top="{Binding DragElement.Y}">
+                <ContentControl.ContentTemplate>
+                <DataTemplate>
+                    <Drag:ShapeUserControl></Drag:ShapeUserControl>
+                </DataTemplate>
+                </ContentControl.ContentTemplate>
+            </ContentControl>
+            <i:Interaction.Triggers>
+                <!--
+                <i:EventTrigger EventName="PreviewMouseWheel">
+                    <gala:EventToCommand Command="{Binding ZoomCommand}" PassEventArgsToCommand="True"></gala:EventToCommand>
+                </i:EventTrigger>
+                -->
+            </i:Interaction.Triggers>
+        </Canvas>
 
         <local:Ribbon Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"/>
 

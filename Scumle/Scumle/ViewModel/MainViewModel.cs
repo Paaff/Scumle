@@ -47,11 +47,18 @@ namespace Scumle.ViewModel
         private double _loadingOffSet = 5;
         private static Color _selectedColor;
         private System.Drawing.Point OldMousePos;
+        private IShape _dragElement;
 
         public UndoRedoController UndoRedo = UndoRedoController.Instance;
         #endregion
 
         #region Properties
+        public IShape DragElement
+        {
+            get { return _dragElement; }
+            set { _dragElement = value; OnPropertyChanged(); }
+        }
+
         public int SelectedConnector { get; set; }
         public int SelectedFigure { get; set; }
         public string StatusText
@@ -152,6 +159,7 @@ namespace Scumle.ViewModel
         public ICommand MouseDownGridCommand => new RelayCommand<MouseButtonEventArgs>(GridMouseDown);
         public ICommand MouseMoveGridCommand => new RelayCommand<MouseEventArgs>(GridMouseMove);
         public ICommand MouseUpGridCommand => new RelayCommand<MouseButtonEventArgs>(GridMouseUp);
+        public ICommand MouseMoveDragCommand => new RelayCommand<MouseEventArgs>(DragMouseMove);
         public ICommand EscCommand => new RelayCommand(Escape);
         public ICommand SelectAllCommand => new RelayCommand(SelectAll);
         public ICommand ColorSelectedCommand => new RelayCommand(ColorSelected);
@@ -405,6 +413,15 @@ namespace Scumle.ViewModel
         #endregion
 
         #region GridMouseEventHandling
+        private void DragMouseMove(MouseEventArgs e)
+        {
+            if (Tool == ETool.ShapeTool) {
+                Point dragPoint = e.MouseDevice.GetPosition(e.Source as IInputElement);
+                DragElement.X = dragPoint.X;
+                DragElement.Y = dragPoint.Y;
+                e.MouseDevice.Target.CaptureMouse();
+            }
+        }
         public void GridMouseDown(MouseButtonEventArgs e)
         {
             if (Tool == ETool.Default)
@@ -417,7 +434,16 @@ namespace Scumle.ViewModel
 
             if (Tool == ETool.ShapeTool)
             {
-                AddShape(e);
+                Point InsertionPoint = e.MouseDevice.GetPosition(e.Source as IInputElement);
+                IShape shape = CreateSelectedShape();
+                shape.X = InsertionPoint.X+50;
+                shape.Y = InsertionPoint.Y+50;
+                DragElement = null;
+                new ShapeAddCommand(Shapes, shape).Execute();
+                Tool = ETool.Default;
+                e.MouseDevice.Target.ReleaseMouseCapture();
+
+
             }
         }
         public void GridMouseMove(MouseEventArgs e)
@@ -470,32 +496,31 @@ namespace Scumle.ViewModel
         public void SetShapeInsertion()
         {
             Tool = ETool.ShapeTool;
+            DragElement = CreateSelectedShape();
+            System.Console.WriteLine(DragElement.GetType());
         }
 
-        public void AddShape(MouseButtonEventArgs e)
+        public IShape CreateSelectedShape()
         {
             string UMLFields = "-First field : int\n-Second Field : String";
             string UMLMethods = "+First method()\n+Second method()";
-            Point p = e.MouseDevice.GetPosition(e.Source as IInputElement);
             IShape shape = null;
             switch (SelectedFigure)
             {
                 case 0:
-                    shape = new BasicShapeViewModel(new BasicShape(EBasicShape.Ellipse, p.X, p.Y, 50, 50, SelectedColor, CreateShapeID()));
+                    shape = new BasicShapeViewModel(new BasicShape(EBasicShape.Ellipse, 0, 0, 50, 50, SelectedColor, CreateShapeID()));
                     break;
                 case 1:
-                    shape = new UMLClassViewModel(new UMLClass(p.X, p.Y, 300, 200, "New Shape", SelectedColor, CreateShapeID(), UMLFields, UMLMethods));
+                    shape = new UMLClassViewModel(new UMLClass(0, 0, 300, 200, "New Shape", SelectedColor, CreateShapeID(), UMLFields, UMLMethods));
                     break;
                 case 2:
-                    shape = new BasicShapeViewModel(new BasicShape(EBasicShape.Rectangle, p.X, p.Y, 50, 50, SelectedColor, CreateShapeID()));
+                    shape = new BasicShapeViewModel(new BasicShape(EBasicShape.Rectangle, 0, 0, 50, 50, SelectedColor, CreateShapeID()));
                     break;
                 default:
                     Console.WriteLine("Figure selection error");
                     break;
             }
-            if (shape != null)
-                new ShapeAddCommand(Shapes, shape).Execute();
-            Tool = ETool.Default;
+            return shape;
         }
         #endregion
 

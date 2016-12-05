@@ -38,11 +38,13 @@
                 <Style TargetType="{x:Type Grid}">
                     <Setter Property="Cursor" Value="Arrow"></Setter>
                     <Style.Triggers>
+                        <!--
                         <DataTrigger Binding="{Binding Tool}" Value="{x:Static Model:ETool.ShapeTool}">
                             <Setter Property="Cursor" Value="Cross"></Setter>
                         </DataTrigger>
+                        -->
                         <DataTrigger Binding="{Binding Tool}" Value="{x:Static Model:ETool.LineTool}">
-                            <Setter Property="Cursor" Value="Pen"></Setter>
+                            <Setter Property="Cursor" Value="Cross"></Setter>
                         </DataTrigger>
                     </Style.Triggers>
                 </Style>
