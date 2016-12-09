@@ -419,7 +419,7 @@ namespace Scumle.ViewModel
                 Point dragPoint = e.MouseDevice.GetPosition(e.Source as IInputElement);
                 DragElement.X = dragPoint.X;
                 DragElement.Y = dragPoint.Y;
-                e.MouseDevice.Target.CaptureMouse();
+                e.MouseDevice.Target.();
             }
         }
         public void GridMouseDown(MouseButtonEventArgs e)
@@ -436,8 +436,8 @@ namespace Scumle.ViewModel
             {
                 Point InsertionPoint = e.MouseDevice.GetPosition(e.Source as IInputElement);
                 IShape shape = CreateSelectedShape();
-                shape.X = InsertionPoint.X+50;
-                shape.Y = InsertionPoint.Y+50;
+                shape.X = InsertionPoint.X+100;
+                shape.Y = InsertionPoint.Y+100;
                 DragElement = null;
                 new ShapeAddCommand(Shapes, shape).Execute();
                 Tool = ETool.Default;
