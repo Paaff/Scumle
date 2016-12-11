@@ -73,11 +73,9 @@ namespace Scumle.Helpers
 
 
 
-        }
+        }        
 
-
-              
-        // Method to serialize XML in memory
+       // Method to serialize XML in memory
         public static string SerializeToXMLInMemory(List<ModelBase> objectToSave)
         {
            XmlSerializer serializer = new XmlSerializer(typeof(List<ModelBase>));
