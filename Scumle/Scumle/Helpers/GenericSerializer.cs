@@ -14,8 +14,7 @@ namespace Scumle.Helpers
 
     
     public static class GenericSerializer
-    {
-        // OBS: Heavy inspired by http://www.c-sharpcorner.com/UploadFile/manishkdwivedi/save-a-observablecollection-to-application-storage-in-window/ 
+    { 
         #region Methods
         // Method to take an object and serialize to XML
         public static void convertToXML<T>(T objectToSave, string path) where T : new()
@@ -77,10 +76,7 @@ namespace Scumle.Helpers
         }
 
 
-
-
-
-        // Below methods heavely inspired by http://www.java2s.com/Code/CSharp/File-Stream/UsingMemoryStreamtoSerializeandDesirialize.htm
+              
         // Method to serialize XML in memory
         public static string SerializeToXMLInMemory(List<ModelBase> objectToSave)
         {

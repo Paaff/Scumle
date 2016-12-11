@@ -20,6 +20,7 @@ using Scumle.ViewModel.Shapes;
 using Scumle.View.Preview;
 using System.Windows.Controls.Primitives;
 using System.Windows;
+using Scumle.Helpers;
 
 namespace Scumle.ViewModel
 {
@@ -47,8 +48,8 @@ namespace Scumle.ViewModel
         private double _loadingOffSet = 5;
         private static Color _selectedColor;
         private System.Drawing.Point OldMousePos;
-
         public UndoRedoController UndoRedo = UndoRedoController.Instance;
+       
         #endregion
 
         #region Properties
@@ -295,9 +296,8 @@ namespace Scumle.ViewModel
                              
                 CopiedShapes.Add(i);
                 
-            }
-            
-            _memoryOfCopy = Helpers.GenericSerializer.SerializeToXMLInMemory(saving(CopiedShapes, CopiedLines));
+            }          
+            _memoryOfCopy = GenericSerializer.SerializeToXMLInMemory(saving(CopiedShapes, CopiedLines));
             PasteCommand.RaiseCanExecuteChanged(); 
         }
         private void Cut()
@@ -309,35 +309,36 @@ namespace Scumle.ViewModel
         {
             DeselectAllShapes();
             List<ModelBase> copyMemoryShapes = Helpers.GenericSerializer.convertFromXMLInMemory(_memoryOfCopy);
-            List<string> newIDList = new List<string>();          
-                foreach (var model in copyMemoryShapes)
+            List<string> newIDList = new List<string>();
+            foreach (var model in copyMemoryShapes)
+            {
+
+                if (model is Shape)
                 {
+                    string newID = CreateShapeID();
 
-                    if (model is Shape)
+                    foreach (var line in copyMemoryShapes)
                     {
-                        string newID = CreateShapeID();
-
-                        foreach (var line in copyMemoryShapes)
+                        if (line is Line && (line as Line).StoreFromId == (model as Shape).ID)
                         {
-                            if (line is Line && (line as Line).StoreFromId == (model as Shape).ID)
-                            {
-                                (line as Line).StoreFromId = newID;
+                            (line as Line).StoreFromId = newID;
 
-                            }
-                            if (line is Line && (line as Line).StoreToId == (model as Shape).ID)
-                            {
-                                (line as Line).StoreToId = newID;
-
-                            }
-
+                        }
+                        if (line is Line && (line as Line).StoreToId == (model as Shape).ID)
+                        {
+                            (line as Line).StoreToId = newID;
 
                         }
 
-                           (model as Shape).ID = newID;
-                        newIDList.Add(newID);
+
                     }
+
+                       (model as Shape).ID = newID;
+                    newIDList.Add(newID);
                 }
-                if (copyMemoryShapes != null) { loading(copyMemoryShapes); }
+            }
+            if (copyMemoryShapes != null)
+            { loading(copyMemoryShapes); }
 
 
                 foreach (IShape shape in Shapes)
@@ -345,9 +346,105 @@ namespace Scumle.ViewModel
                     if (newIDList.Contains(shape.ID)) { SelectShape(shape, false); }
                 }
 
-            
-            
+
+
         }
+
+        private void loading(List<ModelBase> loadedModelsList)
+        {
+            IList<ILine> linesAdd = new List<ILine>();
+            IList<IShape> shapesAdd = new List<IShape>();
+            foreach (var loadedModel in loadedModelsList)
+            {
+
+                if (loadedModel is UMLClass)
+                {
+                    var actualUMLClass = loadedModel as UMLClass;
+                    var storedColor = Color.FromRgb(actualUMLClass.ColorR, actualUMLClass.ColorG, actualUMLClass.ColorB);
+
+                    IShape actualViewModel = new UMLClassViewModel(new UMLClass(actualUMLClass.X + _loadingOffSet, actualUMLClass.Y + _loadingOffSet, actualUMLClass.Width, actualUMLClass.Height,
+                                                                           actualUMLClass.Name, storedColor, actualUMLClass.ID, actualUMLClass.UMLFields, actualUMLClass.UMLMethods));
+
+                    shapesAdd.Add(actualViewModel);
+                }
+                else if (loadedModel is BasicShape)
+                {
+                    var actualBasicShape = loadedModel as BasicShape;
+                    var storedColor = Color.FromRgb(actualBasicShape.ColorR, actualBasicShape.ColorG, actualBasicShape.ColorB);
+
+
+                    IShape actualViewModel = new BasicShapeViewModel(new BasicShape(actualBasicShape.Type, actualBasicShape.X + _loadingOffSet, actualBasicShape.Y + _loadingOffSet,
+                                                                           actualBasicShape.Width, actualBasicShape.Height, storedColor, actualBasicShape.ID));
+                    shapesAdd.Add(actualViewModel);
+
+                }
+                else if (loadedModel is Line)
+                {
+
+                    var actualLine = loadedModel as Line;
+                    string fromID = actualLine.StoreFromId;
+                    string toID = actualLine.StoreToId;
+                    IPoint cpFrom = null;
+                    IPoint cpTo = null;
+
+                    foreach (var viewModel in shapesAdd)
+                    {
+                        var actualViewModel = viewModel as IShape;
+
+                        if (actualViewModel.ID == fromID)
+                        {
+
+                            cpFrom = actualViewModel.ConnectionPoints.ElementAt(0);
+                        }
+
+                        if (actualViewModel.ID == toID)
+                        {
+
+                            cpTo = actualViewModel.ConnectionPoints.ElementAt(0);
+
+                        }
+                    }
+
+                    if (cpFrom != null || cpTo != null) { linesAdd.Add(new LineViewModel(new Line(actualLine.Type, cpFrom, cpTo))); }
+
+                }
+
+            }
+
+            new MultiUndoRedoCommand(new List<UndoRedoCommand>() {
+                new ShapeAddCommand(Shapes, shapesAdd),
+                new LineAddCommand(Lines, linesAdd)
+            }).Execute();
+        }
+
+        public List<ModelBase> saving(ObservableCollection<IShape> shapesToSave, ObservableCollection<ILine> linesToSave)
+        {
+            // List containing all models to be saved.
+            List<ModelBase> modelsToSave = new List<ModelBase>();
+
+            foreach (var ViewModel in shapesToSave)
+            {
+                if (ViewModel is UMLClassViewModel)
+                {
+                    var actualViewModel = ViewModel as UMLClassViewModel;
+                    modelsToSave.Add(actualViewModel.Shape);
+                }
+                else if (ViewModel is BasicShapeViewModel)
+                {
+                    var actualViewModel = ViewModel as BasicShapeViewModel;
+                    modelsToSave.Add(actualViewModel.Shape);
+                }
+            }
+
+            foreach (var viewModel in linesToSave)
+            {
+                var actualModel = (viewModel as LineViewModel).Model as Line;
+                modelsToSave.Add(actualModel);
+            }
+            return modelsToSave;
+
+        }
+
         #endregion
 
         #region selection
@@ -531,8 +628,8 @@ namespace Scumle.ViewModel
             if (_currentFilePath != null)
             {
 
-                Helpers.GenericSerializer.convertToXML(saving(Shapes, Lines), _currentFilePath);
-
+                SaveThread saveThread = new SaveThread(Shapes, Lines, _currentFilePath);
+                saveThread.Start();       
                 UndoRedo.ChangeSinceSave=false;
 
                 StatusText = "File: \"" + _currentFilePath + "\" Saved successfully";
@@ -555,41 +652,14 @@ namespace Scumle.ViewModel
             if (save.ShowDialog() == true)
             {
                 _currentFilePath = Path.GetFullPath(save.FileName);
-                Helpers.GenericSerializer.convertToXML(saving(Shapes, Lines), _currentFilePath);
+                SaveThread saveThread = new SaveThread(Shapes, Lines, _currentFilePath);
+                saveThread.Start();
                 UndoRedo.ChangeSinceSave = false;
 
             }
 
             StatusText = "File: \"" + _currentFilePath + "\" Saved successfully";
 
-        }
-
-        public List<ModelBase> saving(ObservableCollection<IShape> shapesToSave, ObservableCollection<ILine> linesToSave)
-        {
-            // List containing all models to be saved.
-            List<ModelBase> modelsToSave = new List<ModelBase>();
-
-            foreach (var ViewModel in shapesToSave)
-            {
-                if (ViewModel is UMLClassViewModel)
-                {
-                    var actualViewModel = ViewModel as UMLClassViewModel;
-                    modelsToSave.Add(actualViewModel.Shape);
-                }
-                else if (ViewModel is BasicShapeViewModel)
-                {
-                    var actualViewModel = ViewModel as BasicShapeViewModel;
-                    modelsToSave.Add(actualViewModel.Shape);             
-                }
-            }
-
-            foreach (var viewModel in linesToSave)
-            {
-                var actualModel = (viewModel as LineViewModel).Model as Line;
-                modelsToSave.Add(actualModel);
-            }
-            return modelsToSave;
-         
         }
 
         public void OpenWorkSpace()
@@ -607,84 +677,17 @@ namespace Scumle.ViewModel
                 // Process open file dialog box results
                 if (result == true)
                 {
-                    loadedModelsList = Helpers.GenericSerializer.convertFromXML<List<ModelBase>>(Path.GetFullPath(open.FileName));
+                    LoadThread loadThread = new LoadThread(Shapes, Lines, Path.GetFullPath(open.FileName));
+                    loadThread.Start();
                     Shapes.Clear();
                     Lines.Clear();
                     UndoRedo.clear();
                     UndoRedo.ChangeSinceSave = false;
-                    _currentFilePath = Path.GetFullPath(open.FileName);
-
-                    loading(loadedModelsList);               
+                    _currentFilePath = Path.GetFullPath(open.FileName);             
                 }
             }
         }
-
-        private void loading(List<ModelBase> loadedModelsList)
-        {
-            IList<ILine> linesAdd = new List<ILine>();
-            IList<IShape> shapesAdd = new List<IShape>();
-            foreach (var loadedModel in loadedModelsList)
-            {
-               
-                if (loadedModel is UMLClass)
-                {
-                    var actualUMLClass = loadedModel as UMLClass;
-                       var storedColor = Color.FromRgb(actualUMLClass.ColorR, actualUMLClass.ColorG, actualUMLClass.ColorB);    
-                      
-                        IShape actualViewModel = new UMLClassViewModel(new UMLClass(actualUMLClass.X + _loadingOffSet, actualUMLClass.Y + _loadingOffSet, actualUMLClass.Width, actualUMLClass.Height,
-                                                                               actualUMLClass.Name, storedColor, actualUMLClass.ID, actualUMLClass.UMLFields, actualUMLClass.UMLMethods));
-
-                    shapesAdd.Add(actualViewModel);
-              }
-                else if (loadedModel is BasicShape)
-                {
-                    var actualBasicShape = loadedModel as BasicShape;
-                  var storedColor = Color.FromRgb(actualBasicShape.ColorR, actualBasicShape.ColorG, actualBasicShape.ColorB);
-                  
-
-                    IShape actualViewModel = new BasicShapeViewModel(new BasicShape(actualBasicShape.Type, actualBasicShape.X + _loadingOffSet, actualBasicShape.Y + _loadingOffSet,
-                                                                           actualBasicShape.Width, actualBasicShape.Height, storedColor, actualBasicShape.ID));
-                        shapesAdd.Add(actualViewModel);
-
-                }
-                else if (loadedModel is Line)
-                {
-
-                    var actualLine = loadedModel as Line;
-                    string fromID = actualLine.StoreFromId;
-                    string toID = actualLine.StoreToId;
-                    IPoint cpFrom = null;
-                    IPoint cpTo = null;
-
-                    foreach (var viewModel in shapesAdd)
-                    {
-                        var actualViewModel = viewModel as IShape;
-
-                        if (actualViewModel.ID == fromID)
-                        {
-
-                            cpFrom = actualViewModel.ConnectionPoints.ElementAt(0);
-                        }
-
-                        if (actualViewModel.ID == toID)
-                        {
-
-                            cpTo = actualViewModel.ConnectionPoints.ElementAt(0);
-
-                        }
-                    }
-
-                    if (cpFrom != null || cpTo != null) { linesAdd.Add(new LineViewModel(new Line(actualLine.Type, cpFrom, cpTo))); }
-                  
-                }
-                
-            }
-
-            new MultiUndoRedoCommand(new List<UndoRedoCommand>() {
-                new ShapeAddCommand(Shapes, shapesAdd),
-                new LineAddCommand(Lines, linesAdd)
-            }).Execute();
-        }
+    
 
         public string CreateShapeID()
         {

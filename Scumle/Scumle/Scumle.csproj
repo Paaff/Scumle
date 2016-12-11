@@ -105,7 +105,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Helpers\BaseThread.cs" />
     <Compile Include="Helpers\GenericSerializer.cs" />
+    <Compile Include="Helpers\LoadThread.cs" />
+    <Compile Include="Helpers\SaveThread.cs" />
     <Compile Include="Tools\DictionaryTemplateSelector.cs" />
     <Compile Include="Tools\LineTemplateSelector.cs" />
     <Compile Include="Tools\BasicShapeTemplateSelector.cs" />
