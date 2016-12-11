@@ -10,6 +10,9 @@ using System.Windows.Media;
 
 namespace Scumle.UndeRedo.Commands
 {
+    /// <summary>
+    /// Change the color of shapes
+    /// </summary>
     class ShapeColorCommand : UndoRedoCommand
     {
         List<IShape> shapes;

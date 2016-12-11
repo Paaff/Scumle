@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 
 namespace Scumle.UndeRedo.Commands
 {
+    /// <summary>
+    /// Add one or more lines to the diagram
+    /// </summary>
     class LineAddCommand : UndoRedoCommand
     {
         ObservableCollection<ILine> lines;

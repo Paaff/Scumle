@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 
 namespace Scumle.UndeRedo.Commands
 {
+    /// <summary>
+    /// Remove one or more shapes in the collection
+    /// </summary>
     class ShapeRemoveCommand : UndoRedoCommand
     {
         Collection<IShape> shapes;

@@ -152,9 +152,6 @@
     <Compile Include="View\UserControls\DiagramUserControl.xaml.cs">
       <DependentUpon>DiagramUserControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\UserControls\LineUserControl.xaml.cs">
-      <DependentUpon>LineUserControl.xaml</DependentUpon>
-    </Compile>
     <Compile Include="View\UserControls\ResizeThumb.xaml.cs">
       <DependentUpon>ResizeThumb.xaml</DependentUpon>
     </Compile>
@@ -209,10 +206,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\UserControls\DiagramUserControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\UserControls\LineUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

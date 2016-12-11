@@ -12,6 +12,9 @@ using System.Windows;
 
 namespace Scumle.Helpers
 {
+    /// <summary>
+    /// Thread that saves the diagram to a file in a new thread
+    /// </summary>
     class SaveThread : BaseThread
     {
         private ObservableCollection<ILine> lines;

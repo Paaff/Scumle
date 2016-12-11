@@ -12,7 +12,7 @@ namespace Scumle.Tools
     public abstract class DictionaryTemplateSelector<TModel,TProperty> : DataTemplateSelector where TModel : class
     {
         /// <summary>
-        /// The dictionary strictly below may be populated with line types and
+        /// The dictionary strictly below may be populated with types of TProperty and
         /// data template names. These will then be looked up dynamically at runtime.
         /// Make sure that each template names exists in LinesDictionary.xaml
         /// </summary>

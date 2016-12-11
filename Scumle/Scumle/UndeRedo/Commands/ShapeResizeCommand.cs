@@ -9,6 +9,9 @@ using System.Windows;
 
 namespace Scumle.UndeRedo.Commands
 {
+    /// <summary>
+    /// Resize a single shape
+    /// </summary>
     public class ShapeResizeCommand : UndoRedoCommand
     {
         IShape shape;

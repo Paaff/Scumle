@@ -23,13 +23,7 @@
                 <EventSetter Event="PreviewMouseWheel" Handler="Zoom"></EventSetter>
             </Style>
         </ScrollViewer.Style>
-        <!--
-        <i:Interaction.Triggers>
-            <i:EventTrigger EventName="PreviewMouseWheel">
-                <gala:EventToCommand Command="{Binding ZoomCommand}" PassEventArgsToCommand="True"></gala:EventToCommand>
-            </i:EventTrigger>
-        </i:Interaction.Triggers>
-        -->
+
         <Grid x:Name="Diagram" Background="White" Width="1685" Height="867">
             <Grid.LayoutTransform>
                 <ScaleTransform ScaleX="{Binding Zoom}" ScaleY="{Binding Zoom}"></ScaleTransform>
@@ -49,11 +43,6 @@
             </Grid.Style>
 
             <i:Interaction.Triggers>
-                <!--
-                <i:EventTrigger EventName="PreviewMouseWheel">
-                    <gala:EventToCommand Command="{Binding ZoomCommand}" PassEventArgsToCommand="True"></gala:EventToCommand>
-                </i:EventTrigger>
-                -->
                 <i:EventTrigger EventName="MouseLeftButtonDown">
                     <gala:EventToCommand Command="{Binding MouseDownGridCommand}" PassEventArgsToCommand="True"/>
                 </i:EventTrigger>
@@ -86,21 +75,6 @@
 
             <!-- Lines -->
             <ItemsControl ItemsSource="{Binding Lines}" ItemTemplateSelector="{StaticResource LineTemplateSelector}"></ItemsControl>
-            <!--Not needed ask mathias opinion
-                <ItemsControl.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <Canvas/>
-                    </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>
-                <ItemsControl.ItemContainerStyle>
-                    <Style TargetType="ContentPresenter">
-                        <EventSetter Event="PreviewMouseLeftButtonUp" Handler="SelectShape"></EventSetter>
-                        <Setter Property="Canvas.Left" Value="{Binding CenterX}"/>
-                        <Setter Property="Canvas.Top" Value="{Binding CenterY}"/>
-                    </Style>
-                </ItemsControl.ItemContainerStyle>
-            </ItemsControl>
-            -->
 
             <!-- Selection and temp line -->
             <Canvas x:Name='Canvas' IsHitTestVisible="False">

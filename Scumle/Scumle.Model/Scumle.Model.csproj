@@ -47,10 +47,8 @@
   <ItemGroup>
     <Compile Include="ConnectionPoint.cs" />
     <Compile Include="EBasicShape.cs" />
-    <Compile Include="EHorizontal.cs" />
     <Compile Include="ELine.cs" />
     <Compile Include="ETool.cs" />
-    <Compile Include="EVertical.cs" />
     <Compile Include="ILine.cs" />
     <Compile Include="IPoint.cs" />
     <Compile Include="IShape.cs" />

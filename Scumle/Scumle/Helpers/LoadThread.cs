@@ -13,6 +13,9 @@ using System.Windows;
 
 namespace Scumle.Helpers
 {
+    /// <summary>
+    /// Thread that loads saved files from XML in a new thread
+    /// </summary>
     class LoadThread : BaseThread
     {
         private ObservableCollection<ILine> lines;

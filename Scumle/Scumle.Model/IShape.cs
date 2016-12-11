@@ -9,6 +9,9 @@ using System.Windows.Media;
 
 namespace Scumle.ViewModel
 {
+    /// <summary>
+    /// Interface for implementing any kind of shape in the diagram
+    /// </summary>
     public interface IShape
     {
         double X { get; set; }

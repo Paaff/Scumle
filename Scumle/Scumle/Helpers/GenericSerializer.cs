@@ -11,8 +11,9 @@ using System.Xml.Serialization;
 
 namespace Scumle.Helpers
 {
-
-    
+    /// <summary>
+    /// General serializer to serialize from and to XML for saving and loading
+    /// </summary>
     public static class GenericSerializer
     { 
         #region Methods

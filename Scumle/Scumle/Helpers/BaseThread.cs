@@ -7,6 +7,10 @@ using System.Threading.Tasks;
 
 namespace Scumle.Helpers
 {
+    /// <summary>
+    /// Abstract class to model the notion of a thread. Inherit this class
+    /// and implement the RunThread() method for a concrete implementation
+    /// </summary>
     abstract class BaseThread
     {
         private Thread _thread;

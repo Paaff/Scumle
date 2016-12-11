@@ -7,6 +7,10 @@ using System.Threading.Tasks;
 
 namespace Scumle.UndeRedo
 {
+    /// <summary>
+    /// The controller uses the singleton pattern. The single instance can be found in
+    /// the static field names "Instance". Two stacks contains redo and undo commands.
+    /// </summary>
     public class UndoRedoController
     {
         public static UndoRedoController Instance { get; } = new UndoRedoController();

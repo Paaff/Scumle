@@ -6,6 +6,12 @@ using System.Threading.Tasks;
 
 namespace Scumle.UndeRedo
 {
+    /// <summary>
+    /// Abstract class. Inherit this class and implement the Undo() and Redo()
+    /// methods for a concrete implementation. The Execute() method can be called to
+    /// add the command to the controller and execute the command immediately. Otherwise
+    /// the add command can be called to only add the command the to controller.
+    /// </summary>
     public abstract class UndoRedoCommand
     {
         public abstract void Undo();

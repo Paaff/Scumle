@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 
 namespace Scumle.UndeRedo
 {
+    /// <summary>
+    /// Add one or multiple shapes to the diagram
+    /// </summary>
     public class ShapeAddCommand : UndoRedoCommand
     {
         private ObservableCollection<IShape> shapes;

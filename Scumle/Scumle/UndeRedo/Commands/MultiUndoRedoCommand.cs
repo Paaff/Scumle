@@ -6,6 +6,10 @@ using System.Threading.Tasks;
 
 namespace Scumle.UndeRedo.Commands
 {
+    /// <summary>
+    /// Concatinate multiple undo/redo command that can be undone and redone as
+    /// a single instance
+    /// </summary>
     class MultiUndoRedoCommand : UndoRedoCommand
     {
         IList<UndoRedoCommand> commands;

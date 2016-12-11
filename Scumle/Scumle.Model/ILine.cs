@@ -8,6 +8,9 @@ using System.Windows;
 
 namespace Scumle.Model
 {
+    /// <summary>
+    /// Interface for implementing any sort of line in the editor
+    /// </summary>
     public interface ILine
     {
         IPoint From { get; set; }

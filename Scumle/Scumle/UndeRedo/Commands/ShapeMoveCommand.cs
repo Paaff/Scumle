@@ -9,6 +9,9 @@ using System.Windows;
 
 namespace Scumle.UndeRedo.Commands
 {
+    /// <summary>
+    /// Move one or more shapes on the diagram
+    /// </summary>
     class ShapeMoveCommand : UndoRedoCommand
     {
         IList<IShape> shapes;
