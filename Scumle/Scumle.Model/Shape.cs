@@ -17,8 +17,8 @@ namespace Scumle.Model
         private double _width;
         private double _height;
         private byte a, r, g, b;
-        
-                
+        private SolidColorBrush color;
+
         public Shape(double _X, double _Y, double _Width, double _Height, Color col, string _ID)
         {
             IsSelected = false;
@@ -65,35 +65,50 @@ namespace Scumle.Model
         }
 
         [XmlIgnore]
-        public Brush ShapeColor { get; set; }
-
-        
-        public string StoreColor
-        {
-            get
-            {       
-                 g = ((Color)ShapeColor.GetValue(SolidColorBrush.ColorProperty)).G;
-                 r = ((Color)ShapeColor.GetValue(SolidColorBrush.ColorProperty)).R;
-                 b = ((Color)ShapeColor.GetValue(SolidColorBrush.ColorProperty)).B;
-                return "RGB Values extracted and stored.";
-            }
-            set {}
-        }
-
+        public Brush ShapeColor { get; set; }       
    
         public byte ColorR
         {
-            get { return r; }
+            get
+            {
+                if(ShapeColor != null)
+                {
+                    return ((Color)ShapeColor.GetValue(SolidColorBrush.ColorProperty)).R;
+                } else
+                {
+                    return r;
+                }
+            }
             set { r = value; }
         }
         public byte ColorG
         {
-            get { return g; }
+            get
+            {
+                if (ShapeColor != null)
+                {
+                    return ((Color)ShapeColor.GetValue(SolidColorBrush.ColorProperty)).G;
+                }
+                else
+                {
+                    return g;
+                }
+            }
             set { g = value; }
         }
         public byte ColorB
         {
-            get { return b; }
+            get
+            {
+                if (ShapeColor != null)
+                {
+                    return ((Color)ShapeColor.GetValue(SolidColorBrush.ColorProperty)).B;
+                }
+                else
+                {
+                    return b;
+                }
+            }
             set { b = value; }
         }
 

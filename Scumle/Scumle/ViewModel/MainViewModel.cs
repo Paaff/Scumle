@@ -629,7 +629,8 @@ namespace Scumle.ViewModel
                 if (loadedModel is UMLClass)
                 {
                     var actualUMLClass = loadedModel as UMLClass;
-                    var storedColor = Color.FromRgb(actualUMLClass.ColorR, actualUMLClass.ColorG, actualUMLClass.ColorB);        
+                       var storedColor = Color.FromRgb(actualUMLClass.ColorR, actualUMLClass.ColorG, actualUMLClass.ColorB);    
+                      
                         IShape actualViewModel = new UMLClassViewModel(new UMLClass(actualUMLClass.X + _loadingOffSet, actualUMLClass.Y + _loadingOffSet, actualUMLClass.Width, actualUMLClass.Height,
                                                                                actualUMLClass.Name, storedColor, actualUMLClass.ID, actualUMLClass.UMLFields, actualUMLClass.UMLMethods));
 
@@ -638,9 +639,10 @@ namespace Scumle.ViewModel
                 else if (loadedModel is BasicShape)
                 {
                     var actualBasicShape = loadedModel as BasicShape;
-                    var storedColor = Color.FromRgb(actualBasicShape.ColorR, actualBasicShape.ColorG, actualBasicShape.ColorB);
-              
-                        IShape actualViewModel = new BasicShapeViewModel(new BasicShape(actualBasicShape.Type, actualBasicShape.X + _loadingOffSet, actualBasicShape.Y + _loadingOffSet,
+                  var storedColor = Color.FromRgb(actualBasicShape.ColorR, actualBasicShape.ColorG, actualBasicShape.ColorB);
+                  
+
+                    IShape actualViewModel = new BasicShapeViewModel(new BasicShape(actualBasicShape.Type, actualBasicShape.X + _loadingOffSet, actualBasicShape.Y + _loadingOffSet,
                                                                            actualBasicShape.Width, actualBasicShape.Height, storedColor, actualBasicShape.ID));
                         shapesAdd.Add(actualViewModel);
 
