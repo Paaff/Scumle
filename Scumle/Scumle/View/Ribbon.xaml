@@ -71,12 +71,10 @@
 
         <RibbonTab Header="Home">
 
-            <!-- Add command for copy, cut and paste that have 3 options -->
             <RibbonGroup Header="Clipboard">
 
                 <RibbonButton x:Name="Paste" Label="Paste" LargeImageSource="/Images/Paste.png" Command="{Binding PasteCommand}"/>
 
-                <!-- For cut and copy make sure that they can tell the difference of what is in the clipboard -->
                 <RibbonButton x:Name="Cut" Label="Cut" SmallImageSource="/Images/Cut.png"
                               Command="{Binding CutCommand}"/>
 
@@ -89,9 +87,7 @@
 
                 <RibbonButton Label="Delete" Command="{Binding DeleteSelectedShapesCommand}" LargeImageSource="/Images/Delete.png"/>
 
-            </RibbonGroup>
-            <!-- Zoom needs to be more generic (DK vs US layout might f up). 
-                 Zoom should also work on mouse scrolling-->
+            </RibbonGroup>          
             <RibbonGroup Header="View">
                 <RibbonMenuButton Label="Zoom" LargeImageSource="/Images/Search.png">
                     <RibbonMenuItem Header="25%" Command="{Binding ChangeZoomCommand}">
@@ -132,27 +128,13 @@
                 </RibbonMenuButton>
             </RibbonGroup>
 
-            <!-- There needs to be an undo and redo queue which goes back and restores previous "versions"
-                of the shapes. -->
-
 
         </RibbonTab>
 
-        <RibbonTab Header="Design">
-            <!-- This need to work on both highlighted text and as a general setting.
-            <RibbonGroup Header="Font">
-                
-                <StackPanel Orientation="Horizontal">
-                    <RibbonButton Label="B" FontWeight="Bold"/>
-                    <RibbonButton Label="U" />
-                    <RibbonButton Label="I" FontStyle="Italic"/>
-                </StackPanel>
-            </RibbonGroup>
-                 -->
+        <RibbonTab Header="Design">  
 
             <RibbonGroup Header="Color">
-                <!-- This need to work on both highlighted text and as a general setting. -->
-                <StackPanel>
+               <StackPanel>
                     <xctk:ColorPicker Name="ClrPcker_Background" Margin = "5" SelectedColor="{Binding SelectedColor, Mode=TwoWay}"></xctk:ColorPicker>
                     <Button Content="Color selected" Command="{Binding ColorSelectedCommand}" Margin="5,5,5,0"></Button>
                 </StackPanel>

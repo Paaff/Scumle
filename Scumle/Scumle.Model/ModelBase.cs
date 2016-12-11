@@ -11,7 +11,7 @@ namespace Scumle.Model
     [XmlInclude(typeof(BasicShape))]
     [XmlInclude(typeof(UMLClass))]
     [XmlInclude(typeof(Line))]
-    [XmlInclude(typeof(ConnectionPoint))] // Maybe not used.
+    [XmlInclude(typeof(ConnectionPoint))]
     public class ModelBase
     {
 

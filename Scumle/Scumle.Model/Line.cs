@@ -13,13 +13,7 @@ namespace Scumle.Model
             To = to;
             Type = type;
             StoreFromId = from.AttachedID;
-            StoreToId = to.AttachedID;
-          
-            // For Serialization
-            // TODO: You can't reference ConnectionPointViewModel because the model should
-            // not know anything about the view!
-            //storeTo = (to as ConnectionPointViewModel).Model as ConnectionPoint;
-            //storeFrom = (from as ConnectionPointViewModel).Model as ConnectionPoint; 
+            StoreToId = to.AttachedID;         
         }
 
         // For Serialization

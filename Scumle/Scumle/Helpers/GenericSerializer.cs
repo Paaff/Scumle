@@ -26,8 +26,6 @@ namespace Scumle.Helpers
             {               
                 XmlSerializer serializer = new XmlSerializer(typeof(T));
                 streamWriter = new StreamWriter(path, false);
-
-                // Settings for XML (Optional I think)
                 XmlWriterSettings settings = new XmlWriterSettings()
                 {
                     Indent = true,

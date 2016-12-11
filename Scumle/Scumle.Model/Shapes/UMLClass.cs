@@ -10,8 +10,6 @@ namespace Scumle.Model.Shapes
     [Serializable]
     public class UMLClass : Shape
     {
-
-        // An UML Class should carry a list of methods modelled and a list of fields modelled.
         public string Name { get; set; }
         public string UMLFields { get; set; }
         public string UMLMethods { get; set; }
