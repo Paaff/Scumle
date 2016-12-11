@@ -68,14 +68,14 @@ namespace Scumle.Model
         public Brush ShapeColor { get; set; }
 
         
-        public Color StoreColor
+        public string StoreColor
         {
             get
             {       
                  g = ((Color)ShapeColor.GetValue(SolidColorBrush.ColorProperty)).G;
                  r = ((Color)ShapeColor.GetValue(SolidColorBrush.ColorProperty)).R;
-                 b = ((Color)ShapeColor.GetValue(SolidColorBrush.ColorProperty)).B;           
-                 return Color.FromRgb(ColorR, ColorG, ColorB);
+                 b = ((Color)ShapeColor.GetValue(SolidColorBrush.ColorProperty)).B;
+                return "RGB Values extracted and stored.";
             }
             set {}
         }
